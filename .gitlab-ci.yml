@@ -1,0 +1,32 @@
+stages:
+  - deploy
+
+deploy-development:
+  stage: deploy
+  only:
+    - develop
+  script:
+    - whoami 
+    - cd /workspace/deployer/orada-infrastructure && sudo -u ubuntu git pull
+    - cd /workspace/deployer && sudo make chmod-deploy
+    - cd /workspace/deployer/orada-infrastructure/be && ./deploy.sh development
+
+deploy-staging:
+  stage: deploy
+  only:
+    - staging
+  script:
+    - whoami 
+    - cd /workspace/deployer/orada-infrastructure && sudo -u ubuntu git pull
+    - cd /workspace/deployer && sudo make chmod-deploy
+    - cd /workspace/deployer/orada-infrastructure/be && ./deploy.sh staging
+
+deploy-production:
+  stage: deploy
+  only:
+    - main
+  script:
+    - whoami 
+    - cd /workspace/deployer/orada-infrastructure && sudo -u ubuntu git pull
+    - cd /workspace/deployer && sudo make chmod-deploy
+    - cd /workspace/deployer/orada-infrastructure/be && ./deploy.sh production
