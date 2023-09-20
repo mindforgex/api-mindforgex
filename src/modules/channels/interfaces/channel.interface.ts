@@ -1,11 +1,30 @@
 import { Post } from 'src/modules/posts/models/post.model';
 
+export interface Social {
+  url: string;
+  name: string;
+  icon: string;
+}
+export interface Country {
+  name: string;
+  icon: string;
+}
 export interface IChannel {
   _id?: string;
   channelName?: string;
-  avatarUrls: string;
-  backgroundUrls: string;
+  avatarUrl: string;
   description: string;
+  socialLinks: Social[];
+  country: Country;
+  founder: string;
+  mainGame: string;
+  profestionalFeild: string;
+  email: string;
+  age: string;
+  twitterUrl: string;
+  youtubeUrl: string;
+  follwerYoutube: number;
+  follwerTwitter: number;
   posts?: Post[];
   createdAt?: Date;
   updatedAt?: Date;
