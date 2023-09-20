@@ -67,3 +67,8 @@ export class DefaultResponseDto {
   @ApiResponseProperty({ example: 'Success' })
   message: string;
 }
+
+export class MongoItemDto<T> {
+  @ApiProperty({ isArray: true })
+  items: T[];
+}
