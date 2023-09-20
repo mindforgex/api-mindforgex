@@ -32,12 +32,18 @@ export const seedChannel = async () => {
   for (let i = 0; i < channelData.length; i++) {
     params.push({
       "channelName": channelData[i].name,
-      "avatarUrls": channelData[i].avatar,
-      "backgroundUrls": channelData[i].background,
-      "description": channelData[i].description,
-      "followers": channelData[i].followers,
+      "avatarUrl": channelData[i].avatar,
       "socialLinks": channelData[i].socialLinks,
-      // "post": channelData[i].post
+      "country": channelData[i].country,
+      "founder": channelData[i].founder,
+      "mainGame": channelData[i].mainGame,
+      "profestionalFeild": channelData[i].profestionalFeild,
+      "email": channelData[i].email,
+      "age": channelData[i].age,
+      "twitterUrl": channelData[i].twitterUrl,
+      "youtubeUrl": channelData[i].youtubeUrl,
+      "follwerYoutube": channelData[i].follwerYoutube,
+      "follwerTwitter": channelData[i].follwerTwitter,
     });
   }
 

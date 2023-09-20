@@ -2,10 +2,37 @@
   {
     "name": "Channel1",
     "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
-    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
-    "description": "",
-    "followers": 1000,
-    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "description": "description",
+    "socialLinks": [
+      {
+        "url": "url1",
+        "name": "social1-1",
+        "icon": "icon1-1"
+      },
+      {
+        "url": "url2",
+        "name": "social1-2",
+        "icon": "icon1-2"
+      },
+      {
+        "url": "url3",
+        "name": "social1-3",
+        "icon": "icon1-3"
+      }
+    ],
+    "country": {
+      "name": "country1",
+      "icon": "icon ct 1"
+    },
+    "founder": "founder",
+    "mainGame": "mainGame",
+    "profestionalFeild": "profestionalFeild",
+    "email": "email@relipasoft.com",
+    "age": "20",
+    "twitterUrl": "twitterUrl",
+    "youtubeUrl": "youtubeUrl",
+    "follwerYoutube": 2000,
+    "follwerTwitter": 3000,
     "post": [
       {
         "content": "content1-1",
@@ -26,10 +53,36 @@
   {
     "name": "Channel2",
     "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
-    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
-    "description": "",
-    "followers": 2000,
-    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "socialLinks": [
+      {
+        "url": "url1",
+        "name": "social1-1",
+        "icon": "icon1-1"
+      },
+      {
+        "url": "url2",
+        "name": "social1-2",
+        "icon": "icon1-2"
+      },
+      {
+        "url": "url3",
+        "name": "social1-3",
+        "icon": "icon1-3"
+      }
+    ],
+    "country": {
+      "name": "country1",
+      "icon": "icon ct 1"
+    },
+    "founder": "founder",
+    "mainGame": "mainGame",
+    "profestionalFeild": "profestionalFeild",
+    "email": "email@relipasoft.com",
+    "age": "20",
+    "twitterUrl": "twitterUrl",
+    "youtubeUrl": "youtubeUrl",
+    "follwerYoutube": 2000,
+    "follwerTwitter": 3000,
     "post": [
       {
         "content": "content2-1",
@@ -50,10 +103,36 @@
   {
     "name": "Channel3",
     "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
-    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
-    "description": "",
-    "followers": 3000,
-    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "socialLinks": [
+      {
+        "url": "url1",
+        "name": "social1-1",
+        "icon": "icon1-1"
+      },
+      {
+        "url": "url2",
+        "name": "social1-2",
+        "icon": "icon1-2"
+      },
+      {
+        "url": "url3",
+        "name": "social1-3",
+        "icon": "icon1-3"
+      }
+    ],
+    "country": {
+      "name": "country1",
+      "icon": "icon ct 1"
+    },
+    "founder": "founder",
+    "mainGame": "mainGame",
+    "profestionalFeild": "profestionalFeild",
+    "email": "email@relipasoft.com",
+    "age": "20",
+    "twitterUrl": "twitterUrl",
+    "youtubeUrl": "youtubeUrl",
+    "follwerYoutube": 2000,
+    "follwerTwitter": 3000,
     "post": [
       {
         "content": "content3-1",
@@ -74,10 +153,36 @@
   {
     "name": "Channel4",
     "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
-    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
-    "description": "",
-    "followers": 4000,
-    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "socialLinks": [
+      {
+        "url": "url1",
+        "name": "social1-1",
+        "icon": "icon1-1"
+      },
+      {
+        "url": "url2",
+        "name": "social1-2",
+        "icon": "icon1-2"
+      },
+      {
+        "url": "url3",
+        "name": "social1-3",
+        "icon": "icon1-3"
+      }
+    ],
+    "country": {
+      "name": "country1",
+      "icon": "icon ct 1"
+    },
+    "founder": "founder",
+    "mainGame": "mainGame",
+    "profestionalFeild": "profestionalFeild",
+    "email": "email@relipasoft.com",
+    "age": "20",
+    "twitterUrl": "twitterUrl",
+    "youtubeUrl": "youtubeUrl",
+    "follwerYoutube": 2000,
+    "follwerTwitter": 3000,
     "post": [
       {
         "content": "content4-1",
@@ -98,10 +203,36 @@
   {
     "name": "Channel5",
     "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
-    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
-    "description": "",
-    "followers": 5000,
-    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "socialLinks": [
+      {
+        "url": "url1",
+        "name": "social1-1",
+        "icon": "icon1-1"
+      },
+      {
+        "url": "url2",
+        "name": "social1-2",
+        "icon": "icon1-2"
+      },
+      {
+        "url": "url3",
+        "name": "social1-3",
+        "icon": "icon1-3"
+      }
+    ],
+    "country": {
+      "name": "country1",
+      "icon": "icon ct 1"
+    },
+    "founder": "founder",
+    "mainGame": "mainGame",
+    "profestionalFeild": "profestionalFeild",
+    "email": "email@relipasoft.com",
+    "age": "20",
+    "twitterUrl": "twitterUrl",
+    "youtubeUrl": "youtubeUrl",
+    "follwerYoutube": 2000,
+    "follwerTwitter": 3000,
     "post": [
       {
         "content": "content5-1",
@@ -121,11 +252,36 @@
   },
   {
     "name": "Channel6",
-    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
-    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
-    "description": "",
-    "followers": 6000,
-    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "socialLinks": [
+      {
+        "url": "url1",
+        "name": "social1-1",
+        "icon": "icon1-1"
+      },
+      {
+        "url": "url2",
+        "name": "social1-2",
+        "icon": "icon1-2"
+      },
+      {
+        "url": "url3",
+        "name": "social1-3",
+        "icon": "icon1-3"
+      }
+    ],
+    "country": {
+      "name": "country1",
+      "icon": "icon ct 1"
+    },
+    "founder": "founder",
+    "mainGame": "mainGame",
+    "profestionalFeild": "profestionalFeild",
+    "email": "email@relipasoft.com",
+    "age": "20",
+    "twitterUrl": "twitterUrl",
+    "youtubeUrl": "youtubeUrl",
+    "follwerYoutube": 2000,
+    "follwerTwitter": 3000,
     "post": [
       {
         "content": "content6-1",
