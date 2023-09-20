@@ -1,0 +1,146 @@
+[
+  {
+    "name": "Channel1",
+    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
+    "description": "",
+    "followers": 1000,
+    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "post": [
+      {
+        "content": "content1-1",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      },
+      {
+        "content": "content1-2",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Channel2",
+    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
+    "description": "",
+    "followers": 2000,
+    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "post": [
+      {
+        "content": "content2-1",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      },
+      {
+        "content": "content2-2",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Channel3",
+    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
+    "description": "",
+    "followers": 3000,
+    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "post": [
+      {
+        "content": "content3-1",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      },
+      {
+        "content": "content3-2",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Channel4",
+    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
+    "description": "",
+    "followers": 4000,
+    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "post": [
+      {
+        "content": "content4-1",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      },
+      {
+        "content": "content4-2",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Channel5",
+    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
+    "description": "",
+    "followers": 5000,
+    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "post": [
+      {
+        "content": "content5-1",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      },
+      {
+        "content": "content5-2",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Channel6",
+    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "background": "https://www.google.com/search?q=background&oq=back&gs_lcrp=EgZjaHJvbWUqDQgBEAAYgwEYsQMYgAQyDwgAEEUYORiDARixAxiABDINCAEQABiDARixAxiABDINCAIQABiDARixAxiABDIGCAMQRRhBMgYIBBBFGDwyBggFEEUYPDIGCAYQRRhBMgYIBxBFGEHSAQgyNzM1ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8#vhid=ltTJ47IOa_OHyM&vssid=l",
+    "description": "",
+    "followers": 6000,
+    "socialLinks": "https://www.youtube.com/watch?v=ysNDDrG9PtI&ab_channel=DreamyVibez",
+    "post": [
+      {
+        "content": "content6-1",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      },
+      {
+        "content": "content6-2",
+        "images": [
+          "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+          "https://t3.ftcdn.net/jpg/01/70/95/04/360_F_170950403_AcP6Be7ySdi17iJdDsXIi84fZfN2MDMM.webp"
+        ]
+      }
+    ]
+  }
+]
