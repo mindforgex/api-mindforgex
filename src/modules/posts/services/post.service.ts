@@ -35,7 +35,6 @@ export class PostService extends BaseService<PostDocument> {
 
   public async createMultiPosts(channelId: string, dataArray: any[]) {
     try {
-      // Tạo nhiều bài viết cho kênh có channelId cụ thể
       const posts = await this.postModel.create(dataArray.map((data) => ({ ...data, channel: channelId })));
       return posts;
     } catch (error) {

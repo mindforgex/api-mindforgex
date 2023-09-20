@@ -6,14 +6,17 @@ import { program } from 'commander';
 import { Types } from 'mongoose';
 import { ChannelModule } from 'src/modules/channels/channel.module';
 import { PostModule } from 'src/modules/posts/post.module';
+import { NFTInfoModule } from 'src/modules/nft_infos/nft_info.module';
 
 import { ChannelService } from 'src/modules/channels/services/channel.service';
 import { PostService } from 'src/modules/posts/services/post.service';
+import { NFTInfoService } from 'src/modules/nft_infos/services/nft_info.service';
 
 @Module({
   imports: [
     ChannelModule,
     PostModule,
+    NFTInfoModule,
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_DB_URL),
   ],
@@ -25,8 +28,10 @@ export const seedChannel = async () => {
     await NestFactory.createApplicationContext(CommandModule);
   const service = app.get(ChannelService);
   const postService = app.get(PostService);
+  const nftInfoService = app.get(NFTInfoService);
 
   const channelData = require('src/common/data_template/channel_info.json');
+  const nftInfoData = require('src/common/data_template/nft_info.json');
 
   let params = [];
   for (let i = 0; i < channelData.length; i++) {
@@ -50,6 +55,7 @@ export const seedChannel = async () => {
   try {
     await service.clearChannels();
     await postService.clearPosts();
+    await nftInfoService.clearNFTInfos();
 
     const channels = await service.createMultiChannel(params);
 
@@ -62,8 +68,18 @@ export const seedChannel = async () => {
       }));
       const createdPosts = await postService.createMultiPosts(channel._id, postParams);
 
+      const nftData = nftInfoData.sort(() => Math.random() - 0.5).slice(0, 2);
+      const nftInfoParams = nftData.map((nft) => ({
+        channelId: channel.id,
+        name: nft.name,
+        image: nft.image,
+        metaData: nft.metaData,
+      }));
+      const createdNFTInfos = await nftInfoService.createMultiNFTInfos(channel._id, nftInfoParams);
+
       // update post to chanels
       channel.posts = createdPosts;
+      channel.nftInfos = createdNFTInfos;
       await channel.save();
     }
 

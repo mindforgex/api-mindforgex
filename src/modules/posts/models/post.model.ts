@@ -2,7 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { IPost } from '../interfaces/post.interface';
-import { Channel } from '../../channels/models/channel.model';
 
 @Schema({ timestamps: true })
 export class Post implements IPost {

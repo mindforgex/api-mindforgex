@@ -26,12 +26,12 @@ export class ChannelService extends BaseService<ChannelDocument> {
     super(channelModel);
   }
 
-  private readonly defaultSelectFields: string = '-posts';
+  private readonly defaultSelectFields: string = '-posts, -nftInfos';
 
   public findOneById = (channelId: string, selectFields?: string) =>
   this.channelModel
     .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields)
-    .populate('posts')
+    .populate(['posts', 'nftInfos'])
     .lean();
 
   public async getListChannel(queryParams: any) {
@@ -62,10 +62,6 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
     return sort;
   };
-
-  async getChannel(channelId) {
-    return await this.channelModel.findOne(channelId).exec()
-  }
 
   async getAllWithPagination(queryParams: any, querySelect?: string) {
     const pageIndex = queryParams.pageIndex;
