@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { IChannel, Social, Country } from '../interfaces/channel.interface';
 import { Post } from '../../posts/models/post.model';
-import { NFTInfo } from '../../nft_infos/models/nft_info.model';
+import { NFTInfo } from '../../nfts/models/nft-info.model';
 
 @Schema({ timestamps: true })
 export class Channel implements IChannel {

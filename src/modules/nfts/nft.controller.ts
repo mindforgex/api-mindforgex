@@ -4,7 +4,7 @@ import { GetListNFTInfoDto } from './dtos/request.dto';
 import { GetListNFTInfoResponseDto, NFTInfoDetaitResponseDto } from './dtos/response.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
-import { NFTInfoService } from './services/nft_info.service';
+import { NFTInfoService } from './services/nft-info.service';
 import { MongoIdDto } from 'src/common/classes';
 
 @ApiTags('nft_infos')

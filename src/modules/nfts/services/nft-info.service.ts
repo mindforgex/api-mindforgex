@@ -8,11 +8,11 @@ import { ClientSession, Model } from 'mongoose';
 
 import {
   SORT_CONDITION,
-} from '../constants/nft_info.constant';
+} from '../constants/nft.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 
-import { NFTInfo, NFTInfoDocument } from '../models/nft_info.model';
+import { NFTInfo, NFTInfoDocument } from '../models/nft-info.model';
 
 @Injectable()
 export class NFTInfoService extends BaseService<NFTInfoDocument> {

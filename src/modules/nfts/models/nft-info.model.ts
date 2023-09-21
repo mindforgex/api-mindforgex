@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-import { INFTInfo, NFTProperty } from '../interfaces/nft_info.interface';
+import { INFTInfo, NFTProperty } from '../interfaces/nft-info.interface';
 
 @Schema({ timestamps: true })
 export class NFTInfo implements INFTInfo {
