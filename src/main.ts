@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
+import * as mongoose from 'mongoose';
 
 import { swaggerConfig } from 'src/config/swagger';
 
@@ -46,6 +47,8 @@ async function bootstrap() {
       app,
       SwaggerModule.createDocument(app, swaggerConfig),
     );
+
+  if (process.env.NODE_ENV === 'development') mongoose.set('debug', true);
 
   await app.listen(Number(process.env.PORT) || 3000);
 

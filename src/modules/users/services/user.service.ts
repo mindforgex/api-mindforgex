@@ -1,16 +1,8 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ClientSession, Model } from 'mongoose';
 
-import {
-  PasswordResetStatus,
-  Role,
-  SORT_CONDITION,
-} from '../constants/user.constant';
+import { SORT_CONDITION } from '../constants/user.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 
@@ -37,35 +29,13 @@ export class UserService extends BaseService<UserDocument> {
       .findOne({ email }, selectFields ?? this.defaultSelectFields)
       .lean();
 
-  public findOneByTwitterId = (twitterId: string, selectFields?: string) =>
-    this.userModel
-      .findOne({ twitterId }, selectFields ?? this.defaultSelectFields)
-      .lean();
-
-  async findByEmailAndUpsert(
-    email: string,
+  async findByWalletAddressAndUpsert(
+    walletAddress: string,
     update: any,
     session?: ClientSession,
   ) {
     const userUpdated = await this.userModel
-      .findOneAndUpdate({ email }, update, {
-        new: true,
-        upsert: true,
-        fields: this.defaultSelectFields,
-        session,
-      })
-      .lean();
-
-    return userUpdated;
-  }
-
-  async findByTwitterIdAndUpsert(
-    twitterId: string,
-    update: any,
-    session?: ClientSession,
-  ) {
-    const userUpdated = await this.userModel
-      .findOneAndUpdate({ twitterId }, update, {
+      .findOneAndUpdate({ walletAddress }, update, {
         new: true,
         upsert: true,
         fields: this.defaultSelectFields,
@@ -116,112 +86,5 @@ export class UserService extends BaseService<UserDocument> {
     return totalItems;
   }
 
-  public async getListUserByAdmin(queryParams: any) {
-    const conditions = { ...queryParams, role: Role.commonUser };
-
-    const [{ pageIndex, pageSize, items }, totalItems] = await Promise.all([
-      this.getAllWithPagination(conditions),
-      this.countItems(conditions),
-    ]);
-
-    return {
-      totalItems,
-      pageIndex,
-      pageSize,
-      items,
-    };
-  }
-
   public findAll = () => this.userModel.find().lean();
-
-  public async updateAfterTransferred(
-    userId: string,
-    params: {
-      transferredAt: Date;
-      contractAddress: string;
-      collectionName: string;
-    },
-    session: ClientSession,
-  ) {
-    await this.userModel.updateOne(
-      { _id: userId },
-      {
-        transferredAt: params.transferredAt,
-        contractAddress: params.contractAddress,
-        collectionName: params.collectionName,
-      },
-      { session },
-    );
-  }
-
-  async findUserByActivePasswordResetToken(
-    passwordResetToken: string,
-    session: ClientSession,
-  ) {
-    const users = await this.userModel
-      .find({
-        passwordResetToken,
-      })
-      .session(session);
-
-    if (!users.length)
-      throw new BadRequestException('Password reset token is invalid');
-
-    if (users.length !== 1) {
-      this.logger.error(
-        `Duplicate pw reset token ${passwordResetToken}, ${users.length} users found.`,
-      );
-      throw new InternalServerErrorException({
-        message: 'Please try again.',
-      });
-    }
-
-    const [user] = users;
-    if (
-      user.passwordResetExpiredAt &&
-      user.passwordResetExpiredAt >= Date.now() &&
-      user.passwordResetStatus === PasswordResetStatus.unconfirmed
-    )
-      return user;
-
-    throw new BadRequestException('Password reset token is expired');
-  }
-
-  public async exportUsers() {
-    const users = await this.userModel.aggregate([
-      {
-        $match: { role: Role.commonUser },
-      },
-      {
-        $sort: this.makeSortCondition({}),
-      },
-      {
-        $lookup: {
-          from: 'nftreceives',
-          localField: '_id',
-          foreignField: 'userId',
-          as: 'nftReceives',
-        },
-      },
-      {
-        $unwind: {
-          path: '$nftReceives',
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          email: 1,
-          twitterUsername: 1,
-          transferredAt: 1,
-          collection: '$nftReceives.collectionName',
-          tokenId: '$nftReceives.tokenId',
-          receivedAt: '$nftReceives.createdAt',
-        },
-      },
-    ]);
-
-    return users;
-  }
 }

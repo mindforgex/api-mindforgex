@@ -5,7 +5,7 @@ import { IPost } from '../interfaces/post.interface';
 
 @Schema({ timestamps: true })
 export class Post implements IPost {
-  @Prop({ required: true, types: Types.ObjectId, ref: 'Channel'})
+  @Prop({ required: true, types: Types.ObjectId, ref: 'Channel' })
   channelId?: Types.ObjectId;
 
   @Prop({ default: '' })
@@ -13,6 +13,15 @@ export class Post implements IPost {
 
   @Prop({ default: [] })
   images: Array<string>;
+
+  @Prop({ default: [] })
+  tasks: Array<{
+    id: string;
+    type: string;
+    name: string;
+    description: string;
+    info: any;
+  }>;
 }
 
 export type PostDocument = Post & Document;
