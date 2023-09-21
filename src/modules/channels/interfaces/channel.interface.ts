@@ -18,7 +18,7 @@ export interface IChannel {
   description: string;
   socialLinks: Social[];
   country: Country;
-  founder: string;
+  founded: string;
   mainGame: string;
   profestionalFeild: string;
   email: string;
@@ -26,10 +26,12 @@ export interface IChannel {
   dateOfBirth: string;
   twitterUrl: string;
   youtubeUrl: string;
-  follwerYoutube: number;
-  follwerTwitter: number;
+  follower: number;
+  followerYoutube: number;
+  followerTwitter: number;
   posts?: Post[];
   nftInfos?: NFTInfo[];
+  userSubcribe: Array<string>;
   createdAt?: Date;
   updatedAt?: Date;
 }

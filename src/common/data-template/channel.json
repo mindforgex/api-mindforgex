@@ -25,7 +25,7 @@
       "name": "Japan",
       "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "21 Sep, 2023",
+    "founded": "21 Sep, 2023",
     "mainGame": "Overwatch",
     "profestionalFeild": "Stream all types of game (hyper casual => fps)",
     "email": "info@relipasoft.com",
@@ -33,8 +33,9 @@
     "dateOfBirth": "May 6, 1990",
     "twitterUrl": "https://twitter.com/stylishnoob/status/1154341628011614208?lang=ja",
     "youtubeUrl": "https://www.youtube.com/@StylishNoob4",
-    "follwerYoutube": 678000,
-    "follwerTwitter": 3000,
+    "follower": 3000,
+    "followerYoutube": 678000,
+    "followerTwitter": 3000,
     "post": [
       {
         "content": "content1-1",
@@ -78,7 +79,7 @@
       "name": "Japan",
       "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "21 Sep, 2023",
+    "founded": "21 Sep, 2023",
     "mainGame": "Overwatch",
     "profestionalFeild": "Review technology products, Life-Style, DIY, ...)",
     "email": "info@relipasoft.com",
@@ -86,8 +87,9 @@
     "dateOfBirth": "May 30, 1983",
     "twitterUrl": "https://twitter.com/kazuch0924",
     "youtubeUrl": "https://www.youtube.com/channel/UCVPZ_NAEJPQPXXVYIPCHQ",
-    "follwerYoutube": 1850000,
-    "follwerTwitter": 3000,
+    "follower": 3000,
+    "followerYoutube": 1850000,
+    "followerTwitter": 3000,
     "post": [
       {
         "content": "content2-1",
@@ -131,7 +133,7 @@
       "name": "Japan",
       "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "21 Sep, 2023",
+    "founded": "21 Sep, 2023",
     "mainGame": "Overwatch",
     "profestionalFeild": "Stream horror game on PC, Battle Royale game and Nintendo game. In particular, Hikakin is good at playing Minecraft",
     "email": "info@relipasoft.com",
@@ -139,8 +141,9 @@
     "dateOfBirth": "April 21, 1989",
     "twitterUrl": "https://twitter.com/hikakin",
     "youtubeUrl": "https://www.youtube.com/user/hikakingames",
-    "follwerYoutube": 5910000,
-    "follwerTwitter": 3000,
+    "follower": 3000,
+    "followerYoutube": 5910000,
+    "followerTwitter": 3000,
     "post": [
       {
         "content": "content3-1",
@@ -184,7 +187,7 @@
       "name": "Japan",
       "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "21 Sep, 2023",
+    "founded": "21 Sep, 2023",
     "mainGame": "Overwatch",
     "profestionalFeild": "Stream game, music, painting",
     "email": "info@relipasoft.com",
@@ -192,8 +195,9 @@
     "dateOfBirth": "June 8",
     "twitterUrl": "https://twitter.com/ksononair",
     "youtubeUrl": "https://www.youtube.com/@ksononair/videos",
-    "follwerYoutube": 1250000,
-    "follwerTwitter": 3000,
+    "follower": 3000,
+    "followerYoutube": 1250000,
+    "followerTwitter": 3000,
     "post": [
       {
         "content": "content4-1",
@@ -237,7 +241,7 @@
       "name": "Japan",
       "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "21 Sep, 2023",
+    "founded": "21 Sep, 2023",
     "mainGame": "Overwatch",
     "profestionalFeild": "Stream game Minecraft, PUBG, ...\nStream playing piano",
     "email": "info@relipasoft.com",
@@ -245,8 +249,9 @@
     "dateOfBirth": "June 4, 1996",
     "twitterUrl": "https://twitter.com/co1971385",
     "youtubeUrl": "https://www.youtube.com/c/namayara/featured",
-    "follwerYoutube": 380000,
-    "follwerTwitter": 3000,
+    "follower": 3000,
+    "followerYoutube": 380000,
+    "followerTwitter": 3000,
     "post": [
       {
         "content": "content5-1",
@@ -290,7 +295,7 @@
       "name": "Japan",
       "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "21 Sep, 2023",
+    "founded": "21 Sep, 2023",
     "mainGame": "Overwatch",
     "profestionalFeild": "Stream Hyper Casual Game, Mario Maker, Minecraft, ...",
     "email": "info@relipasoft.com",
@@ -298,8 +303,9 @@
     "dateOfBirth": "June 16, 1997",
     "twitterUrl": "https://twitter.com/takutti0214",
     "youtubeUrl": "https://www.youtube.com/channel/UCP1PN9Um8z8Li-20Yauqa6A",
-    "follwerYoutube": 1220000,
-    "follwerTwitter": 3000,
+    "follower": 3000,
+    "followerYoutube": 1220000,
+    "followerTwitter": 3000,
     "post": [
       {
         "content": "content6-1",

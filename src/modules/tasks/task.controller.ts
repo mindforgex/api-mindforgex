@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Res, UseGuards, Param } from '@nestjs/common';
+import { Controller, Get, Post, Query, Res, UseGuards, Param, Body } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOkResponse,
@@ -17,15 +17,29 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { TaskService } from './services/task.service';
 import { MongoIdDto } from 'src/common/classes';
 
+import { Role } from 'src/modules/channels/constants/channel.constant';
+import { UserParams } from 'src/decorators/user-params.decorator';
+
 @ApiTags('tasks')
 @Controller('tasks')
 export class TaskController {
-  constructor(private readonly postService: TaskService) {}
+  constructor(private readonly taskService: TaskService) {}
 
   @Get('/:id')
   @ApiOkResponse({ type: TaskDetailResponseDto })
   @ApiBadRequestResponse({ description: 'Task not found' })
   async getTaskById(@Param() params: MongoIdDto): Promise<any> {
-    return this.postService.findOneById(params.id);
+    return this.taskService.findOneById(params.id);
+  }
+
+  @Post(':id/verify')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async verifyTask(
+    @Param('id') taskId: string,
+    @UserParams() requestData,
+  ): Promise<any> {
+    const result = await this.taskService.verify(taskId, requestData);
+
+    return { message: 'Verify successfully' };
   }
 }

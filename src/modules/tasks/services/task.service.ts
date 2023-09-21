@@ -6,9 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { ClientSession, Model } from 'mongoose';
 
-import {
-  SORT_CONDITION,
-} from '../constants/task.constant';
+import { SORT_CONDITION } from '../constants/task.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 
@@ -27,7 +25,9 @@ export class TaskService extends BaseService<TaskDocument> {
 
   public async createMultiTasks(channelId: string, dataArray: any[]) {
     try {
-      const posts = await this.taskModel.create(dataArray.map((data) => ({ ...data, channel: channelId })));
+      const posts = await this.taskModel.create(
+        dataArray.map((data) => ({ ...data, channel: channelId })),
+      );
       return posts;
     } catch (error) {
       throw new Error(`Error creating posts: ${error.message}`);
@@ -53,7 +53,44 @@ export class TaskService extends BaseService<TaskDocument> {
   }
 
   public findOneById = (taskId: string, selectFields?: string) =>
-  this.taskModel
-    .findOne({ _id: taskId }, selectFields ?? this.defaultSelectFields)
-    .lean();
+    this.taskModel
+      .findOne({ _id: taskId }, selectFields ?? this.defaultSelectFields)
+      .lean();
+
+  async verify(taskId: string, requestData: any): Promise<any> {
+    const userVerify = requestData.userAddress;
+
+    try {
+      const updatedTask = await this.taskModel.findOneAndUpdate(
+        { _id: taskId, userAddress: { $nin: [userVerify] } },
+        {
+          $push: { userAddress: userVerify },
+        },
+        { new: true },
+      );
+
+      if (!updatedTask)
+      throw new BadRequestException('already subscribed')
+
+
+
+      // const task = await this.taskModel.findOne({ _id: taskId }).lean();
+      // if (!task) {
+      //   return null;
+      // }
+
+      // const userAddress = task.userAddress;
+      // const user = userAddress.find((user) => user === userVerify) || '';
+      // if (user !== '') {
+      //   return null;
+      // }
+
+      // task.userAddress.push(userVerify);
+      // const updatedTask = await task.save();
+
+      return updatedTask;
+    } catch (error) {
+      throw new Error(`Error adding user to verify list: ${error.message}`);
+    }
+  }
 }

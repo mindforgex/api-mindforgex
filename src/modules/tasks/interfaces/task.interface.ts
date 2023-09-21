@@ -6,6 +6,7 @@ export interface ITask {
   postId?: Types.ObjectId | IPost;
   name?: string;
   description?: string;
+  userAddress: Array<string>;
   createdAt?: Date;
   updatedAt?: Date;
 }
