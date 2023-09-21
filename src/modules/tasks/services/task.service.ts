@@ -5,18 +5,16 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ClientSession, Model } from 'mongoose';
-
 import { SORT_CONDITION } from '../constants/task.constant';
-
 import { BaseService } from 'src/modules/base/services/base.service';
-
 import { Task, TaskDocument } from '../models/task.model';
-
+import { ChannelService } from 'src/modules/channels/services/channel.service';
 @Injectable()
 export class TaskService extends BaseService<TaskDocument> {
   constructor(
     @InjectModel(Task.name)
     private readonly taskModel: Model<TaskDocument>,
+    private readonly channelService: ChannelService,
   ) {
     super(taskModel);
   }
@@ -58,9 +56,18 @@ export class TaskService extends BaseService<TaskDocument> {
       .lean();
 
   async verify(taskId: string, requestData: any): Promise<any> {
-    const userVerify = requestData.userAddress;
+    const userVerify = requestData.walletAddress;
+    const channelId = requestData.channelId;
 
     try {
+      // check user subscribed.
+      const channel = await this.channelService.getChannelByUserSubcribe(channelId, userVerify);
+
+      if (!channel) {
+        throw new BadRequestException('not subscribed yet');
+      }
+
+      // check and insert user to user verify list.
       const updatedTask = await this.taskModel.findOneAndUpdate(
         { _id: taskId, userAddress: { $nin: [userVerify] } },
         {
@@ -69,24 +76,9 @@ export class TaskService extends BaseService<TaskDocument> {
         { new: true },
       );
 
-      if (!updatedTask)
-      throw new BadRequestException('already subscribed')
-
-
-
-      // const task = await this.taskModel.findOne({ _id: taskId }).lean();
-      // if (!task) {
-      //   return null;
-      // }
-
-      // const userAddress = task.userAddress;
-      // const user = userAddress.find((user) => user === userVerify) || '';
-      // if (user !== '') {
-      //   return null;
-      // }
-
-      // task.userAddress.push(userVerify);
-      // const updatedTask = await task.save();
+      if (!updatedTask) {
+        throw new BadRequestException('verify fail');
+      }
 
       return updatedTask;
     } catch (error) {
