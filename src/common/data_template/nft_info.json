@@ -6,8 +6,32 @@
     "metaData": {
       "name": "Kson Barbie",
       "image": "https://drive.google.com/file/d/1oD0ZCN2aVQAQcsRYDXxiVws79OWzqcbV/view",
-      "externalUrl": "",
-      "attributes": []
+      "symbol": "SHY",
+      "description": "A web3 development platform that gets you wings",
+      "attributes": [
+        {
+          "trait_type": "fast",
+          "value": "80"
+        },
+        {
+          "trait_type": "efficient",
+          "value": 100
+        }
+      ],
+      "royalty": 5,
+      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+      "share": 100,
+      "external_url": "https://www.example.com",
+      "files": [
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
+          "type": "image/png"
+        },
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "type": "image/png"
+        }
+      ]
     }
   },
   {
@@ -17,8 +41,32 @@
     "metaData": {
       "name": "Kson Kimono",
       "image": "https://drive.google.com/file/d/1mAhhByyXtUszNR9iCjUIwR1Ht0atL0Zv/view",
-      "externalUrl": "",
-      "attributes": []
+      "symbol": "SHY",
+      "description": "A web3 development platform that gets you wings",
+      "attributes": [
+        {
+          "trait_type": "fast",
+          "value": "80"
+        },
+        {
+          "trait_type": "efficient",
+          "value": 100
+        }
+      ],
+      "royalty": 5,
+      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+      "share": 100,
+      "external_url": "https://www.example.com",
+      "files": [
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
+          "type": "image/png"
+        },
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "type": "image/png"
+        }
+      ]
     }
   },
   {
@@ -28,8 +76,32 @@
     "metaData": {
       "name": "Kson Meme ",
       "image": "https://drive.google.com/file/d/1P25QhiBg2pA6nGpvpxLp0SKN4rP8M_RC/view",
-      "externalUrl": "",
-      "attributes": []
+      "symbol": "SHY",
+      "description": "A web3 development platform that gets you wings",
+      "attributes": [
+        {
+          "trait_type": "fast",
+          "value": "80"
+        },
+        {
+          "trait_type": "efficient",
+          "value": 100
+        }
+      ],
+      "royalty": 5,
+      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+      "share": 100,
+      "external_url": "https://www.example.com",
+      "files": [
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
+          "type": "image/png"
+        },
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "type": "image/png"
+        }
+      ]
     }
   },
   {
@@ -39,8 +111,32 @@
     "metaData": {
       "name": "Kson Ice Cream",
       "image": "https://drive.google.com/file/d/1AqQe7TcoIgZcmTt8V14pADq2YJgOB_wO/view",
-      "externalUrl": "",
-      "attributes": []
+      "symbol": "SHY",
+      "description": "A web3 development platform that gets you wings",
+      "attributes": [
+        {
+          "trait_type": "fast",
+          "value": "80"
+        },
+        {
+          "trait_type": "efficient",
+          "value": 100
+        }
+      ],
+      "royalty": 5,
+      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+      "share": 100,
+      "external_url": "https://www.example.com",
+      "files": [
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
+          "type": "image/png"
+        },
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "type": "image/png"
+        }
+      ]
     }
   },
   {
@@ -50,8 +146,32 @@
     "metaData": {
       "name": "Kson Chibi Kimono",
       "image": "https://drive.google.com/file/d/1ELm91zEvx47R6iuCOPyUpx38nKsQQlJs/view",
-      "externalUrl": "",
-      "attributes": []
+      "symbol": "SHY",
+      "description": "A web3 development platform that gets you wings",
+      "attributes": [
+        {
+          "trait_type": "fast",
+          "value": "80"
+        },
+        {
+          "trait_type": "efficient",
+          "value": 100
+        }
+      ],
+      "royalty": 5,
+      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+      "share": 100,
+      "external_url": "https://www.example.com",
+      "files": [
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
+          "type": "image/png"
+        },
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "type": "image/png"
+        }
+      ]
     }
   },
   {
@@ -61,8 +181,32 @@
     "metaData": {
       "name": "Kson Barbie",
       "image": "https://drive.google.com/file/d/16Di7DBeEVlUhOXIpnvv3QBEIdYwPnn52/view",
-      "externalUrl": "",
-      "attributes": []
+      "symbol": "SHY",
+      "description": "A web3 development platform that gets you wings",
+      "attributes": [
+        {
+          "trait_type": "fast",
+          "value": "80"
+        },
+        {
+          "trait_type": "efficient",
+          "value": 100
+        }
+      ],
+      "royalty": 5,
+      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+      "share": 100,
+      "external_url": "https://www.example.com",
+      "files": [
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
+          "type": "image/png"
+        },
+        {
+          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "type": "image/png"
+        }
+      ]
     }
   }
 ]
