@@ -1,5 +1,5 @@
 import { Post } from 'src/modules/posts/models/post.model';
-import { NFTInfo } from 'src/modules/nft_infos/models/nft_info.model';
+import { NFTInfo } from 'src/modules/nfts/models/nft-info.model';
 
 export interface Social {
   url: string;

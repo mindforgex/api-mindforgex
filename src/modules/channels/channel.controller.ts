@@ -18,7 +18,7 @@ export class ChannelController {
   @Get('')
   @ApiBearerAuth('jwt')
   @ApiOkResponse({ type: GetListChannelResponseDto })
-  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  // @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async getListChannel(
     @Query() query: GetListChannelDto,
   ): Promise<any> {
@@ -30,7 +30,7 @@ export class ChannelController {
   @Get(':id')
   @ApiOkResponse({ type: ChannelDetaitResponseDto })
   @ApiBadRequestResponse({ description: 'Channel not found' })
-  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  // @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async getChannelById(
     @Param() params: MongoIdDto,
   ): Promise<any> {

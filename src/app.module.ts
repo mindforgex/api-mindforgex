@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { ChannelModule } from 'src/modules/channels/channel.module';
 import { PostModule } from 'src/modules/posts/post.module';
-import { NFTInfoModule } from 'src/modules/nft_infos/nft_info.module';
+import { NFTInfoModule } from 'src/modules/nfts/nft.module';
 import { TaskModule } from 'src/modules/tasks/task.module';
 import { UserModule } from 'src/modules/users/user.module';
 import { AppController } from './app.controller';

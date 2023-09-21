@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { NftInfoController } from './nft_info.controller';
+import { NftInfoController } from './nft.controller';
 
-import { NFTInfoService } from './services/nft_info.service';
+import { NFTInfoService } from './services/nft-info.service';
 
-import { NFTInfo, NFTInfoSchema } from './models/nft_info.model';
+import { NFTInfo, NFTInfoSchema } from './models/nft-info.model';
 
 @Module({
   imports: [
