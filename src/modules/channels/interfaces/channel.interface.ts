@@ -1,4 +1,5 @@
 import { Post } from 'src/modules/posts/models/post.model';
+import { NFTInfo } from 'src/modules/nft_infos/models/nft_info.model';
 
 export interface Social {
   url: string;
@@ -26,6 +27,7 @@ export interface IChannel {
   follwerYoutube: number;
   follwerTwitter: number;
   posts?: Post[];
+  nftInfos?: NFTInfo[];
   createdAt?: Date;
   updatedAt?: Date;
 }

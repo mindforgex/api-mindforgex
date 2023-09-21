@@ -5,6 +5,7 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { UserModule } from 'src/modules/users/user.module';
 import { ChannelModule } from 'src/modules/channels/channel.module';
 import { PostModule } from 'src/modules/posts/post.module';
+import { NFTInfoModule } from 'src/modules/nft_infos/nft_info.module';
 import { AppController } from './app.controller';
 import * as mongoose from 'mongoose';
 
@@ -17,6 +18,7 @@ const modules = [
   UserModule,
   ChannelModule,
   PostModule,
+  NFTInfoModule,
 ];
 
 @Module({
