@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { IPost } from '../interfaces/post.interface';
+import { Task } from 'src/modules/tasks/models/task.model';
 
 @Schema({ timestamps: true })
 export class Post implements IPost {
@@ -9,19 +10,22 @@ export class Post implements IPost {
   channelId?: Types.ObjectId;
 
   @Prop({ default: '' })
+  title?: string;
+
+  @Prop({ default: '' })
   content?: string;
 
   @Prop({ default: [] })
   images: Array<string>;
 
-  @Prop({ default: [] })
-  tasks: Array<{
-    id: string;
-    type: string;
-    name: string;
-    description: string;
-    info: any;
-  }>;
+  @Prop({ default: '' })
+  practicipants: number;
+
+  @Prop({ default: '' })
+  nftMinted: number;
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: Task.name }] })
+  tasks: Task[];
 }
 
 export type PostDocument = Post & Document;

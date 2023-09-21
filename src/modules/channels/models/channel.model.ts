@@ -37,6 +37,9 @@ export class Channel implements IChannel {
   email: string;
 
   @Prop({ default: '' })
+  sex: string;
+
+  @Prop({ default: '' })
   dateOfBirth: string;
 
   @Prop({ default: '' })

@@ -31,7 +31,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
   public findOneById = (channelId: string, selectFields?: string) =>
   this.channelModel
     .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields)
-    .populate(['posts', 'nftInfos'])
+    .populate(['nftInfos', { path: 'posts', populate: { path: 'tasks', model: 'Task'} }])
     .lean();
 
   public async getListChannel(queryParams: any) {

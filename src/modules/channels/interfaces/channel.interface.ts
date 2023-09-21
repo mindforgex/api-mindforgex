@@ -22,6 +22,7 @@ export interface IChannel {
   mainGame: string;
   profestionalFeild: string;
   email: string;
+  sex: string;
   dateOfBirth: string;
   twitterUrl: string;
   youtubeUrl: string;

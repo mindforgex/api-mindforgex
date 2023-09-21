@@ -3,9 +3,15 @@ import { IChannel } from 'src/modules/channels/interfaces/channel.interface';
 
 export interface NFTMetaData {
   name: string;
+  symbol: string;
   image: string;
-  externalUrl: string;
+  description: string;
   attributes: Array<string>;
+  royalty: number;
+  creator: string;
+  share: number;
+  external_url: string;
+  files: Array<string>;
 }
 
 export interface INFTInfo {
