@@ -6,6 +6,9 @@ export interface IPost {
   channelId?: Types.ObjectId | IChannel;
   content?: string;
   images: Array<string>;
+  tasks: Array<{
+    type: string;
+  }>;
   createdAt?: Date;
   updatedAt?: Date;
 }

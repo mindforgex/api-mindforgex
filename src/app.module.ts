@@ -1,17 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+
 import { AuthModule } from 'src/modules/auth/auth.module';
-import { UserModule } from 'src/modules/users/user.module';
 import { ChannelModule } from 'src/modules/channels/channel.module';
 import { PostModule } from 'src/modules/posts/post.module';
 import { NFTInfoModule } from 'src/modules/nft_infos/nft_info.module';
+import { UserModule } from 'src/modules/users/user.module';
 import { AppController } from './app.controller';
-import * as mongoose from 'mongoose';
-
-if (process.env.NODE_ENV === "develop") {
-  mongoose.set('debug', true);
-}
 
 const modules = [
   AuthModule,
@@ -28,12 +24,11 @@ const modules = [
       connectionFactory: (connection) => {
         connection.plugin(require('mongoose-autopopulate'));
         return connection;
-      }
+      },
     }),
     ...modules,
   ],
   controllers: [AppController],
-  providers: [
-  ],
+  providers: [],
 })
 export class AppModule {}
