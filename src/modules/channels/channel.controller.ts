@@ -8,15 +8,17 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { ChannelService } from './services/channel.service';
 import { IChannel } from './interfaces/channel.interface';
 import { MongoIdDto } from 'src/common/classes';
+import { Role } from 'src/modules/channels/constants/channel.constant';
 
 @ApiTags('channels')
 @Controller('channels')
 export class ChannelController {
   constructor(private readonly channelService: ChannelService) {}
 
+  @Get('')
   @ApiBearerAuth('jwt')
   @ApiOkResponse({ type: GetListChannelResponseDto })
-  @Get('')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async getListChannel(
     @Query() query: GetListChannelDto,
   ): Promise<any> {
@@ -28,10 +30,12 @@ export class ChannelController {
   @Get(':id')
   @ApiOkResponse({ type: ChannelDetaitResponseDto })
   @ApiBadRequestResponse({ description: 'Channel not found' })
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async getChannelById(
     @Param() params: MongoIdDto,
   ): Promise<any> {
     const channelId = params.id
+
     return await this.channelService.findOneById(channelId);
   }
 }
