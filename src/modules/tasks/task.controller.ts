@@ -17,15 +17,15 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { TaskService } from './services/task.service';
 import { MongoIdDto } from 'src/common/classes';
 
-@ApiTags('posts')
-@Controller('posts')
+@ApiTags('tasks')
+@Controller('tasks')
 export class TaskController {
   constructor(private readonly postService: TaskService) {}
 
   @Get('/:id')
   @ApiOkResponse({ type: TaskDetailResponseDto })
-  @ApiBadRequestResponse({ description: 'Post not found' })
-  async getPostById(@Param() params: MongoIdDto): Promise<any> {
+  @ApiBadRequestResponse({ description: 'Task not found' })
+  async getTaskById(@Param() params: MongoIdDto): Promise<any> {
     return this.postService.findOneById(params.id);
   }
 }

@@ -3,32 +3,30 @@
     "name": "Kson Barbie",
     "image": "https://drive.google.com/file/d/1oD0ZCN2aVQAQcsRYDXxiVws79OWzqcbV/view",
     "description": "Level 1 - NFT Collector: Collect 10 NFTs (Any Collection) to join a group chat with the streamer.\nLevel 2 - Collection Explorer: Collect 10 different NFTs within a single collection to join a talk show with the idol.\nLevel 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol.\nLevel 4 - Exclusive Insider: Collect NFTs from 10 different collections to gain exclusive access to backstage content.\nLevel 5 - Ultimate Superfan: Collect NFTs from 20 different collections to receive personalized shoutouts from the idol.",
-    "metaData": {
-      "name": "Kson Barbie",
-      "image": "https://drive.google.com/file/d/1oD0ZCN2aVQAQcsRYDXxiVws79OWzqcbV/view",
-      "symbol": "SHY",
-      "description": "A web3 development platform that gets you wings",
-      "attributes": [
+    "symbol": "SHY",
+    "seller_fee_basis_points": 5,
+    "external_url": "https://www.example.com",
+    "attributes": [
+      {
+        "trait_type": "fast",
+        "value": "80"
+      },
+      {
+        "trait_type": "efficient",
+        "value": 100
+      }
+    ],
+    "properties": {
+      "creators": [
         {
-          "trait_type": "fast",
-          "value": "80"
-        },
-        {
-          "trait_type": "efficient",
-          "value": 100
+          "address": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+          "verified": true,
+          "share": 100
         }
       ],
-      "royalty": 5,
-      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
-      "share": 100,
-      "external_url": "https://www.example.com",
       "files": [
         {
-          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
-          "type": "image/png"
-        },
-        {
-          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "uri": "https://drive.google.com/file/d/1oD0ZCN2aVQAQcsRYDXxiVws79OWzqcbV/view",
           "type": "image/png"
         }
       ]
@@ -38,32 +36,30 @@
     "name": "Kson Kimono",
     "image": "https://drive.google.com/file/d/1mAhhByyXtUszNR9iCjUIwR1Ht0atL0Zv/view",
     "description": "Level 1 - NFT Collector: Collect 10 NFTs (Any Collection) to join a group chat with the streamer.\nLevel 2 - Collection Explorer: Collect 10 different NFTs within a single collection to join a talk show with the idol.\nLevel 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol.\nLevel 4 - Exclusive Insider: Collect NFTs from 10 different collections to gain exclusive access to backstage content.\nLevel 5 - Ultimate Superfan: Collect NFTs from 20 different collections to receive personalized shoutouts from the idol.",
-    "metaData": {
-      "name": "Kson Kimono",
-      "image": "https://drive.google.com/file/d/1mAhhByyXtUszNR9iCjUIwR1Ht0atL0Zv/view",
-      "symbol": "SHY",
-      "description": "A web3 development platform that gets you wings",
-      "attributes": [
+    "symbol": "SHY",
+    "seller_fee_basis_points": 5,
+    "external_url": "https://www.example.com",
+    "attributes": [
+      {
+        "trait_type": "fast",
+        "value": "80"
+      },
+      {
+        "trait_type": "efficient",
+        "value": 100
+      }
+    ],
+    "properties": {
+      "creators": [
         {
-          "trait_type": "fast",
-          "value": "80"
-        },
-        {
-          "trait_type": "efficient",
-          "value": 100
+          "address": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+          "verified": true,
+          "share": 100
         }
       ],
-      "royalty": 5,
-      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
-      "share": 100,
-      "external_url": "https://www.example.com",
       "files": [
         {
-          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
-          "type": "image/png"
-        },
-        {
-          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "uri": "https://drive.google.com/file/d/1mAhhByyXtUszNR9iCjUIwR1Ht0atL0Zv/view",
           "type": "image/png"
         }
       ]
@@ -73,32 +69,30 @@
     "name": "Kson Meme ",
     "image": "https://drive.google.com/file/d/1P25QhiBg2pA6nGpvpxLp0SKN4rP8M_RC/view",
     "description": "Level 1 - NFT Collector: Collect 10 NFTs (Any Collection) to join a group chat with the streamer.\nLevel 2 - Collection Explorer: Collect 10 different NFTs within a single collection to join a talk show with the idol.\nLevel 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol.\nLevel 4 - Exclusive Insider: Collect NFTs from 10 different collections to gain exclusive access to backstage content.\nLevel 5 - Ultimate Superfan: Collect NFTs from 20 different collections to receive personalized shoutouts from the idol.",
-    "metaData": {
-      "name": "Kson Meme ",
-      "image": "https://drive.google.com/file/d/1P25QhiBg2pA6nGpvpxLp0SKN4rP8M_RC/view",
-      "symbol": "SHY",
-      "description": "A web3 development platform that gets you wings",
-      "attributes": [
+    "symbol": "SHY",
+    "seller_fee_basis_points": 5,
+    "external_url": "https://www.example.com",
+    "attributes": [
+      {
+        "trait_type": "fast",
+        "value": "80"
+      },
+      {
+        "trait_type": "efficient",
+        "value": 100
+      }
+    ],
+    "properties": {
+      "creators": [
         {
-          "trait_type": "fast",
-          "value": "80"
-        },
-        {
-          "trait_type": "efficient",
-          "value": 100
+          "address": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+          "verified": true,
+          "share": 100
         }
       ],
-      "royalty": 5,
-      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
-      "share": 100,
-      "external_url": "https://www.example.com",
       "files": [
         {
-          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
-          "type": "image/png"
-        },
-        {
-          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "uri": "https://drive.google.com/file/d/1P25QhiBg2pA6nGpvpxLp0SKN4rP8M_RC/view",
           "type": "image/png"
         }
       ]
@@ -108,32 +102,30 @@
     "name": "Kson Ice Cream",
     "image": "https://drive.google.com/file/d/1AqQe7TcoIgZcmTt8V14pADq2YJgOB_wO/view",
     "description": "Level 1 - NFT Collector: Collect 10 NFTs (Any Collection) to join a group chat with the streamer.\nLevel 2 - Collection Explorer: Collect 10 different NFTs within a single collection to join a talk show with the idol.\nLevel 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol.\nLevel 4 - Exclusive Insider: Collect NFTs from 10 different collections to gain exclusive access to backstage content.\nLevel 5 - Ultimate Superfan: Collect NFTs from 20 different collections to receive personalized shoutouts from the idol.",
-    "metaData": {
-      "name": "Kson Ice Cream",
-      "image": "https://drive.google.com/file/d/1AqQe7TcoIgZcmTt8V14pADq2YJgOB_wO/view",
-      "symbol": "SHY",
-      "description": "A web3 development platform that gets you wings",
-      "attributes": [
+    "symbol": "SHY",
+    "seller_fee_basis_points": 5,
+    "external_url": "https://www.example.com",
+    "attributes": [
+      {
+        "trait_type": "fast",
+        "value": "80"
+      },
+      {
+        "trait_type": "efficient",
+        "value": 100
+      }
+    ],
+    "properties": {
+      "creators": [
         {
-          "trait_type": "fast",
-          "value": "80"
-        },
-        {
-          "trait_type": "efficient",
-          "value": 100
+          "address": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+          "verified": true,
+          "share": 100
         }
       ],
-      "royalty": 5,
-      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
-      "share": 100,
-      "external_url": "https://www.example.com",
       "files": [
         {
-          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
-          "type": "image/png"
-        },
-        {
-          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "uri": "https://drive.google.com/file/d/1AqQe7TcoIgZcmTt8V14pADq2YJgOB_wO/view",
           "type": "image/png"
         }
       ]
@@ -143,32 +135,30 @@
     "name": "Kson Chibi Kimono",
     "image": "https://drive.google.com/file/d/1ELm91zEvx47R6iuCOPyUpx38nKsQQlJs/view",
     "description": "Level 1 - NFT Collector: Collect 10 NFTs (Any Collection) to join a group chat with the streamer.\nLevel 2 - Collection Explorer: Collect 10 different NFTs within a single collection to join a talk show with the idol.\nLevel 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol.\nLevel 4 - Exclusive Insider: Collect NFTs from 10 different collections to gain exclusive access to backstage content.\nLevel 5 - Ultimate Superfan: Collect NFTs from 20 different collections to receive personalized shoutouts from the idol.",
-    "metaData": {
-      "name": "Kson Chibi Kimono",
-      "image": "https://drive.google.com/file/d/1ELm91zEvx47R6iuCOPyUpx38nKsQQlJs/view",
-      "symbol": "SHY",
-      "description": "A web3 development platform that gets you wings",
-      "attributes": [
+    "symbol": "SHY",
+    "seller_fee_basis_points": 5,
+    "external_url": "https://www.example.com",
+    "attributes": [
+      {
+        "trait_type": "fast",
+        "value": "80"
+      },
+      {
+        "trait_type": "efficient",
+        "value": 100
+      }
+    ],
+    "properties": {
+      "creators": [
         {
-          "trait_type": "fast",
-          "value": "80"
-        },
-        {
-          "trait_type": "efficient",
-          "value": 100
+          "address": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+          "verified": true,
+          "share": 100
         }
       ],
-      "royalty": 5,
-      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
-      "share": 100,
-      "external_url": "https://www.example.com",
       "files": [
         {
-          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
-          "type": "image/png"
-        },
-        {
-          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "uri": "https://drive.google.com/file/d/1ELm91zEvx47R6iuCOPyUpx38nKsQQlJs/view",
           "type": "image/png"
         }
       ]
@@ -178,32 +168,30 @@
     "name": "Kson Funny Meme",
     "image": "https://drive.google.com/file/d/16Di7DBeEVlUhOXIpnvv3QBEIdYwPnn52/view",
     "description": "Level 1 - NFT Collector: Collect 10 NFTs (Any Collection) to join a group chat with the streamer.\nLevel 2 - Collection Explorer: Collect 10 different NFTs within a single collection to join a talk show with the idol.\nLevel 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol.\nLevel 4 - Exclusive Insider: Collect NFTs from 10 different collections to gain exclusive access to backstage content.\nLevel 5 - Ultimate Superfan: Collect NFTs from 20 different collections to receive personalized shoutouts from the idol.",
-    "metaData": {
-      "name": "Kson Barbie",
-      "image": "https://drive.google.com/file/d/16Di7DBeEVlUhOXIpnvv3QBEIdYwPnn52/view",
-      "symbol": "SHY",
-      "description": "A web3 development platform that gets you wings",
-      "attributes": [
+    "symbol": "SHY",
+    "seller_fee_basis_points": 5,
+    "external_url": "https://www.example.com",
+    "attributes": [
+      {
+        "trait_type": "fast",
+        "value": "80"
+      },
+      {
+        "trait_type": "efficient",
+        "value": 100
+      }
+    ],
+    "properties": {
+      "creators": [
         {
-          "trait_type": "fast",
-          "value": "80"
-        },
-        {
-          "trait_type": "efficient",
-          "value": 100
+          "address": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
+          "verified": true,
+          "share": 100
         }
       ],
-      "royalty": 5,
-      "creator": "BvzKvn6nUUAYtKu2pH3h5SbUkUNcRPQawg4bURBiojJx",
-      "share": 100,
-      "external_url": "https://www.example.com",
       "files": [
         {
-          "uri": "https://nftstorage.link/ipfs/bafybeia4ml3aaj3tqln5z6qxqvi2ygfouw4ppt7t3qp3wrsoiccslexomm",
-          "type": "image/png"
-        },
-        {
-          "uri": "https://nftstorage.link/ipfs/bafybeigvojjdy5ofaeu7semfvdjugnbutda37r35xjpsvmm5vzblill6k4",
+          "uri": "https://drive.google.com/file/d/16Di7DBeEVlUhOXIpnvv3QBEIdYwPnn52/view",
           "type": "image/png"
         }
       ]

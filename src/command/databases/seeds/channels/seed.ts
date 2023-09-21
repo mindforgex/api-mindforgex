@@ -94,9 +94,13 @@ export const seedChannel = async () => {
       const nftInfoParams = nftInfoData.map((nft) => ({
         channelId: channel.id,
         name: nft.name,
-        image: nft.image,
+        symbol: nft.symbol,
         description: nft.description,
-        metaData: nft.metaData,
+        seller_fee_basis_points: nft.seller_fee_basis_points,
+        external_url: nft.external_url,
+        image: nft.image,
+        attributes: nft.attributes,
+        properties: nft.properties,
       }));
       const createdNFTInfos = await nftInfoService.createMultiNFTInfos(channel._id, nftInfoParams);
 

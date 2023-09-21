@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-import { INFTInfo, NFTMetaData } from '../interfaces/nft_info.interface';
+import { INFTInfo, NFTProperty } from '../interfaces/nft_info.interface';
 
 @Schema({ timestamps: true })
 export class NFTInfo implements INFTInfo {
@@ -12,13 +12,25 @@ export class NFTInfo implements INFTInfo {
   name: string;
 
   @Prop({ default: '' })
-  image: string;
+  symbol: string;
 
   @Prop({ default: '' })
   description: string;
 
-  @Prop({ type: 'object', ref: 'NFTMetaData' })
-  metaData: NFTMetaData;
+  @Prop({ default: 0 })
+  seller_fee_basis_points: number;
+
+  @Prop({ default: '' })
+  external_url: string;
+
+  @Prop({ default: '' })
+  image: string;
+
+  @Prop({ default: '' })
+  attributes: Array<string>;
+
+  @Prop({ type: 'object', ref: 'NFTProperty' })
+  properties: NFTProperty;
 }
 
 export type NFTInfoDocument = NFTInfo & Document;

@@ -1,26 +1,22 @@
 import { Types } from 'mongoose';
 import { IChannel } from 'src/modules/channels/interfaces/channel.interface';
 
-export interface NFTMetaData {
-  name: string;
-  symbol: string;
-  image: string;
-  description: string;
-  attributes: Array<string>;
-  royalty: number;
-  creator: string;
-  share: number;
-  external_url: string;
-  files: Array<string>;
+export interface NFTProperty {
+  creators: Array<string>,
+  files: Array<string>,
 }
 
 export interface INFTInfo {
   _id?: string;
   channelId?: Types.ObjectId | IChannel;
   name: string;
-  image: string;
+  symbol: string;
   description: string;
-  metaData: NFTMetaData;
+  seller_fee_basis_points: number;
+  external_url: string;
+  image: string;
+  attributes: Array<string>;
+  properties: NFTProperty;
   createdAt?: Date;
   updatedAt?: Date;
 }
