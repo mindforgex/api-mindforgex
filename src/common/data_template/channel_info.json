@@ -1,37 +1,38 @@
 [
   {
-    "name": "Channel1",
-    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
-    "description": "description",
+    "name": "Seki Yuta",
+    "channelName": "stylishnoob4",
+    "avatar": "https://drive.google.com/file/d/1tex96CtjCSE6Vs0JhqGAFQpR0V_3Mt8O/view?usp=drive_link",
+    "description": "Date of birth: May 6, 1990\nHometown: Inazawa City, Aichi Province\nAchievements:\n+ Champion \"JCG Overwatch Master 2016 Summer Finals\"\n+ The captain of the Japanese national team at \"Overwatch World Cup 2016\"",
     "socialLinks": [
       {
-        "url": "url1",
-        "name": "social1-1",
-        "icon": "icon1-1"
+        "url": "https://www.youtube.com/@StylishNoob4",
+        "name": "youtube",
+        "icon": ""
       },
       {
-        "url": "url2",
-        "name": "social1-2",
-        "icon": "icon1-2"
+        "url": "https://www.twitch.tv/stylishnoob4",
+        "name": "twitter",
+        "icon": ""
       },
       {
-        "url": "url3",
-        "name": "social1-3",
-        "icon": "icon1-3"
+        "url": "https://twitter.com/stylishnoob/status/1154341628011614208?lang=ja",
+        "name": "twitter",
+        "icon": ""
       }
     ],
     "country": {
-      "name": "country1",
-      "icon": "icon ct 1"
+      "name": "Japan",
+      "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "founder",
-    "mainGame": "mainGame",
-    "profestionalFeild": "profestionalFeild",
-    "email": "email@relipasoft.com",
-    "age": "20",
-    "twitterUrl": "twitterUrl",
-    "youtubeUrl": "youtubeUrl",
-    "follwerYoutube": 2000,
+    "founder": "21 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Stream all types of game (hyper casual => fps)",
+    "email": "info@relipasoft.com",
+    "dateOfBirth": "May 6, 1990",
+    "twitterUrl": "https://twitter.com/stylishnoob/status/1154341628011614208?lang=ja",
+    "youtubeUrl": "https://www.youtube.com/@StylishNoob4",
+    "follwerYoutube": 678000,
     "follwerTwitter": 3000,
     "post": [
       {
@@ -51,37 +52,39 @@
     ]
   },
   {
-    "name": "Channel2",
-    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "name": "Kazu",
+    "channelName": "Kazu Channel",
+    "avatar": "https://drive.google.com/file/d/1PWQ9PiBMhIuVAyl6qntmiYdHncva2JdQ/view?usp=sharing",
+    "description": "Date of birth: May 30, 1983\nHometown: Ichinomiya City, Aichi Province/residing in Aichi province",
     "socialLinks": [
       {
-        "url": "url1",
-        "name": "social1-1",
-        "icon": "icon1-1"
+        "url": "https://www.youtube.com/channel/UCVPZ_NAEJPQPXXVYIPCHQ",
+        "name": "youtube",
+        "icon": ""
       },
       {
-        "url": "url2",
-        "name": "social1-2",
-        "icon": "icon1-2"
+        "url": "",
+        "name": "twitter",
+        "icon": ""
       },
       {
-        "url": "url3",
-        "name": "social1-3",
-        "icon": "icon1-3"
+        "url": "https://twitter.com/kazuch0924",
+        "name": "twitter",
+        "icon": ""
       }
     ],
     "country": {
-      "name": "country1",
-      "icon": "icon ct 1"
+      "name": "Japan",
+      "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "founder",
-    "mainGame": "mainGame",
-    "profestionalFeild": "profestionalFeild",
-    "email": "email@relipasoft.com",
-    "age": "20",
-    "twitterUrl": "twitterUrl",
-    "youtubeUrl": "youtubeUrl",
-    "follwerYoutube": 2000,
+    "founder": "21 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Review technology products, Life-Style, DIY, ...)",
+    "email": "info@relipasoft.com",
+    "dateOfBirth": "May 30, 1983",
+    "twitterUrl": "https://twitter.com/kazuch0924",
+    "youtubeUrl": "https://www.youtube.com/channel/UCVPZ_NAEJPQPXXVYIPCHQ",
+    "follwerYoutube": 1850000,
     "follwerTwitter": 3000,
     "post": [
       {
@@ -101,37 +104,39 @@
     ]
   },
   {
-    "name": "Channel3",
-    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "name": "Hikakin",
+    "channelName": "HikakinGames",
+    "avatar": "https://drive.google.com/file/d/12plNLJFr4ZRk4jNUXpV5ANrlOpbInmcX/view?usp=sharing",
+    "description": "Date of birth: April 21, 1989\nHometown: Niigata province",
     "socialLinks": [
       {
-        "url": "url1",
-        "name": "social1-1",
-        "icon": "icon1-1"
+        "url": "https://www.youtube.com/channel/UCVPZ_NAEJPQPXXVYIPCHQ",
+        "name": "youtube",
+        "icon": ""
       },
       {
-        "url": "url2",
-        "name": "social1-2",
-        "icon": "icon1-2"
+        "url": "",
+        "name": "twitter",
+        "icon": ""
       },
       {
-        "url": "url3",
-        "name": "social1-3",
-        "icon": "icon1-3"
+        "url": "https://twitter.com/kazuch0924",
+        "name": "twitter",
+        "icon": ""
       }
     ],
     "country": {
-      "name": "country1",
-      "icon": "icon ct 1"
+      "name": "Japan",
+      "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "founder",
-    "mainGame": "mainGame",
-    "profestionalFeild": "profestionalFeild",
-    "email": "email@relipasoft.com",
-    "age": "20",
-    "twitterUrl": "twitterUrl",
-    "youtubeUrl": "youtubeUrl",
-    "follwerYoutube": 2000,
+    "founder": "21 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Stream horror game on PC, Battle Royale game and Nintendo game. In particular, Hikakin is good at playing Minecraft",
+    "email": "info@relipasoft.com",
+    "dateOfBirth": "April 21, 1989",
+    "twitterUrl": "https://twitter.com/hikakin",
+    "youtubeUrl": "https://www.youtube.com/user/hikakingames",
+    "follwerYoutube": 5910000,
     "follwerTwitter": 3000,
     "post": [
       {
@@ -151,37 +156,39 @@
     ]
   },
   {
-    "name": "Channel4",
-    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "name": "kson ONAIR",
+    "channelName": "kson ONAIR",
+    "avatar": "https://drive.google.com/file/d/1kYW5pikktTxiIsKoUTzGksZxzkzhvILw/view?usp=sharing",
+    "description": "Date of birth: June 8\nHometown: USA and Japan\nAchievements:\n+ 100,000 registered people: August 19, 2020\n+ 500,000 registered: June 17, 2021\n+ 1 million registered people: November 10, 2021",
     "socialLinks": [
       {
-        "url": "url1",
-        "name": "social1-1",
-        "icon": "icon1-1"
+        "url": "https://www.youtube.com/@ksononair/videos",
+        "name": "youtube",
+        "icon": ""
       },
       {
-        "url": "url2",
-        "name": "social1-2",
-        "icon": "icon1-2"
+        "url": "https://twitch.tv/ksonsouchou",
+        "name": "twitter",
+        "icon": ""
       },
       {
-        "url": "url3",
-        "name": "social1-3",
-        "icon": "icon1-3"
+        "url": "https://twitter.com/ksononair",
+        "name": "twitter",
+        "icon": ""
       }
     ],
     "country": {
-      "name": "country1",
-      "icon": "icon ct 1"
+      "name": "Japan",
+      "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "founder",
-    "mainGame": "mainGame",
-    "profestionalFeild": "profestionalFeild",
-    "email": "email@relipasoft.com",
-    "age": "20",
-    "twitterUrl": "twitterUrl",
-    "youtubeUrl": "youtubeUrl",
-    "follwerYoutube": 2000,
+    "founder": "21 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Stream game, music, painting",
+    "email": "info@relipasoft.com",
+    "dateOfBirth": "June 8",
+    "twitterUrl": "https://twitter.com/ksononair",
+    "youtubeUrl": "https://www.youtube.com/@ksononair/videos",
+    "follwerYoutube": 1250000,
     "follwerTwitter": 3000,
     "post": [
       {
@@ -201,37 +208,39 @@
     ]
   },
   {
-    "name": "Channel5",
-    "avatar": "https://images.livemint.com/img/2022/12/16/600x338/Avatar_2_1671160328691_1671160364702_1671160364702.jfif",
+    "name": "Roa",
+    "channelName": "Roa Game Channel",
+    "avatar": "https://drive.google.com/file/d/13CEgUOZGXtmMcRlpLYJm3ArY0q-rzCij/view?usp=sharing",
+    "description": "Date of birth: June 4, 1996\nHometown: Japan",
     "socialLinks": [
       {
-        "url": "url1",
-        "name": "social1-1",
-        "icon": "icon1-1"
+        "url": "https://www.youtube.com/c/namayara/featured",
+        "name": "youtube",
+        "icon": ""
       },
       {
-        "url": "url2",
-        "name": "social1-2",
-        "icon": "icon1-2"
+        "url": "",
+        "name": "twitter",
+        "icon": ""
       },
       {
-        "url": "url3",
-        "name": "social1-3",
-        "icon": "icon1-3"
+        "url": "https://twitter.com/co1971385",
+        "name": "twitter",
+        "icon": ""
       }
     ],
     "country": {
-      "name": "country1",
-      "icon": "icon ct 1"
+      "name": "Japan",
+      "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "founder",
-    "mainGame": "mainGame",
-    "profestionalFeild": "profestionalFeild",
-    "email": "email@relipasoft.com",
-    "age": "20",
-    "twitterUrl": "twitterUrl",
-    "youtubeUrl": "youtubeUrl",
-    "follwerYoutube": 2000,
+    "founder": "21 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Stream game Minecraft, PUBG, ...\nStream playing piano",
+    "email": "info@relipasoft.com",
+    "dateOfBirth": "June 4, 1996",
+    "twitterUrl": "https://twitter.com/co1971385",
+    "youtubeUrl": "https://www.youtube.com/c/namayara/featured",
+    "follwerYoutube": 380000,
     "follwerTwitter": 3000,
     "post": [
       {
@@ -251,36 +260,39 @@
     ]
   },
   {
-    "name": "Channel6",
+    "name": "Takuchi",
+    "channelName": "Takuchi",
+    "avatar": "https://drive.google.com/file/d/19JPzkt2Oz43kXURaA1HvG6TPSn0pV7hj/view?usp=sharing",
+    "description": "Date of birth: June 16, 1997\nHometown: Tokyo",
     "socialLinks": [
       {
-        "url": "url1",
-        "name": "social1-1",
-        "icon": "icon1-1"
+        "url": "https://www.youtube.com/channel/UCP1PN9Um8z8Li-20Yauqa6A",
+        "name": "youtube",
+        "icon": ""
       },
       {
-        "url": "url2",
-        "name": "social1-2",
-        "icon": "icon1-2"
+        "url": "",
+        "name": "twitter",
+        "icon": ""
       },
       {
-        "url": "url3",
-        "name": "social1-3",
-        "icon": "icon1-3"
+        "url": "https://twitter.com/takutti0214",
+        "name": "twitter",
+        "icon": ""
       }
     ],
     "country": {
-      "name": "country1",
-      "icon": "icon ct 1"
+      "name": "Japan",
+      "icon": "https://www.google.com/search?sca_esv=567123728&sxsrf=AM9HkKkon94irc4kM7wH6jfUZBAbgAGugw:1695262488706&q=icon+japan&tbm=isch&source=lnms&sa=X&sqi=2&ved=2ahUKEwiHy8Lz0LqBAxWFQ94KHa1-BfsQ0pQJegQIDBAB&biw=1920&bih=944&dpr=1#imgrc=sGOqgd6CCLfN1M"
     },
-    "founder": "founder",
-    "mainGame": "mainGame",
-    "profestionalFeild": "profestionalFeild",
-    "email": "email@relipasoft.com",
-    "age": "20",
-    "twitterUrl": "twitterUrl",
-    "youtubeUrl": "youtubeUrl",
-    "follwerYoutube": 2000,
+    "founder": "21 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Stream Hyper Casual Game, Mario Maker, Minecraft, ...",
+    "email": "info@relipasoft.com",
+    "dateOfBirth": "June 16, 1997",
+    "twitterUrl": "https://twitter.com/takutti0214",
+    "youtubeUrl": "https://www.youtube.com/channel/UCP1PN9Um8z8Li-20Yauqa6A",
+    "follwerYoutube": 1220000,
     "follwerTwitter": 3000,
     "post": [
       {

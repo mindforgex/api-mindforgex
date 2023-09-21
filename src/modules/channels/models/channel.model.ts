@@ -7,6 +7,9 @@ import { NFTInfo } from '../../nft_infos/models/nft_info.model';
 @Schema({ timestamps: true })
 export class Channel implements IChannel {
   @Prop({ default: '' })
+  name?: string;
+
+  @Prop({ default: '' })
   channelName?: string;
 
   @Prop({ default: '' })
@@ -34,7 +37,7 @@ export class Channel implements IChannel {
   email: string;
 
   @Prop({ default: '' })
-  age: string;
+  dateOfBirth: string;
 
   @Prop({ default: '' })
   twitterUrl: string;

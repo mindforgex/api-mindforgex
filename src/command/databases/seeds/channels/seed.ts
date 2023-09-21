@@ -36,7 +36,8 @@ export const seedChannel = async () => {
   let params = [];
   for (let i = 0; i < channelData.length; i++) {
     params.push({
-      "channelName": channelData[i].name,
+      "name": channelData[i].name,
+      "channelName": channelData[i].channelName,
       "avatarUrl": channelData[i].avatar,
       "socialLinks": channelData[i].socialLinks,
       "country": channelData[i].country,
@@ -44,7 +45,7 @@ export const seedChannel = async () => {
       "mainGame": channelData[i].mainGame,
       "profestionalFeild": channelData[i].profestionalFeild,
       "email": channelData[i].email,
-      "age": channelData[i].age,
+      "dateOfBirth": channelData[i].dateOfBirth,
       "twitterUrl": channelData[i].twitterUrl,
       "youtubeUrl": channelData[i].youtubeUrl,
       "follwerYoutube": channelData[i].follwerYoutube,
@@ -68,11 +69,11 @@ export const seedChannel = async () => {
       }));
       const createdPosts = await postService.createMultiPosts(channel._id, postParams);
 
-      const nftData = nftInfoData.sort(() => Math.random() - 0.5).slice(0, 2);
-      const nftInfoParams = nftData.map((nft) => ({
+      const nftInfoParams = nftInfoData.map((nft) => ({
         channelId: channel.id,
         name: nft.name,
         image: nft.image,
+        description: nft.description,
         metaData: nft.metaData,
       }));
       const createdNFTInfos = await nftInfoService.createMultiNFTInfos(channel._id, nftInfoParams);

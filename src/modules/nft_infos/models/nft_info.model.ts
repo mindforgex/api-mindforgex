@@ -14,6 +14,9 @@ export class NFTInfo implements INFTInfo {
   @Prop({ default: '' })
   image: string;
 
+  @Prop({ default: '' })
+  description: string;
+
   @Prop({ type: 'object', ref: 'NFTMetaData' })
   metaData: NFTMetaData;
 }
