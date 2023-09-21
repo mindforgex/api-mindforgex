@@ -17,7 +17,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.getHttpAdapter().getInstance().disable('x-powered-by');
-  app.enableCors({ origin: true });
+  // app.enableCors({ origin: true });
   app.use(helmet({}));
 
   app.useGlobalPipes(
