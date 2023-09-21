@@ -25,7 +25,7 @@ export class Channel implements IChannel {
   country: Country;
 
   @Prop({ default: '' })
-  founder: string;
+  founded: string;
 
   @Prop({ default: '' })
   mainGame: string;
@@ -49,16 +49,22 @@ export class Channel implements IChannel {
   youtubeUrl: string;
 
   @Prop({ default: '' })
-  follwerYoutube: number;
+  follower: number;
 
   @Prop({ default: '' })
-  follwerTwitter: number;
+  followerYoutube: number;
+
+  @Prop({ default: '' })
+  followerTwitter: number;
 
   @Prop({ type: [{ type: Types.ObjectId, ref: Post.name }] })
   posts: Post[];
 
   @Prop({ type: [{ type: Types.ObjectId, ref: NFTInfo.name }] })
   nftInfos: NFTInfo[];
+
+  @Prop({ default: [] })
+  userSubcribe: Array<string>;
 }
 
 export type ChannelDocument = Channel & Document;

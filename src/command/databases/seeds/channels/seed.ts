@@ -47,7 +47,7 @@ export const seedChannel = async () => {
       "description": channelData[i].description,
       "socialLinks": channelData[i].socialLinks,
       "country": channelData[i].country,
-      "founder": channelData[i].founder,
+      "founded": channelData[i].founded,
       "mainGame": channelData[i].mainGame,
       "profestionalFeild": channelData[i].profestionalFeild,
       "email": channelData[i].email,
@@ -55,15 +55,17 @@ export const seedChannel = async () => {
       "dateOfBirth": channelData[i].dateOfBirth,
       "twitterUrl": channelData[i].twitterUrl,
       "youtubeUrl": channelData[i].youtubeUrl,
-      "follwerYoutube": channelData[i].follwerYoutube,
-      "follwerTwitter": channelData[i].follwerTwitter,
+      "follower": channelData[i].follower,
+      "followerYoutube": channelData[i].followerYoutube,
+      "followerTwitter": channelData[i].followerTwitter,
+      "userSubcribe": [],
     });
   }
 
   try {
     await service.clearChannels();
     await postService.clearPosts();
-    await nftInfoService.clearNFTInfos();
+    // await nftInfoService.clearNFTInfos();
     await taskService.clearTasks();
 
     const channels = await service.createMultiChannel(params);
@@ -85,6 +87,7 @@ export const seedChannel = async () => {
           postId: post._id,
           name: task.name,
           description: task.description,
+          userAddress: []
         }));
         const createdTasks = await taskService.createMultiTasks(post._id, taskParams);
 
@@ -92,22 +95,22 @@ export const seedChannel = async () => {
         await post.save();
       }
 
-      const nftInfoParams = nftInfoData.map((nft) => ({
-        channelId: channel.id,
-        name: nft.name,
-        symbol: nft.symbol,
-        description: nft.description,
-        seller_fee_basis_points: nft.seller_fee_basis_points,
-        external_url: nft.external_url,
-        image: nft.image,
-        attributes: nft.attributes,
-        properties: nft.properties,
-      }));
-      const createdNFTInfos = await nftInfoService.createMultiNFTInfos(channel._id, nftInfoParams);
+      // const nftInfoParams = nftInfoData.map((nft) => ({
+      //   channelId: channel.id,
+      //   name: nft.name,
+      //   symbol: nft.symbol,
+      //   description: nft.description,
+      //   seller_fee_basis_points: nft.seller_fee_basis_points,
+      //   external_url: nft.external_url,
+      //   image: nft.image,
+      //   attributes: nft.attributes,
+      //   properties: nft.properties,
+      // }));
+      // const createdNFTInfos = await nftInfoService.createMultiNFTInfos(channel._id, nftInfoParams);
 
       // update post to chanels
       channel.posts = createdPosts;
-      channel.nftInfos = createdNFTInfos;
+      // channel.nftInfos = createdNFTInfos;
       await channel.save();
     }
 

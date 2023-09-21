@@ -13,6 +13,9 @@ export class Task implements ITask {
 
   @Prop({ default: '' })
   description?: string;
+
+  @Prop({ default: [] })
+  userAddress: Array<string>;
 }
 
 export type TaskDocument = Task & Document;

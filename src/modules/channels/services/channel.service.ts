@@ -6,9 +6,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { ClientSession, Model } from 'mongoose';
 
-import {
-  SORT_CONDITION,
-} from '../constants/channel.constant';
+import { SORT_CONDITION } from '../constants/channel.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 import { PostService } from 'src/modules/posts/services/post.service';
@@ -26,16 +24,19 @@ export class ChannelService extends BaseService<ChannelDocument> {
     super(channelModel);
   }
 
-  private readonly defaultSelectFields: string = '-posts, -nftInfos';
+  private readonly defaultSelectFields: string = '-posBadRequestExceptionts, -nftInfos';
 
   public findOneById = (channelId: string, selectFields?: string) =>
-  this.channelModel
-    .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields)
-    .populate(['nftInfos', { path: 'posts', populate: { path: 'tasks', model: 'Task'} }])
-    .lean();
+    this.channelModel
+      .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields)
+      .populate([
+        'nftInfos',
+        { path: 'posts', populate: { path: 'tasks', model: 'Task' } },
+      ])
+      .lean();
 
   public async getListChannel(queryParams: any) {
-    const conditions = { ...queryParams};
+    const conditions = { ...queryParams };
 
     const [{ pageIndex, pageSize, items }, totalItems] = await Promise.all([
       this.getAllWithPagination(conditions),
@@ -106,6 +107,36 @@ export class ChannelService extends BaseService<ChannelDocument> {
       await this.channelModel.deleteMany({});
     } catch (error) {
       throw new Error(`Error clearing channels: ${error.message}`);
+    }
+  }
+
+  async subscribe(channelId: string, requestData: any): Promise<any> {
+    const userAddress = requestData.walletAddress;
+
+    console.log('requestData', requestData);
+    console.log('userAddress', userAddress);
+
+    try {
+      const updatedChannel = await this.channelModel.findOneAndUpdate(
+        { _id: channelId, userSubcribe: { $nin: [userAddress] } },
+        {
+          $inc: { follower: 1 },
+          $push: { userSubcribe: userAddress },
+        },
+        { new: true },
+      );
+
+      if (!updatedChannel)
+      throw new BadRequestException('already subscribed')
+
+      console.log('updatedChannel', updatedChannel);
+
+
+      return updatedChannel;
+    } catch (error) {
+      throw new Error(
+        `Error adding user to subscription list: ${error.message}`,
+      );
     }
   }
 }
