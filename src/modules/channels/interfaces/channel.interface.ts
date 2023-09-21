@@ -12,6 +12,7 @@ export interface Country {
 }
 export interface IChannel {
   _id?: string;
+  name?: string;
   channelName?: string;
   avatarUrl: string;
   description: string;
@@ -21,7 +22,7 @@ export interface IChannel {
   mainGame: string;
   profestionalFeild: string;
   email: string;
-  age: string;
+  dateOfBirth: string;
   twitterUrl: string;
   youtubeUrl: string;
   follwerYoutube: number;
