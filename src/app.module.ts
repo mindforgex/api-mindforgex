@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { ChannelModule } from 'src/modules/channels/channel.module';
@@ -28,9 +30,18 @@ const modules = [
         return connection;
       },
     }),
+    CacheModule.register({
+      ttl: 1 * 1000,
+      isGlobal: true,
+    }),
     ...modules,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+  ],
 })
 export class AppModule {}

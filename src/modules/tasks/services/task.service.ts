@@ -1,14 +1,10 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ClientSession, Model } from 'mongoose';
-import { SORT_CONDITION } from '../constants/task.constant';
+import { Model, Types } from 'mongoose';
+
 import { BaseService } from 'src/modules/base/services/base.service';
-import { Task, TaskDocument } from '../models/task.model';
 import { ChannelService } from 'src/modules/channels/services/channel.service';
+import { Task, TaskDocument } from '../models/task.model';
 @Injectable()
 export class TaskService extends BaseService<TaskDocument> {
   constructor(
@@ -33,21 +29,11 @@ export class TaskService extends BaseService<TaskDocument> {
   }
 
   public async clearTasks() {
-    try {
-      // Delete all channels info
-      await this.taskModel.deleteMany({});
-    } catch (error) {
-      throw new Error(`Error clearing channels: ${error.message}`);
-    }
+    return this.taskModel.deleteMany({});
   }
 
-  public async getListTaskByPostId(postId: string) {
-    try {
-      const tasks = await this.taskModel.find({ post: postId }).exec();
-      return tasks;
-    } catch (error) {
-      throw new Error(`Error fetching posts: ${error.message}`);
-    }
+  public async getTasksByPostId(postId: string) {
+    return this.taskModel.find({ postId: new Types.ObjectId(postId) });
   }
 
   public findOneById = (taskId: string, selectFields?: string) =>
@@ -61,7 +47,10 @@ export class TaskService extends BaseService<TaskDocument> {
 
     try {
       // check user subscribed.
-      const channel = await this.channelService.getChannelByUserSubcribe(channelId, userVerify);
+      const channel = await this.channelService.getChannelByUserSubscribe(
+        channelId,
+        userVerify,
+      );
 
       if (!channel) {
         throw new BadRequestException('not subscribed yet');

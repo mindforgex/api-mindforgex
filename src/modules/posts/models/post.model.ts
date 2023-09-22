@@ -3,6 +3,7 @@ import { Document, Types } from 'mongoose';
 
 import { IPost } from '../interfaces/post.interface';
 import { Task } from 'src/modules/tasks/models/task.model';
+import { NFTInfo } from 'src/modules/nfts/models/nft-info.model';
 
 @Schema({ timestamps: true })
 export class Post implements IPost {
@@ -26,6 +27,9 @@ export class Post implements IPost {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: Task.name }] })
   tasks: Task[];
+
+  @Prop({ required: true, types: Types.ObjectId, ref: NFTInfo.name })
+  nftId: Types.ObjectId;
 }
 
 export type PostDocument = Post & Document;

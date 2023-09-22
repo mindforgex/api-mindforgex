@@ -1,7 +1,24 @@
-import { Controller, Post, Get, Query, Res, UseGuards, Param, Body } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse, ApiTags, ApiBadRequestResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Post,
+  Get,
+  Query,
+  Res,
+  UseGuards,
+  Param,
+  Body,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiTags,
+  ApiBadRequestResponse,
+} from '@nestjs/swagger';
 import { GetListChannelDto } from './dtos/request.dto';
-import { GetListChannelResponseDto, ChannelDetaitResponseDto } from './dtos/response.dto';
+import {
+  GetListChannelResponseDto,
+  ChannelDetaitResponseDto,
+} from './dtos/response.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { ChannelService } from './services/channel.service';
@@ -19,9 +36,7 @@ export class ChannelController {
   @ApiBearerAuth('jwt')
   @ApiOkResponse({ type: GetListChannelResponseDto })
   // @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
-  async getListChannel(
-    @Query() query: GetListChannelDto,
-  ): Promise<any> {
+  async getListChannel(@Query() query: GetListChannelDto): Promise<any> {
     const result = await this.channelService.getListChannel(query);
 
     return result;
@@ -31,10 +46,8 @@ export class ChannelController {
   @ApiOkResponse({ type: ChannelDetaitResponseDto })
   @ApiBadRequestResponse({ description: 'Channel not found' })
   // @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
-  async getChannelById(
-    @Param() params: MongoIdDto,
-  ): Promise<any> {
-    const channelId = params.id
+  async getChannelById(@Param() params: MongoIdDto): Promise<any> {
+    const channelId = params.id;
 
     return await this.channelService.findOneById(channelId);
   }
@@ -45,7 +58,6 @@ export class ChannelController {
     @Param('id') channelId: string,
     @UserParams() requestData,
   ): Promise<any> {
-
     const result = await this.channelService.subscribe(channelId, requestData);
 
     return { message: 'Subscribed successfully' };
