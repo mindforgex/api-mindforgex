@@ -40,7 +40,7 @@ export const updateChannel = async () => {
 
   try {
     const params = {
-        aboutMe: "https://www.youtube.com/watch?v=UmzlreolyvY"
+        aboutMe: `<iframe width="1280" height="720" src="https://www.youtube.com/embed/UmzlreolyvY" title="釣り堀り🐟女子4人ガチ釣り対決！！【Karen(Demondice)/ Giri/ Projekt Melody/ kson】" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
     }
     const updateChannels = await service.updateMultiChannel(params);
 
