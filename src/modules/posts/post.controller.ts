@@ -76,11 +76,20 @@ export class PostController {
     if (!isUserCompletedAllTasks)
       throw new BadRequestException('User has not completed all tasks');
 
-    const { nftId: nftMetadata } = await this.postService.getPostById(postId);
+    const post = await this.postService.getPostById(postId);
 
-    return this.shyftWeb3Service.mintCNFTToWalletAddress({
+    const { nftId: nftMetadata, userAddress } = post;
+
+    if (userAddress.includes(walletAddress))
+      throw new BadRequestException('User has claimed this post');
+
+    const txnSignature = this.shyftWeb3Service.mintCNFTToWalletAddress({
       receiverAddress: walletAddress,
       metadataUri: `${process.env.BACKEND_BASE_URL}/v1/nfts/metadata/${nftMetadata._id}`,
     });
+
+    await this.postService.updateUserClaimed(post._id, walletAddress);
+
+    return { txnSignature };
   }
 }

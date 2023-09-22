@@ -88,7 +88,7 @@ export class ShyftWeb3Service {
           this.creatorPrivateKey,
         );
 
-        return { txnSignature };
+        return txnSignature;
       }
     } catch (error) {
       console.log(error);

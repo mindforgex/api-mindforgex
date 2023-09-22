@@ -70,4 +70,14 @@ export class PostService extends BaseService<PostDocument> {
 
     return post;
   }
+
+  public async updateUserClaimed(postId: string, walletAddress: string) {
+    const post = await this.postModel.findByIdAndUpdate(
+      postId,
+      { $push: { userAddress: walletAddress } },
+      { new: true },
+    );
+
+    return post;
+  }
 }

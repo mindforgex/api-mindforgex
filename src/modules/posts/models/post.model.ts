@@ -30,6 +30,9 @@ export class Post implements IPost {
 
   @Prop({ required: true, types: Types.ObjectId, ref: NFTInfo.name })
   nftId: Types.ObjectId;
+
+  @Prop({ default: [] })
+  userAddress: Array<string>;
 }
 
 export type PostDocument = Post & Document;
