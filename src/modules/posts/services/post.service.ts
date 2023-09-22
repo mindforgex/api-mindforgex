@@ -18,11 +18,13 @@ export class PostService extends BaseService<PostDocument> {
 
   private readonly defaultSelectFields: string = '';
 
-  public async getListPost(queryParams: any) {
-    const conditions = { ...queryParams };
+  private makeFilterCondition = ({}) => ({});
 
+  public async getListPost(queryParams: any) {
     // const [{ pageIndex, pageSize, items }, totalItems] = await Promise.all();
-    const posts = await this.postModel.find(conditions);
+    const posts = await this.postModel.find(
+      this.makeFilterCondition(queryParams),
+    );
 
     return posts;
   }
