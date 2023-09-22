@@ -1,14 +1,6 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ClientSession, Model } from 'mongoose';
-
-import {
-  SORT_CONDITION,
-} from '../constants/nft.constant';
+import { Model } from 'mongoose';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 
@@ -25,13 +17,15 @@ export class NFTInfoService extends BaseService<NFTInfoDocument> {
   private readonly defaultSelectFields: string = '-_id -channelId';
 
   public findOneById = (nftInfoId: string, selectFields?: string) =>
-  this.nftInfoModel
-    .findOne({ _id: nftInfoId }, selectFields ?? this.defaultSelectFields)
-    .lean();
+    this.nftInfoModel
+      .findOne({ _id: nftInfoId }, selectFields ?? this.defaultSelectFields)
+      .lean();
 
   public async createMultiNFTInfos(channelId: string, dataArray: any[]) {
     try {
-      return await this.nftInfoModel.create(dataArray.map((data) => ({ ...data, channel: channelId })));
+      return await this.nftInfoModel.create(
+        dataArray.map((data) => ({ ...data, channel: channelId })),
+      );
     } catch (error) {
       throw new Error(`Error creating posts: ${error.message}`);
     }
@@ -45,4 +39,7 @@ export class NFTInfoService extends BaseService<NFTInfoDocument> {
       throw new Error(`Error clearing channels: ${error.message}`);
     }
   }
+
+  public findByChannelId = (channelId) =>
+    this.nftInfoModel.findOne({ channelId }).lean();
 }

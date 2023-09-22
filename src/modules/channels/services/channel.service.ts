@@ -24,7 +24,8 @@ export class ChannelService extends BaseService<ChannelDocument> {
     super(channelModel);
   }
 
-  private readonly defaultSelectFields: string = '-posBadRequestExceptionts, -nftInfos';
+  private readonly defaultSelectFields: string =
+    '-posBadRequestExceptionts, -nftInfos';
 
   public findOneById = (channelId: string, selectFields?: string) =>
     this.channelModel
@@ -112,9 +113,12 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
   public async updateMultiChannel(dataArray: any) {
     try {
-      const channelUpdateds = await this.channelModel.updateMany({}, { $set: dataArray });
+      const channelsUpdated = await this.channelModel.updateMany(
+        {},
+        { $set: dataArray },
+      );
 
-      return channelUpdateds;
+      return channelsUpdated;
     } catch (error) {
       throw new Error(`Error update channels: ${error.message}`);
     }
@@ -145,7 +149,9 @@ export class ChannelService extends BaseService<ChannelDocument> {
     }
   }
 
-  public async getChannelByUserSubcribe(channelId: string, userAddr: string) {
-    return await this.channelModel.findOne({_id: channelId, userSubcribe: { $in: [userAddr] }}).lean();
+  public async getChannelByUserSubscribe(channelId: string, userAddr: string) {
+    return await this.channelModel
+      .findOne({ _id: channelId, userSubcribe: { $in: [userAddr] } })
+      .lean();
   }
 }
