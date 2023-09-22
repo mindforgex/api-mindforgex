@@ -110,6 +110,16 @@ export class ChannelService extends BaseService<ChannelDocument> {
     }
   }
 
+  public async updateMultiChannel(dataArray: any) {
+    try {
+      const channelUpdateds = await this.channelModel.updateMany({}, { $set: dataArray });
+
+      return channelUpdateds;
+    } catch (error) {
+      throw new Error(`Error update channels: ${error.message}`);
+    }
+  }
+
   async subscribe(channelId: string, requestData: any): Promise<any> {
     const userAddress = requestData.walletAddress;
 

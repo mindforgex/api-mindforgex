@@ -23,7 +23,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config test/jest-e2e.json",
     "seed-counters": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/counters/seed.ts",
-    "seed-channels": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/channels/seed.ts"
+    "seed-channels": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/channels/seed.ts",
+    "update-channels": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/channels/update.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.360.0",

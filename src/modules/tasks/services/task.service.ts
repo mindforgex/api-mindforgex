@@ -55,9 +55,9 @@ export class TaskService extends BaseService<TaskDocument> {
       .findOne({ _id: taskId }, selectFields ?? this.defaultSelectFields)
       .lean();
 
-  async verify(taskId: string, requestData: any): Promise<any> {
+  async verify(taskId: string, requestData: any, body: any): Promise<any> {
     const userVerify = requestData.walletAddress;
-    const channelId = requestData.channelId;
+    const channelId = body.channelId;
 
     try {
       // check user subscribed.
