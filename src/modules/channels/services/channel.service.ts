@@ -113,9 +113,6 @@ export class ChannelService extends BaseService<ChannelDocument> {
   async subscribe(channelId: string, requestData: any): Promise<any> {
     const userAddress = requestData.walletAddress;
 
-    console.log('requestData', requestData);
-    console.log('userAddress', userAddress);
-
     try {
       const updatedChannel = await this.channelModel.findOneAndUpdate(
         { _id: channelId, userSubcribe: { $nin: [userAddress] } },
@@ -126,11 +123,9 @@ export class ChannelService extends BaseService<ChannelDocument> {
         { new: true },
       );
 
-      if (!updatedChannel)
-      throw new BadRequestException('already subscribed')
-
-      console.log('updatedChannel', updatedChannel);
-
+      if (!updatedChannel) {
+        throw new BadRequestException('already subscribed');
+      }
 
       return updatedChannel;
     } catch (error) {
@@ -138,5 +133,9 @@ export class ChannelService extends BaseService<ChannelDocument> {
         `Error adding user to subscription list: ${error.message}`,
       );
     }
+  }
+
+  public async getChannelByUserSubcribe(channelId: string, userAddr: string) {
+    return await this.channelModel.findOne({_id: channelId, userSubcribe: { $in: [userAddr] }}).lean();
   }
 }
