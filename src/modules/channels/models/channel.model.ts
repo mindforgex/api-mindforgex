@@ -65,6 +65,9 @@ export class Channel implements IChannel {
 
   @Prop({ default: [] })
   userSubcribe: Array<string>;
+
+  @Prop({ default: '' })
+  aboutMe: string;
 }
 
 export type ChannelDocument = Channel & Document;

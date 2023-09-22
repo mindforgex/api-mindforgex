@@ -37,8 +37,9 @@ export class TaskController {
   async verifyTask(
     @Param('id') taskId: string,
     @UserParams() requestData,
+    @Body() body,
   ): Promise<any> {
-    const result = await this.taskService.verify(taskId, requestData);
+    const result = await this.taskService.verify(taskId, requestData, body);
 
     return { message: 'Verify successfully' };
   }

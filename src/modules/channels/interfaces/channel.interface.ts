@@ -32,6 +32,7 @@ export interface IChannel {
   posts?: Post[];
   nftInfos?: NFTInfo[];
   userSubcribe: Array<string>;
+  aboutMe: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
