@@ -1,19 +1,11 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ClientSession, Model } from 'mongoose';
+import { Model } from 'mongoose';
 
 import { SORT_CONDITION } from '../constants/channel.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
-import { PostService } from 'src/modules/posts/services/post.service';
-import { Types } from 'mongoose';
 import { Channel, ChannelDocument } from '../models/channel.model';
-import { IChannel } from 'src/modules/channels/interfaces/channel.interface';
-import { Post } from 'src/modules/posts/models/post.model';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
@@ -33,6 +25,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
       .populate([
         'nftInfos',
         { path: 'posts', populate: { path: 'tasks', model: 'Task' } },
+        { path: 'posts', populate: { path: 'nftId', model: 'NFTInfo' } },
       ])
       .lean();
 
