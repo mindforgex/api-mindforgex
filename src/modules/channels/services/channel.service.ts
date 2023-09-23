@@ -25,7 +25,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
       .populate([
         'nftInfos',
         { path: 'posts', populate: { path: 'tasks', model: 'Task' } },
-        { path: 'posts', populate: { path: 'nftId', model: 'NFTInfo' } },
+        { path: 'posts', populate: { path: 'nftId' } },
       ])
       .lean();
 

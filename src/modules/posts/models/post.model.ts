@@ -29,7 +29,7 @@ export class Post implements IPost {
   tasks: Task[];
 
   @Prop({ required: true, types: Types.ObjectId, ref: NFTInfo.name })
-  nftId: NFTInfo;
+  nftId: Types.ObjectId;
 
   @Prop({ default: [] })
   userAddress: Array<string>;
