@@ -32,11 +32,10 @@ class CommandModule {}
 export const seedChannel = async () => {
   const app: INestApplicationContext =
     await NestFactory.createApplicationContext(CommandModule);
-  const nftCollectionService = app.get(NFTCollectionService);
+  // const nftCollectionService = app.get(NFTCollectionService);
 
-  const nftCollection = await nftCollectionService.createMany([{}], '123');
-  console.log(nftCollection);
-
+  // const nftCollection = await nftCollectionService.createMany([{}], '123');
+  // console.log(nftCollection);
   await app.close();
   process.exit(0);
 };

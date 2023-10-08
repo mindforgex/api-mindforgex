@@ -58,10 +58,7 @@ export class NftController {
   async getNFTInfoById(@Param() params: MongoIdDto): Promise<JsonMetadata> {
     const nftInfoId = params.id;
     const nftInfoData = await this.nftInfoService.findOneById(nftInfoId);
-    return {
-      ...nftInfoData,
-      nft_collection_id: undefined,
-    };
+    return nftInfoData;
   }
 
   @Get('users/:walletAddress')

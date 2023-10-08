@@ -14,27 +14,21 @@ export type JsonMetadata<Uri = string> = {
   attributes?: Array<{
     trait_type?: string;
     value?: string;
-    [key: string]: unknown;
   }>;
   properties?: {
     creators?: Array<{
       address?: string;
       share?: number;
-      [key: string]: unknown;
     }>;
     files?: Array<{
       type?: string;
       uri?: Uri;
-      [key: string]: unknown;
     }>;
-    [key: string]: unknown;
   };
   collection?: {
     name?: string;
     family?: string;
-    [key: string]: unknown;
   };
-  [key: string]: unknown;
 };
 
 export type Creator = {
