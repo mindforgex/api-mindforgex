@@ -12,6 +12,7 @@ import { NFTInfoModule } from 'src/modules/nfts/nft.module';
 import { TaskModule } from 'src/modules/tasks/task.module';
 import { UserModule } from 'src/modules/users/user.module';
 import { RewardModule } from './modules/reward/reward.module';
+import { DonateModule } from 'src/modules/donates/donate.module';
 import { AppController } from './app.controller';
 
 const modules = [
@@ -22,6 +23,7 @@ const modules = [
   NFTInfoModule,
   TaskModule,
   RewardModule,
+  DonateModule,
 ];
 
 @Module({

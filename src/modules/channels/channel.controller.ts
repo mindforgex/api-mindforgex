@@ -22,7 +22,6 @@ import {
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { ChannelService } from './services/channel.service';
-import { IChannel } from './interfaces/channel.interface';
 import { MongoIdDto } from 'src/common/classes';
 import { Role } from 'src/modules/channels/constants/channel.constant';
 import { UserParams } from 'src/decorators/user-params.decorator';
@@ -61,5 +60,21 @@ export class ChannelController {
     const result = await this.channelService.subscribe(channelId, requestData);
 
     return { message: 'Subscribed successfully' };
+  }
+
+  @Post(':id/donate')
+  // @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async donateToChannel(
+    @Param('id') channelId: string,
+    @UserParams() requestData,
+    @Body() body,
+  ): Promise<any> {
+    // body = {
+    //   sender: '6hMrSrbGueb2F6mTVvuR4PhgG97Haq2VEbfsyrgACfFS',
+    //   amount: 0.002
+    // }
+    const result = await this.channelService.donateToChannel(channelId, requestData, body);
+
+    return { message: 'Donate To Channel Successfully' };
   }
 }

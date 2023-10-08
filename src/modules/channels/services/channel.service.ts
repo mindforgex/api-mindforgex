@@ -6,12 +6,15 @@ import { SORT_CONDITION } from '../constants/channel.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 import { Channel, ChannelDocument } from '../models/channel.model';
+import { DonateService } from 'src/modules/donates/services/donate.service';
+import { Connection, Keypair, PublicKey, Transaction, TransactionInstruction, SystemProgram } from '@solana/web3.js';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
   constructor(
     @InjectModel(Channel.name)
     private readonly channelModel: Model<ChannelDocument>,
+    private readonly donateService: DonateService,
   ) {
     super(channelModel);
   }
@@ -146,5 +149,46 @@ export class ChannelService extends BaseService<ChannelDocument> {
     return await this.channelModel
       .findOne({ _id: channelId, userSubcribe: { $in: [userAddr] } })
       .lean();
+  }
+
+  public async donateToChannel(channelId: string, requestData: any, body: any) {
+    const selectFields = "_id, donateReceiver";
+    const channel =  this.channelModel
+    .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields);
+
+    const lamports = parseInt(process.env.LAMPORTS);
+    const senderAddress = body.sender;
+    const receiverAddress = (await channel).donateReceiver;
+    try {
+      const publicKeySender = new PublicKey(senderAddress);
+      const publicKeyReciever = new PublicKey(receiverAddress);
+      const amountLamports = body.amount * lamports; // 1 SOL = 1,000,000,000 lamports
+
+      const transaction = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: publicKeySender,
+          toPubkey: publicKeyReciever,
+          lamports: amountLamports,
+        })
+      );
+
+      // store data donate
+      const data = {
+        'channelId': channelId,
+        'userWallet': senderAddress,
+        'channelWallet': receiverAddress,
+        'amount':  body.amount,
+        'dateTimeDonate': new Date()
+      };
+      const donateItem = await this.donateService.storeDonate(data);
+
+      return {
+        'transaction': transaction
+      };
+    } catch (error) {
+      console.error(error);
+      throw new Error('Transfer failed');
+    }
+    return true;
   }
 }
