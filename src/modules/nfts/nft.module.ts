@@ -8,6 +8,7 @@ import { NFTInfoService } from './services/nft-info.service';
 import { NFTReceiveService } from './services/nft-receive.service';
 import { ChannelService } from '../channels/services/channel.service';
 import { RewardHistoryService } from '../reward/services/reward-history.service';
+import { NFTCollectionService } from './services/nft-collection.service';
 
 import {
   NFTCollection,
@@ -49,13 +50,13 @@ import {
   ],
   controllers: [NftController],
   providers: [
-    NFTCollection,
+    NFTCollectionService,
     NFTInfoService,
     NFTReceiveService,
     ShyftWeb3Service,
     ChannelService,
     RewardHistoryService,
   ],
-  exports: [NFTCollection, NFTInfoService, NFTReceiveService],
+  exports: [NFTCollectionService, NFTInfoService, NFTReceiveService],
 })
 export class NFTInfoModule {}

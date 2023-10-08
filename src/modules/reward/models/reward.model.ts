@@ -2,27 +2,25 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { IReward } from '../interfaces/reward.interface';
-import { Channel } from 'src/modules/channels/models/channel.model';
-import { NFTCollection } from 'src/modules/nfts/models/nft-collection.model';
 
 @Schema({ timestamps: true })
 export class Reward implements IReward {
-  @Prop({ required: true, type: Types.ObjectId, ref: Channel.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'Channel' })
   channel_id: IReward['channel_id'];
 
-  @Prop({ default: '', type: 'string' })
+  @Prop({ default: '', type: String })
   name: IReward['name'];
 
-  @Prop({ default: '', type: 'string' })
+  @Prop({ default: '', type: String })
   description: IReward['description'];
 
-  @Prop({ default: '', type: 'string' })
+  @Prop({ default: '', type: String })
   image_uri: IReward['image_uri'];
 
-  @Prop({ default: 0, type: 'number' })
+  @Prop({ default: 0, type: Number })
   amount: IReward['amount'];
 
-  @Prop({ required: true, type: Types.ObjectId, ref: NFTCollection.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'NFTCollection' })
   nft_collection_id: IReward['nft_collection_id'];
 }
 
