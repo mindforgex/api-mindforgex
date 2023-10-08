@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { BaseService } from 'src/modules/base/services/base.service';
 
 import { NFTInfo, NFTInfoDocument } from '../models/nft-info.model';
+import { INFTInfo } from '../interfaces/nft-info.interface';
 
 @Injectable()
 export class NFTInfoService extends BaseService<NFTInfoDocument> {
@@ -22,11 +23,9 @@ export class NFTInfoService extends BaseService<NFTInfoDocument> {
       .findOne({ _id: nftInfoId }, selectFields ?? this.defaultSelectFields)
       .lean();
 
-  public async createMultiNFTInfos(channelId: string, dataArray: any[]) {
+  public async createMultiNFTInfos(data: INFTInfo[]) {
     try {
-      return await this.nftInfoModel.create(
-        dataArray.map((data) => ({ ...data, channel: channelId })),
-      );
+      return await this.nftInfoModel.create(data);
     } catch (error) {
       throw new Error(`Error creating posts: ${error.message}`);
     }

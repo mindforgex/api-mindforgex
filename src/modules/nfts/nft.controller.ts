@@ -81,9 +81,11 @@ export class NftController {
         .filter((_grouping) => _grouping.group_key === 'collection')
         .map((_grouping) => _grouping.group_value),
     );
-    collections = await this.nftCollectionService.findByCollectionAddress(
-      collections as Array<string>,
-    );
+    collections = await this.nftCollectionService.find({
+      address: {
+        $in: collections as Array<string>,
+      },
+    });
 
     for (const _collection of collections as Array<INFTCollection>) {
       // filter nft of collection
@@ -109,31 +111,6 @@ export class NftController {
       pageSize: collections.length,
       items: collections as Array<INFTCollection>,
     };
-  }
-
-  @Post('users/request-exchange')
-  @ApiBearerAuth('jwt')
-  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
-  async userRequestExchangeCollection(
-    @Body() payload: RequestExchangeCollectionDto,
-    @UserParams() userParams: IUser,
-  ): Promise<RequestExchangeCollectionResponseDto> {
-    return await this.nftCollectionService.requestExchangeCollection(
-      payload,
-      userParams,
-    );
-  }
-
-  @Post('users/confirm-exchange')
-  @ApiBearerAuth('jwt')
-  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
-  async userConfirmExchangeCollection(
-    @Body() payload: ConfirmExchangeCollectionDto,
-    @UserParams() userParams: IUser,
-  ): Promise<any> {
-    await this.nftCollectionService.userConfirmExchange(payload, userParams);
-
-    return { message: 'Exchange collection to reward successful' };
   }
 
   @Get('channel/:channelId')
@@ -165,5 +142,30 @@ export class NftController {
       pageSize: channelCollectionData.length,
       items: channelCollectionData,
     };
+  }
+
+  @Post('users/request-exchange')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async userRequestExchangeCollection(
+    @Body() payload: RequestExchangeCollectionDto,
+    @UserParams() userParams: IUser,
+  ): Promise<RequestExchangeCollectionResponseDto> {
+    return await this.nftCollectionService.requestExchangeCollection(
+      payload,
+      userParams,
+    );
+  }
+
+  @Post('users/confirm-exchange')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async userConfirmExchangeCollection(
+    @Body() payload: ConfirmExchangeCollectionDto,
+    @UserParams() userParams: IUser,
+  ): Promise<any> {
+    await this.nftCollectionService.userConfirmExchange(payload, userParams);
+
+    return { message: 'Exchange collection to reward successful' };
   }
 }

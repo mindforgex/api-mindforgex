@@ -26,7 +26,7 @@ export class NFTInfo implements INFTInfo {
   @Prop({ default: '', type: String })
   external_url: INFTInfo['external_url'];
 
-  @Prop({ required: true, default: '', type: String })
+  @Prop({ required: true, default: '', type: String, ref: 'NFTCollection' })
   nft_collection_address: INFTInfo['nft_collection_address'];
 
   @Prop({ default: [], type: Types.Array })
