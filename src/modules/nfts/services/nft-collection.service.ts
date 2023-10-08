@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -8,7 +9,6 @@ import {
   NFTCollection,
   NFTCollectionDocument,
 } from '../models/nft-collection.model';
-import { NFTInfo } from '../models/nft-info.model';
 import { INFTCollection } from '../interfaces/nft-info.interface';
 import { ShyftWeb3Service } from 'src/modules/base/services/shyft-web3.service';
 import { WrapperConnection } from 'src/modules/base/services/wrapped-solana-connection.service';
@@ -19,14 +19,12 @@ import {
   ConfirmExchangeCollectionDto,
   RequestExchangeCollectionDto,
 } from '../dtos/request.dto';
-import { Reward } from 'src/modules/reward/models/reward.model';
-import { RewardHistory } from 'src/modules/reward/models/reward-history.model';
 import { RequestExchangeCollectionResponseDto } from '../dtos/response.dto';
 import { RewardHistoryService } from 'src/modules/reward/services/reward-history.service';
 import { IUser } from 'src/modules/users/interfaces/user.interface';
 import { STATUS } from 'src/modules/reward/constants/reward.constant';
 
-import { PublicKey } from '@solana/web3.js';
+import { ParsedTransactionWithMeta } from '@solana/web3.js';
 
 @Injectable()
 export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
@@ -55,6 +53,16 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       )
       .lean();
 
+  // save metadata
+  public async insertMany(data: INFTCollection[]) {
+    try {
+      return await this.nftCollectionModel.create(data);
+    } catch (error) {
+      throw new Error(`Error creating ${NFTCollection.name}: ${error.message}`);
+    }
+  }
+
+  // mint and save metadata
   public async createMany(data: ICreateNFTCollectionForm[], channelId: string) {
     try {
       // Shyft free plan allows 1 request per second
@@ -75,7 +83,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       }
       return await this.nftCollectionModel.create(_formatData);
     } catch (error) {
-      throw new Error(`Error creating posts: ${error.message}`);
+      throw new Error(`Error creating ${NFTCollection.name}: ${error.message}`);
     }
   }
 
@@ -124,23 +132,20 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       }
 
       // filter index and optimize data
-      const itemIndexes = new Set(
-        userNFTData.flatMap((_item) =>
+      const itemIndexes = userNFTData.flatMap(
+        (_item) =>
+          Array.isArray(_item.content.metadata.attributes) &&
           _item.content.metadata.attributes
             .filter((_itemAttribute) => _itemAttribute.trait_type === 'index')
             .map((_itemAttribute) => _itemAttribute.value),
-        ),
       );
 
       // check owned
       for (const _collectionItems of collectionData.nft_info) {
         _collectionItems.owned = _collectionItems.attributes.some(
-          (_collectionAttribute) => {
-            return (
-              _collectionAttribute.trait_type === 'index' &&
-              itemIndexes.has(_collectionAttribute.value)
-            );
-          },
+          (_collectionAttribute) =>
+            _collectionAttribute.trait_type === 'index' &&
+            itemIndexes.includes(_collectionAttribute.value),
         );
       }
     } catch (error) {
@@ -148,7 +153,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
     }
   };
 
-  public find = (query: INFTCollection): Promise<INFTCollection[]> =>
+  public find = (query: INFTCollection | any): Promise<INFTCollection[]> =>
     this.nftCollectionModel
       .aggregate([
         {
@@ -156,7 +161,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         },
         {
           $lookup: {
-            from: NFTInfo.name, // The name of the "nft_info" collection
+            from: 'nftinfos',
             localField: 'address',
             foreignField: 'nft_collection_address',
             as: 'nft_info',
@@ -164,7 +169,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         },
         {
           $lookup: {
-            from: Reward.name, // The name of the "reward" collection
+            from: 'rewards',
             localField: '_id',
             foreignField: 'nft_collection_id',
             as: 'reward_data',
@@ -172,7 +177,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         },
         {
           $lookup: {
-            from: RewardHistory.name, // The name of the "reward_history" collection
+            from: 'rewardhistories',
             localField: 'reward_data._id',
             foreignField: 'reward_id',
             as: 'reward_history',
@@ -198,17 +203,6 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         },
       ])
       .exec() as unknown as Promise<INFTCollection[]>;
-
-  public findByCollectionAddress = (
-    collectionAddresses: string[],
-  ): Promise<INFTCollection[]> =>
-    this.nftCollectionModel
-      .find({
-        address: {
-          $in: collectionAddresses,
-        },
-      })
-      .lean();
 
   public requestExchangeCollection = async (
     payload: RequestExchangeCollectionDto,
@@ -271,13 +265,14 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
     userParam: IUser,
   ) => {
     // check burnt NFT
-    // get parsed transaction
-    const rawTx = await this.wrapperConnection.getParsedTransaction(
-      payload.txnSignature,
-    );
-
-    // check tx
-    this._validateBurnTransaction(rawTx, userParam.walletAddress);
+    for (const _txnSignature of payload.txnSignature) {
+      // get parsed transaction
+      const rawTx = await this.wrapperConnection.getParsedTransaction(
+        _txnSignature,
+      );
+      // check tx
+      this._validateBurnTransaction(rawTx, userParam.walletAddress);
+    }
 
     // update reward_storage
     this.rewardHistoryService.findOneAndUpdate(
@@ -295,8 +290,8 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
   };
 
   private _validateBurnTransaction = (
-    transaction,
-    expectedNFTOwnerPublicKey,
+    transaction: ParsedTransactionWithMeta & { logMessages?: string[] },
+    expectedNFTOwnerPublicKey: string,
   ) => {
     if (!transaction) {
       throw new Error('Transaction not found');
@@ -307,23 +302,16 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       throw new Error('Transaction failed');
     }
 
-    // Extract the instructions from the transaction
-    const instructions = transaction.transaction.message.instructions;
+    const isBurntFunc = transaction.logMessages.some((_log: string) =>
+      _log.includes('Instruction: Burn'),
+    );
+    const isSigner = transaction.transaction.message.accountKeys.some(
+      (_acc) => _acc.pubkey.toString() === expectedNFTOwnerPublicKey,
+    );
 
-    // Iterate through instructions to find the burn instruction
-    for (const instruction of instructions) {
-      // Check if the instruction targets the expected NFT owner's public key
-      if (
-        instruction.programId.equals(
-          PublicKey.findProgramAddressSync(
-            [new PublicKey(expectedNFTOwnerPublicKey).toBuffer()],
-            new PublicKey('token'),
-          ),
-        )
-      ) {
-        this.logger.log('Burn instruction found');
-        return;
-      }
+    if (isBurntFunc && isSigner) {
+      this.logger.log('Burn instruction found');
+      return;
     }
 
     throw new Error('No burn instruction found in the transaction');

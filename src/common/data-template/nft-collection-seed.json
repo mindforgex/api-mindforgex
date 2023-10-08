@@ -1,0 +1,46 @@
+[
+  {
+    "address": "9KD71uAN9HTPovRoYq7Zk7hJVacCQh7cPNXvw89Vsm1g",
+    "owner_address": "7fbPDP3jAbkEVf7QAAxhBKHcbfLPttPkyXJNNkv62Xvd",
+    "channel_id": "650c2cf2042aef782518e554",
+    "metadata_uri": "https://bafkreiaqzdzaykkqh7coa4lo3ag7apixn7akutysp6xglgo7i77npizxja.ipfs.nftstorage.link/",
+    "nft_info": [
+      {
+        "nft_collection_address": "9KD71uAN9HTPovRoYq7Zk7hJVacCQh7cPNXvw89Vsm1g",
+        "name": "Compressed NFT #1",
+        "symbol": "CNFT",
+        "description": "Subtle details.",
+        "seller_fee_basis_points": 1,
+        "image": "https://gateway.pinata.cloud/ipfs/QmXdkz86pnGN5DyJEo1J9tmFyz5gRDXZHy67dbcxxCPbEk",
+        "animation_url": "",
+        "external_url": "https://mindforgex.relipa.vn/channel/lalisa/album/lisa-aniversary",
+        "attributes": [
+          {
+            "trait_type": "index",
+            "value": 1
+          }
+        ],
+        "properties": {
+          "creators": [
+            {
+              "address": "5KW2twHzRsAaiLeEx4zYNV35CV2hRrZGw7NYbwMfL4a2",
+              "share": 80,
+              "verified": false
+            },
+            {
+              "address": "3yTKSCKoDcjBFpbgxyJUh4cM1NG77gFXBimkVBx2hKrf",
+              "share": 20,
+              "verified": false
+            }
+          ],
+          "files": [
+            {
+              "uri": "https://gateway.pinata.cloud/ipfs/QmXdkz86pnGN5DyJEo1J9tmFyz5gRDXZHy67dbcxxCPbEk",
+              "type": "image/png"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

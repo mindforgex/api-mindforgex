@@ -13,7 +13,7 @@ export type JsonMetadata<Uri = string> = {
   external_url?: Uri;
   attributes?: Array<{
     trait_type?: string;
-    value?: string;
+    value?: string | number;
   }>;
   properties?: {
     creators?: Array<{

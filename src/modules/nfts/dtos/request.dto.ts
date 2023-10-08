@@ -44,7 +44,7 @@ export class ConfirmExchangeCollectionDto {
 
   @ApiProperty()
   @IsString()
-  readonly txnSignature: string;
+  readonly txnSignature: string[];
 
   @ApiProperty()
   @IsString()
