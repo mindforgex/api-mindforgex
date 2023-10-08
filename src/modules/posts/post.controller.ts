@@ -84,6 +84,7 @@ export class PostController {
       throw new BadRequestException('User has claimed this post');
 
     const txnSignature = await this.shyftWeb3Service.mintCNFTToWalletAddress({
+      collectionAddress: nftMetadata.nft_collection_address,
       receiverAddress: walletAddress,
       metadataUri: `${process.env.BACKEND_BASE_URL}/v1/nfts/metadata/${nftMetadata._id}`,
     });

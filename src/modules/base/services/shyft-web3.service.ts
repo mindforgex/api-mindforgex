@@ -11,6 +11,10 @@ import {
 } from '@solana/web3.js';
 import axios, { AxiosInstance } from 'axios';
 import * as bs58 from 'bs58';
+import {
+  IGetCollectionResponse,
+  ICreateNFTCollectionForm,
+} from '../interface/shyft-web3.type';
 
 @Injectable()
 export class ShyftWeb3Service {
@@ -48,7 +52,7 @@ export class ShyftWeb3Service {
   private async signTransaction(
     encodedTransaction: string,
     fromPrivateKey: string,
-  ): Promise<any> {
+  ): Promise<string> {
     try {
       const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
       const feePayer = Keypair.fromSecretKey(bs58.decode(fromPrivateKey));
@@ -63,21 +67,75 @@ export class ShyftWeb3Service {
 
       return txnSignature;
     } catch (error) {
-      console.log(error);
+      this.logger.error(__filename, error);
     }
+    throw new InternalServerErrorException('Sign transaction failed');
+  }
+
+  /**
+   * @api: https://docs.shyft.to/start-hacking/nft#create-v2
+   * dùng API ver2 có thể config payer
+   */
+  public async mintCollectionNFT(
+    metadata: ICreateNFTCollectionForm,
+  ): Promise<{ txnSignature: string; address: string }> {
+    try {
+      // const buffer = fs.readFileSync(
+      //   path.resolve(__dirname, '../../../', metadata.imageRelativePath),
+      // );
+      const blob = new Blob([metadata.imageBuffer]);
+      const formdata = new FormData();
+      formdata.append('network', this.network);
+      formdata.append('creator_wallet', this.creatorWalletAddress);
+      formdata.append('name', metadata.name);
+      formdata.append('symbol', metadata.symbol);
+      formdata.append('description', metadata.description);
+      formdata.append('attributes', JSON.stringify(metadata.attributes));
+      formdata.append('external_url', metadata.externalUrl);
+      formdata.append('max_supply', '0');
+      formdata.append('royalty', '1');
+      formdata.append(
+        'receiver',
+        metadata.receiver || this.creatorWalletAddress,
+      );
+      formdata.append('image', blob);
+      formdata.append('fee_payer', metadata.payer || this.creatorWalletAddress);
+
+      const res = await this.axiosInstance.post('/sol/v2/nft/create', formdata);
+      if (res.data) {
+        const encodedTransaction = res.data.result.encoded_transaction;
+
+        const txnSignature = await this.signTransaction(
+          encodedTransaction,
+          this.creatorPrivateKey,
+        );
+
+        return {
+          txnSignature,
+          address: res.data.result.mint,
+        };
+      }
+    } catch (error) {
+      this.logger.error(__filename, error);
+    }
+    throw new InternalServerErrorException('Failed to mint collection');
   }
 
   public async mintCNFTToWalletAddress(params: {
     receiverAddress: string;
     metadataUri: string;
-  }) {
+    collectionAddress: string;
+  }): Promise<string> {
     try {
       const res = await this.axiosInstance.post('/sol/v1/nft/compressed/mint', {
         network: this.network,
         creator_wallet: this.creatorWalletAddress,
-        merkle_tree: this.merkleTreeAddress,
         metadata_uri: params.metadataUri,
+        merkle_tree: this.merkleTreeAddress,
+        collection_address: params.collectionAddress,
+        max_supply: 0,
         receiver: params.receiverAddress,
+        fee_payer: this.creatorWalletAddress,
       });
 
       if (res.data) {
@@ -95,10 +153,30 @@ export class ShyftWeb3Service {
       this.logger.error('mintCNFTToWalletAddress', error);
     }
 
-    throw new InternalServerErrorException('Failed to mint NFT');
+    throw new InternalServerErrorException('Failed to mint cNFT');
   }
 
-  public async getCNFTByWalletAddress(walletAddress: string) {
+  public async getCollectionByAddress(
+    tokenAddress: string,
+  ): Promise<IGetCollectionResponse> {
+    try {
+      const res = await this.axiosInstance.get(`/sol/v1/nft/read`, {
+        params: {
+          network: this.network,
+          token_address: tokenAddress,
+        },
+      });
+
+      if (res.data) {
+        return res.data.result;
+      }
+    } catch (error) {
+      this.logger.error(__filename, error);
+    }
+    throw new InternalServerErrorException('Failed to get Collection');
+  }
+
+  public async getCNFT(walletAddress?: string, collectionAddress?: string) {
     try {
       const res = await this.axiosInstance.get(
         '/sol/v1/nft/compressed/read_all',
@@ -106,14 +184,13 @@ export class ShyftWeb3Service {
           params: {
             network: this.network,
             wallet_address: walletAddress,
+            collectionAddress: collectionAddress,
           },
         },
       );
 
       if (res.data) {
         const userCNFTs = res.data.result.nfts;
-
-        // console.log('userCNFTs', userCNFTs);
 
         return {
           pageIndex: 1,

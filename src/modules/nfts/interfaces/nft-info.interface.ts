@@ -1,22 +1,22 @@
 import { Types } from 'mongoose';
-import { IChannel } from 'src/modules/channels/interfaces/channel.interface';
+import { JsonMetadata } from 'src/modules/base/interface/wrapped-solana-connection.type';
+import { IReward } from 'src/modules/reward/interfaces/reward.interface';
 
-export interface NFTProperty {
-  creators: Array<string>,
-  files: Array<string>,
+type _id = string | Types.ObjectId;
+export interface INFTInfo extends JsonMetadata {
+  _id?: _id;
+  nft_collection_address?: string;
+  owned?: boolean; // extra field when user get collection item
 }
 
-export interface INFTInfo {
-  _id?: string;
-  channelId?: Types.ObjectId | IChannel;
-  name: string;
-  symbol: string;
-  description: string;
-  seller_fee_basis_points: number;
-  external_url: string;
-  image: string;
-  attributes: Array<string>;
-  properties: NFTProperty;
-  createdAt?: Date;
-  updatedAt?: Date;
+export interface INFTCollection {
+  _id?: _id;
+  address?: string;
+  owner_address?: string;
+  channel_id?: Types.ObjectId;
+  metadata_uri?: string;
+
+  // extra field
+  nft_info?: Array<INFTInfo>; // when joining
+  reward_data?: IReward;
 }
