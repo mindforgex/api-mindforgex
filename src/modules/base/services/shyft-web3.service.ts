@@ -215,4 +215,33 @@ export class ShyftWeb3Service {
 
     throw new InternalServerErrorException('Failed to mint NFT');
   }
+
+  public async burnMany(
+    nftAddresses: string[],
+    walletAddress: string,
+  ): Promise<string[]> {
+    try {
+      const result = [];
+      for (const _address of nftAddresses) {
+        const resp = await this.axiosInstance.delete(
+          '/sol/v1/nft/compressed/burn',
+          {
+            data: {
+              network: this.network,
+              nft_address: _address,
+              wallet_address: walletAddress,
+            },
+          },
+        );
+        if (resp.data.result.encoded_transaction) {
+          result.push(resp.data.result.encoded_transaction);
+        }
+      }
+      return result;
+    } catch (error) {
+      this.logger.error(__filename, error);
+    }
+
+    throw new InternalServerErrorException('Failed to burn cNFT');
+  }
 }

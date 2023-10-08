@@ -2,20 +2,19 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { INFTCollection } from '../interfaces/nft-info.interface';
-import { Channel } from 'src/modules/channels/models/channel.model';
 
 @Schema({ timestamps: true })
 export class NFTCollection implements INFTCollection {
-  @Prop({ default: '' })
+  @Prop({ default: '', type: 'string' })
   address: INFTCollection['address'];
 
-  @Prop({ default: '' })
+  @Prop({ default: '', type: 'string' })
   owner_address: INFTCollection['owner_address'];
 
-  @Prop({ required: true, types: Types.ObjectId, ref: Channel.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'Channel' })
   channel_id: INFTCollection['channel_id'];
 
-  @Prop({ default: '' })
+  @Prop({ default: '', type: 'string' })
   metadata_uri: INFTCollection['metadata_uri'];
 }
 

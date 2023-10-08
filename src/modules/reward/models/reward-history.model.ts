@@ -2,27 +2,23 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { IRewardHistory } from '../interfaces/reward.interface';
-import { User } from 'src/modules/users/models/user.model';
-import { Channel } from 'src/modules/channels/models/channel.model';
-import { Reward } from './reward.model';
-import { NFTCollection } from 'src/modules/nfts/models/nft-collection.model';
 import { STATUS } from '../constants/reward.constant';
 
 @Schema({ timestamps: true })
 export class RewardHistory implements IRewardHistory {
-  @Prop({ required: true, types: Types.ObjectId, ref: User.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'User' })
   user_id: IRewardHistory['user_id'];
 
-  @Prop({ required: true, types: Types.ObjectId, ref: Channel.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'Channel' })
   channel_id: IRewardHistory['channel_id'];
 
-  @Prop({ required: true, types: Types.ObjectId, ref: Reward.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'Reward' })
   reward_id: IRewardHistory['reward_id'];
 
-  @Prop({ required: true, types: Types.ObjectId, ref: NFTCollection.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'NFTCollection' })
   nft_collection_id: IRewardHistory['nft_collection_id'];
 
-  @Prop({ default: STATUS.PROCESSING })
+  @Prop({ default: STATUS.PROCESSING, type: 'string' })
   status: IRewardHistory['status'];
 }
 

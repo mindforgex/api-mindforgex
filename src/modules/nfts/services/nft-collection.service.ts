@@ -26,6 +26,8 @@ import { RewardHistoryService } from 'src/modules/reward/services/reward-history
 import { IUser } from 'src/modules/users/interfaces/user.interface';
 import { STATUS } from 'src/modules/reward/constants/reward.constant';
 
+import { PublicKey } from '@solana/web3.js';
+
 @Injectable()
 export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
   constructor(
@@ -250,10 +252,13 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
           },
         ]);
       // get burn many compressed nft transaction encoded from Shyft
-
+      const encodedTransactions = await this.shyftWeb3Service.burnMany(
+        userNFTByCollection.map((_nft) => _nft.id),
+        userParam.walletAddress,
+      );
       // return
       return {
-        encodedTxnData: '',
+        encodedTxnData: encodedTransactions,
         rewardHistoryId: insertRewardHistoryResp[0]._id.toString(),
       };
     } catch (error) {
@@ -265,9 +270,15 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
     payload: ConfirmExchangeCollectionDto,
     userParam: IUser,
   ) => {
-    // TODO: implement this
     // check burnt NFT
-    //
+    // get parsed transaction
+    const rawTx = await this.wrapperConnection.getParsedTransaction(
+      payload.txnSignature,
+    );
+
+    // check tx
+    this._validateBurnTransaction(rawTx, userParam.walletAddress);
+
     // update reward_storage
     this.rewardHistoryService.findOneAndUpdate(
       {
@@ -281,5 +292,40 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         status: STATUS.COMPLETED,
       },
     );
+  };
+
+  private _validateBurnTransaction = (
+    transaction,
+    expectedNFTOwnerPublicKey,
+  ) => {
+    if (!transaction) {
+      throw new Error('Transaction not found');
+    }
+
+    // Check if the transaction was successful
+    if (transaction.meta.err !== null) {
+      throw new Error('Transaction failed');
+    }
+
+    // Extract the instructions from the transaction
+    const instructions = transaction.transaction.message.instructions;
+
+    // Iterate through instructions to find the burn instruction
+    for (const instruction of instructions) {
+      // Check if the instruction targets the expected NFT owner's public key
+      if (
+        instruction.programId.equals(
+          PublicKey.findProgramAddressSync(
+            [new PublicKey(expectedNFTOwnerPublicKey).toBuffer()],
+            new PublicKey('token'),
+          ),
+        )
+      ) {
+        this.logger.log('Burn instruction found');
+        return;
+      }
+    }
+
+    throw new Error('No burn instruction found in the transaction');
   };
 }
