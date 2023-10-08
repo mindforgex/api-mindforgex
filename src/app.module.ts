@@ -10,6 +10,7 @@ import { PostModule } from 'src/modules/posts/post.module';
 import { NFTInfoModule } from 'src/modules/nfts/nft.module';
 import { TaskModule } from 'src/modules/tasks/task.module';
 import { UserModule } from 'src/modules/users/user.module';
+import { RewardModule } from './modules/reward/reward.module';
 import { AppController } from './app.controller';
 
 const modules = [
@@ -19,6 +20,7 @@ const modules = [
   PostModule,
   NFTInfoModule,
   TaskModule,
+  RewardModule,
 ];
 
 @Module({

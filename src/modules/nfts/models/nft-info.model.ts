@@ -1,36 +1,45 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 
-import { INFTInfo, NFTProperty } from '../interfaces/nft-info.interface';
+import { INFTInfo } from '../interfaces/nft-info.interface';
+import { NFTCollection } from './nft-collection.model';
 
 @Schema({ timestamps: true })
 export class NFTInfo implements INFTInfo {
-  @Prop({ required: true, types: Types.ObjectId, ref: 'Channel' })
-  channelId?: Types.ObjectId;
+  [key: string]: unknown;
 
   @Prop({ default: '' })
-  name: string;
+  name: INFTInfo['name'];
 
   @Prop({ default: '' })
-  symbol: string;
+  symbol: INFTInfo['symbol'];
 
   @Prop({ default: '' })
-  description: string;
+  description: INFTInfo['description'];
 
   @Prop({ default: 0 })
-  seller_fee_basis_points: number;
+  seller_fee_basis_points: INFTInfo['seller_fee_basis_points'];
 
   @Prop({ default: '' })
-  external_url: string;
+  image: INFTInfo['image'];
 
   @Prop({ default: '' })
-  image: string;
+  animation_url: INFTInfo['animation_url'];
 
   @Prop({ default: '' })
-  attributes: Array<string>;
+  external_url: INFTInfo['external_url'];
 
-  @Prop({ type: 'object', ref: 'NFTProperty' })
-  properties: NFTProperty;
+  @Prop({ required: true, types: 'string', ref: NFTCollection.name })
+  nft_collection_address: INFTInfo['nft_collection_address'];
+
+  @Prop({ default: [] })
+  attributes: INFTInfo['attributes'];
+
+  @Prop({ default: { creators: [], files: [] } })
+  properties: INFTInfo['properties'];
+
+  @Prop({ default: {} })
+  collection: INFTInfo['collection'];
 }
 
 export type NFTInfoDocument = NFTInfo & Document;

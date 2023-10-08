@@ -6,6 +6,8 @@ import { BaseService } from 'src/modules/base/services/base.service';
 import { ShyftWeb3Service } from 'src/modules/base/services/shyft-web3.service';
 
 import { NFTReceive, NFTReceiveDocument } from '../models/nft-receive.model';
+import { WrapperConnection } from 'src/modules/base/services/wrapped-solana-connection.service';
+import { ReadApiAsset } from 'src/modules/base/interface/wrapped-solana-connection.type';
 
 @Injectable()
 export class NFTReceiveService extends BaseService<NFTReceiveDocument> {
@@ -15,7 +17,13 @@ export class NFTReceiveService extends BaseService<NFTReceiveDocument> {
     private readonly shyftWeb3Service: ShyftWeb3Service,
   ) {
     super(nftReceiveModel);
+    this.wrapperConnection = new WrapperConnection(
+      process.env.RPC_ENDPOINT,
+      'confirmed',
+    );
   }
+
+  private wrapperConnection: WrapperConnection;
   private readonly defaultSelectFields: string = '-_id -channelId';
 
   public findOneByChannelId = (channelId: string, selectFields?: string) =>
@@ -50,7 +58,20 @@ export class NFTReceiveService extends BaseService<NFTReceiveDocument> {
     }
   }
 
-  public async getNFTByUser(walletAddress: string) {
-    return this.shyftWeb3Service.getCNFTByWalletAddress(walletAddress);
-  }
+  public getUserNFTByWalletAddress = async (
+    walletAddress: string,
+  ): Promise<ReadApiAsset[]> => {
+    let result = [];
+    try {
+      // read_all user cNFT by collection
+      const { items } = await this.wrapperConnection.getAssetsByOwner({
+        ownerAddress: walletAddress,
+      });
+
+      result = items.filter((_item) => _item.compression.compressed);
+      return result;
+    } catch (error) {
+      this.logger.error(__filename, error);
+    }
+  };
 }

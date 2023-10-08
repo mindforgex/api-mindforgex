@@ -14,6 +14,7 @@ export class NFTInfoService extends BaseService<NFTInfoDocument> {
   ) {
     super(nftInfoModel);
   }
+
   private readonly defaultSelectFields: string = '-_id -channelId';
 
   public findOneById = (nftInfoId: string, selectFields?: string) =>
