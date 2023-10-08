@@ -6,6 +6,8 @@ import { NftController } from './nft.controller';
 import { ShyftWeb3Service } from 'src/modules/base/services/shyft-web3.service';
 import { NFTInfoService } from './services/nft-info.service';
 import { NFTReceiveService } from './services/nft-receive.service';
+import { ChannelService } from '../channels/services/channel.service';
+import { RewardHistoryService } from '../reward/services/reward-history.service';
 
 import {
   NFTCollection,
@@ -13,7 +15,12 @@ import {
 } from './models/nft-collection.model';
 import { NFTInfo, NFTInfoSchema } from './models/nft-info.model';
 import { NFTReceive, NFTReceiveSchema } from './models/nft-receive.model';
-import { ChannelService } from '../channels/services/channel.service';
+import { Channel } from 'diagnostics_channel';
+import { ChannelSchema } from '../channels/models/channel.model';
+import {
+  RewardHistory,
+  RewardHistorySchema,
+} from '../reward/models/reward-history.model';
 
 @Module({
   imports: [
@@ -30,6 +37,14 @@ import { ChannelService } from '../channels/services/channel.service';
         name: NFTReceive.name,
         schema: NFTReceiveSchema,
       },
+      {
+        name: Channel.name,
+        schema: ChannelSchema,
+      },
+      {
+        name: RewardHistory.name,
+        schema: RewardHistorySchema,
+      },
     ]),
   ],
   controllers: [NftController],
@@ -37,8 +52,9 @@ import { ChannelService } from '../channels/services/channel.service';
     NFTCollection,
     NFTInfoService,
     NFTReceiveService,
-    ChannelService,
     ShyftWeb3Service,
+    ChannelService,
+    RewardHistoryService,
   ],
   exports: [NFTCollection, NFTInfoService, NFTReceiveService],
 })

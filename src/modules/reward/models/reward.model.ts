@@ -7,22 +7,22 @@ import { NFTCollection } from 'src/modules/nfts/models/nft-collection.model';
 
 @Schema({ timestamps: true })
 export class Reward implements IReward {
-  @Prop({ required: true, types: Types.ObjectId, ref: Channel.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: Channel.name })
   channel_id: IReward['channel_id'];
 
-  @Prop({ default: '' })
+  @Prop({ default: '', type: 'string' })
   name: IReward['name'];
 
-  @Prop({ default: '' })
+  @Prop({ default: '', type: 'string' })
   description: IReward['description'];
 
-  @Prop({ default: '' })
+  @Prop({ default: '', type: 'string' })
   image_uri: IReward['image_uri'];
 
-  @Prop({ default: 0 })
+  @Prop({ default: 0, type: 'number' })
   amount: IReward['amount'];
 
-  @Prop({ required: true, types: Types.ObjectId, ref: NFTCollection.name })
+  @Prop({ required: true, type: Types.ObjectId, ref: NFTCollection.name })
   nft_collection_id: IReward['nft_collection_id'];
 }
 

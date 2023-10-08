@@ -12,7 +12,7 @@ export class GetListCollectionResponseDto extends PaginateResponseDto<INFTCollec
 
 export class RequestExchangeCollectionResponseDto {
   @ApiResponseProperty()
-  readonly encodedTxnData: string;
+  readonly encodedTxnData: string[];
 
   @ApiResponseProperty()
   readonly rewardHistoryId: string;

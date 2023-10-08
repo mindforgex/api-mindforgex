@@ -5,7 +5,7 @@ import { INFTReceive } from '../interfaces/nft-receive.interface';
 
 @Schema({ timestamps: true })
 export class NFTReceive implements INFTReceive {
-  @Prop({ required: true, types: Types.ObjectId, ref: 'Channel' })
+  @Prop({ required: true, type: Types.ObjectId, ref: 'Channel' })
   channelId?: Types.ObjectId;
 
   @Prop({ default: '' })
