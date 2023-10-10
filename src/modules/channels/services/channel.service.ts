@@ -166,7 +166,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
     const publicKeyReciever = new PublicKey(receiverAddress);
     const amountLamports = body.amount * lamports; // 1 SOL = 1,000,000,000 lamports
 
-    const connection = new Connection(process.env.SONALA_NETWORK);
+    const connection = new Connection(process.env.SOLANA_NETWORK);
     const latestBlockhash = await connection.getLatestBlockhash();
     const transaction = new Transaction().add(
       SystemProgram.transfer({
@@ -195,7 +195,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
     const receiverAddress = (await channel).donateReceiver;
 
     const lamports = parseInt(process.env.LAMPORTS);
-    const connection = new Connection(process.env.SONALA_NETWORK);
+    const connection = new Connection(process.env.SOLANA_NETWORK);
     const tx = body.tx;
     const transactionInfo: TransactionResponse = await connection.getTransaction(tx);
     if (!transactionInfo) {
