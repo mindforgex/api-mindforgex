@@ -22,6 +22,8 @@ import {
   RewardHistory,
   RewardHistorySchema,
 } from '../reward/models/reward-history.model';
+import { Reward, RewardSchema } from '../reward/models/reward.model';
+import { RewardService } from '../reward/services/reward.service';
 
 @Module({
   imports: [
@@ -46,6 +48,10 @@ import {
         name: RewardHistory.name,
         schema: RewardHistorySchema,
       },
+      {
+        name: Reward.name,
+        schema: RewardSchema,
+      },
     ]),
   ],
   controllers: [NftController],
@@ -56,6 +62,7 @@ import {
     ShyftWeb3Service,
     ChannelService,
     RewardHistoryService,
+    RewardService,
   ],
   exports: [NFTCollectionService, NFTInfoService, NFTReceiveService],
 })

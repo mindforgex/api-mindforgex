@@ -9,7 +9,7 @@ export interface IReward {
   description?: string;
   amount?: number;
   image_uri?: string;
-  nft_collection_id?: string;
+  nft_collection_address?: string;
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -20,10 +20,10 @@ export interface IReward {
 
 export interface IRewardHistory {
   _id?: string | Types.ObjectId;
-  user_id?: Types.ObjectId; // Reference to the user who made the exchange
-  channel_id?: Types.ObjectId; // Reference to the channel who created the reward
-  reward_id?: Types.ObjectId; // Reference to the reward being exchanged
-  nft_collection_id?: Types.ObjectId;
+  user_id?: string | Types.ObjectId; // Reference to the user who made the exchange
+  channel_id?: string | Types.ObjectId; // Reference to the channel who created the reward
+  reward_id?: string | Types.ObjectId; // Reference to the reward being exchanged
+  nft_collection_address?: string;
   status?: (typeof STATUS)[keyof typeof STATUS];
   createdAt?: Date;
   updatedAt?: Date;

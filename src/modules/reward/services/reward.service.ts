@@ -16,16 +16,8 @@ export class RewardService extends BaseService<RewardDocument> {
     super(rewardModel);
   }
 
-  private readonly defaultSelectFields: string =
-    '-_id -channel_id -nft_collection_id';
-
-  public findOneById = (nftCollectionId: string, selectFields?: string) =>
-    this.rewardModel
-      .findOne(
-        { _id: nftCollectionId },
-        selectFields ?? this.defaultSelectFields,
-      )
-      .lean();
+  public findOneById = (id: string) =>
+    this.rewardModel.findOne({ _id: id }).lean();
 
   public async createMany(data: IReward[]) {
     try {

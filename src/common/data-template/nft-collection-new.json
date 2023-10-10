@@ -1,1 +1,86 @@
-[]
+{
+  "650c2cf2042aef782518e552": [
+    {
+      "_id": "652418086ad804b2749a7e00",
+      "imageUri": "https://nftstorage.link/ipfs/bafkreiaxwdocoborifqf333q5by47mntqfkwk35vuip6qoy6pgjmrouvpa",
+      "externalUrl": "https://mindforgex.relipa.vn/channel/650c2cf2042aef782518e552/collections#65240cebe2758e46abf70d6d",
+      "name": "Lisa Anniversary",
+      "symbol": "LA",
+      "description": "1 year anniversary album",
+      "attributes": [
+        {
+          "trait_type": "owner",
+          "value": "https://mindforgex.relipa.vn/channel/650c2cf2042aef782518e552"
+        },
+        {
+          "trait_type": "nft_in_collection",
+          "value": 2
+        }
+      ],
+      "nft_info": [
+        {
+          "_id": "65240fe361970af32232d357",
+          "nft_collection_address": "",
+          "name": "First Item",
+          "symbol": "FI",
+          "description": "This is 1st item in collection",
+          "seller_fee_basis_points": 1,
+          "image": "https://gateway.pinata.cloud/ipfs/QmXdkz86pnGN5DyJEo1J9tmFyz5gRDXZHy67dbcxxCPbEk",
+          "animation_url": "",
+          "external_url": "https://mindforgex.relipa.vn/channel/650c2cf2042aef782518e552/collections#65240cebe2758e46abf70d6d",
+          "attributes": [
+            {
+              "trait_type": "index",
+              "value": 1
+            }
+          ],
+          "properties": {
+            "creators": [
+              {
+                "address": "7fbPDP3jAbkEVf7QAAxhBKHcbfLPttPkyXJNNkv62Xvd",
+                "share": 100
+              }
+            ],
+            "files": [
+              {
+                "uri": "https://gateway.pinata.cloud/ipfs/QmXdkz86pnGN5DyJEo1J9tmFyz5gRDXZHy67dbcxxCPbEk",
+                "type": "image/png"
+              }
+            ]
+          }
+        },
+        {
+          "_id": "652412a94e2482d55fbf4913",
+          "nft_collection_address": "",
+          "name": "Second Item",
+          "symbol": "SI",
+          "description": "This is 2nd item in collection",
+          "seller_fee_basis_points": 1,
+          "image": "https://yesofcorsa.com/wp-content/uploads/2019/08/Journey-To-Agartha-Wallpaper-For-Mobile.jpg",
+          "animation_url": "",
+          "external_url": "https://mindforgex.relipa.vn/channel/650c2cf2042aef782518e552/collections#65240cebe2758e46abf70d6d",
+          "attributes": [
+            {
+              "trait_type": "index",
+              "value": 2
+            }
+          ],
+          "properties": {
+            "creators": [
+              {
+                "address": "7fbPDP3jAbkEVf7QAAxhBKHcbfLPttPkyXJNNkv62Xvd",
+                "share": 100
+              }
+            ],
+            "files": [
+              {
+                "uri": "https://yesofcorsa.com/wp-content/uploads/2019/08/Journey-To-Agartha-Wallpaper-For-Mobile.jpg",
+                "type": "image/png"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -25,6 +26,8 @@ import { IUser } from 'src/modules/users/interfaces/user.interface';
 import { STATUS } from 'src/modules/reward/constants/reward.constant';
 
 import { ParsedTransactionWithMeta } from '@solana/web3.js';
+import { RewardService } from 'src/modules/reward/services/reward.service';
+import axios from 'axios';
 
 @Injectable()
 export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
@@ -34,6 +37,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
     private readonly shyftWeb3Service: ShyftWeb3Service,
     private readonly channelService: ChannelService,
     private readonly rewardHistoryService: RewardHistoryService,
+    private readonly rewardService: RewardService,
   ) {
     super(nftCollectionModel);
     this.wrapperConnection = new WrapperConnection(
@@ -68,13 +72,14 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       // Shyft free plan allows 1 request per second
       const _formatData = [];
       for (const _data of data) {
-        // TODO: fix this
-        // const channelData = await this.channelService.findOneById(channelId);
-        // _data.receiver = channelData.walletAddress;
+        const channelData = await this.channelService.findOneById(channelId);
+        // @ts-ignore
+        _data.receiver = channelData.donateReceiver;
         const resp = await this.shyftWeb3Service.mintCollectionNFT(_data);
         const collectionData =
           await this.shyftWeb3Service.getCollectionByAddress(resp.address);
         _formatData.push({
+          _id: _data._id,
           address: collectionData.mint,
           owner_address: collectionData.owner,
           metadata_uri: collectionData.metadata_uri,
@@ -111,7 +116,15 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         },
       });
 
-      result = items.filter((_item) => _item.ownership.owner === walletAddress);
+      result = await Promise.all(
+        items
+          .filter((_item) => _item.ownership.owner === walletAddress)
+          .map(async (_item) => {
+            const { data } = await axios.get(_item.content.json_uri);
+            _item.content.metadata.attributes = data.attributes;
+            return _item;
+          }),
+      );
     } catch (error) {
       this.logger.error(__filename, error.message);
     }
@@ -153,7 +166,9 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
     }
   };
 
-  public find = (query: INFTCollection | any): Promise<INFTCollection[]> =>
+  public find = async (
+    query: INFTCollection | any,
+  ): Promise<INFTCollection[]> =>
     this.nftCollectionModel
       .aggregate([
         {
@@ -170,35 +185,17 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         {
           $lookup: {
             from: 'rewards',
-            localField: '_id',
-            foreignField: 'nft_collection_id',
+            localField: 'address',
+            foreignField: 'nft_collection_address',
             as: 'reward_data',
           },
         },
         {
           $lookup: {
             from: 'rewardhistories',
-            localField: 'reward_data._id',
-            foreignField: 'reward_id',
-            as: 'reward_history',
-          },
-        },
-        {
-          $group: {
-            _id: '$_id',
-            address: { $first: '$address' },
-            owner_address: { $first: '$owner_address' },
-            channel_id: { $first: '$channel_id' },
-            metadata_uri: { $first: '$metadata_uri' },
-            nft_info: { $first: '$nft_info' },
-            rewards: {
-              $push: {
-                $mergeObjects: [
-                  { $arrayElemAt: ['$reward_data', 0] },
-                  { exchanged_amount: { $sum: { $size: '$reward_history' } } },
-                ],
-              },
-            },
+            localField: 'address',
+            foreignField: 'nft_collection_address',
+            as: 'reward_history_data',
           },
         },
       ])
@@ -212,7 +209,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       let collectionData: INFTCollection | Array<INFTCollection>;
       collectionData = await this.find({
         _id: new Types.ObjectId(payload.collectionId),
-        channel_id: new Types.ObjectId(payload.channelId),
+        channel_id: payload.channelId,
       });
       if (collectionData.length === 0) {
         this.logger.error('No NFT collection found');
@@ -238,10 +235,10 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       const insertRewardHistoryResp =
         await this.rewardHistoryService.createMany([
           {
-            user_id: new Types.ObjectId(userParam._id),
+            user_id: userParam._id,
             channel_id: new Types.ObjectId(payload.channelId),
-            reward_id: new Types.ObjectId(collectionData.reward_data._id),
-            nft_collection_id: new Types.ObjectId(collectionData._id),
+            reward_id: collectionData.reward_data[0]._id,
+            nft_collection_address: collectionData.address,
             status: STATUS.PROCESSING,
           },
         ]);
@@ -275,12 +272,11 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
     }
 
     // update reward_storage
-    this.rewardHistoryService.findOneAndUpdate(
+    await this.rewardHistoryService.findOneAndUpdate(
       {
-        _id: new Types.ObjectId(payload.rewardHistoryId),
+        _id: payload.rewardHistoryId,
         user_id: new Types.ObjectId(userParam._id),
         channel_id: new Types.ObjectId(payload.channelId),
-        nft_collection_id: new Types.ObjectId(payload.collectionId),
         status: STATUS.PROCESSING,
       },
       {
@@ -290,7 +286,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
   };
 
   private _validateBurnTransaction = (
-    transaction: ParsedTransactionWithMeta & { logMessages?: string[] },
+    transaction: ParsedTransactionWithMeta,
     expectedNFTOwnerPublicKey: string,
   ) => {
     if (!transaction) {
@@ -302,7 +298,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       throw new Error('Transaction failed');
     }
 
-    const isBurntFunc = transaction.logMessages.some((_log: string) =>
+    const isBurntFunc = transaction.meta.logMessages.some((_log: string) =>
       _log.includes('Instruction: Burn'),
     );
     const isSigner = transaction.transaction.message.accountKeys.some(

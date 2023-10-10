@@ -9,8 +9,6 @@ import {
   RewardHistoryDocument,
 } from '../models/reward-history.model';
 import { IRewardHistory } from '../interfaces/reward.interface';
-import { Reward } from '../models/reward.model';
-import { NFTCollection } from 'src/modules/nfts/models/nft-collection.model';
 
 @Injectable()
 export class RewardHistoryService extends BaseService<RewardHistoryDocument> {
@@ -21,13 +19,8 @@ export class RewardHistoryService extends BaseService<RewardHistoryDocument> {
     super(rewardHistoryModel);
   }
 
-  private readonly defaultSelectFields: string =
-    '-_id -user_id -channel_id -reward_id -nft_collection_id';
-
-  public findOne = (query: IRewardHistory, selectFields?: string) =>
-    this.rewardHistoryModel
-      .findOne(query, selectFields ?? this.defaultSelectFields)
-      .lean();
+  public findOne = (query: IRewardHistory) =>
+    this.rewardHistoryModel.findOne(query).lean();
 
   public findOneAndUpdate = (query: IRewardHistory, update: IRewardHistory) =>
     this.rewardHistoryModel.findOneAndUpdate(query, update).lean();
@@ -59,7 +52,7 @@ export class RewardHistoryService extends BaseService<RewardHistoryDocument> {
         },
         {
           $lookup: {
-            from: Reward.name, // The name of the "reward" collection
+            from: 'rewards',
             localField: 'reward_id',
             foreignField: '_id',
             as: 'reward_data',
@@ -67,9 +60,9 @@ export class RewardHistoryService extends BaseService<RewardHistoryDocument> {
         },
         {
           $lookup: {
-            from: NFTCollection.name, // The name of the "nft_collection" collection
-            localField: 'nft_collection_id',
-            foreignField: '_id',
+            from: 'nftcollections',
+            localField: 'nft_collection_address',
+            foreignField: 'address',
             as: 'nft_collection_data',
           },
         },

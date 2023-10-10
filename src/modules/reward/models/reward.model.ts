@@ -20,8 +20,8 @@ export class Reward implements IReward {
   @Prop({ default: 0, type: Number })
   amount: IReward['amount'];
 
-  @Prop({ required: true, type: Types.ObjectId, ref: 'NFTCollection' })
-  nft_collection_id: IReward['nft_collection_id'];
+  @Prop({ required: true, type: String, ref: 'NFTCollection' })
+  nft_collection_address: IReward['nft_collection_address'];
 }
 
 export type RewardDocument = Reward & Document;
