@@ -16,6 +16,7 @@ import type {
   ReadApiAsset,
   ReadApiAssetList,
 } from '../interface/wrapped-solana-connection.type';
+import axios from 'axios';
 
 type JsonRpcParams<ReadApiMethodParams> = {
   method: string;
@@ -40,12 +41,13 @@ export class WrapperConnection extends Connection {
   private callReadApi = async <ReadApiMethodParams, ReadApiJsonOutput>(
     jsonRpcParams: JsonRpcParams<ReadApiMethodParams>,
   ): Promise<JsonRpcOutput<ReadApiJsonOutput>> => {
-    const response = await fetch(this.rpcEndpoint, {
+    const response = await axios({
+      url: this.rpcEndpoint,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
+      data: JSON.stringify({
         jsonrpc: '2.0',
         method: jsonRpcParams.method,
         id: jsonRpcParams.id ?? 'rpd-op-123',
@@ -53,7 +55,7 @@ export class WrapperConnection extends Connection {
       }),
     });
 
-    return await response.json();
+    return response.data;
   };
 
   // Asset id can be calculated via Bubblegum#getLeafAssetId
