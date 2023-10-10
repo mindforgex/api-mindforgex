@@ -9,6 +9,8 @@ import { NFTReceiveService } from './services/nft-receive.service';
 import { ChannelService } from '../channels/services/channel.service';
 import { RewardHistoryService } from '../reward/services/reward-history.service';
 import { NFTCollectionService } from './services/nft-collection.service';
+import { DonateService } from '../donates/services/donate.service';
+import { RewardService } from '../reward/services/reward.service';
 
 import {
   NFTCollection,
@@ -23,7 +25,11 @@ import {
   RewardHistorySchema,
 } from '../reward/models/reward-history.model';
 import { Reward, RewardSchema } from '../reward/models/reward.model';
-import { RewardService } from '../reward/services/reward.service';
+import {
+  Donate,
+  DonateSchema,
+} from '../donates/models/donate.model';
+
 
 @Module({
   imports: [
@@ -52,6 +58,10 @@ import { RewardService } from '../reward/services/reward.service';
         name: Reward.name,
         schema: RewardSchema,
       },
+      {
+        name: Donate.name,
+        schema: DonateSchema,
+      },
     ]),
   ],
   controllers: [NftController],
@@ -63,6 +73,7 @@ import { RewardService } from '../reward/services/reward.service';
     ChannelService,
     RewardHistoryService,
     RewardService,
+    DonateService,
   ],
   exports: [NFTCollectionService, NFTInfoService, NFTReceiveService],
 })

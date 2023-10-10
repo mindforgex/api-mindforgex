@@ -33,6 +33,7 @@ export interface IChannel {
   nftInfos?: NFTInfo[];
   userSubcribe: Array<string>;
   aboutMe: string;
+  donateReceiver: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

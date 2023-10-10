@@ -68,6 +68,9 @@ export class Channel implements IChannel {
 
   @Prop({ default: '' })
   aboutMe: string;
+
+  @Prop({ default: '' })
+  donateReceiver: string;
 }
 
 export type ChannelDocument = Channel & Document;

@@ -41,7 +41,7 @@
     "@nestjs/swagger": "^6.2.1",
     "@solana/spl-account-compression": "^0.1.10",
     "@solana/spl-token": "^0.3.8",
-    "@solana/web3.js": "^1.78.5",
+    "@solana/web3.js": "^1.87.0",
     "axios": "^1.5.0",
     "bs58": "^5.0.0",
     "cache-manager": "^5.2.3",
