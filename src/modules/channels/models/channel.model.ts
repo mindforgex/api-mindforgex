@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { IChannel, Social, Country } from '../interfaces/channel.interface';
 import { Post } from '../../posts/models/post.model';
-import { NFTInfo } from '../../nfts/models/nft-info.model';
+import { NFTCollection } from 'src/modules/nfts/models/nft-collection.model';
 
 @Schema({ timestamps: true })
 export class Channel implements IChannel {
@@ -60,8 +60,8 @@ export class Channel implements IChannel {
   @Prop({ type: [{ type: Types.ObjectId, ref: Post.name }] })
   posts: Post[];
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: NFTInfo.name }] })
-  nftInfos: NFTInfo[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: NFTCollection.name }] })
+  nftCollections: NFTCollection[];
 
   @Prop({ default: [] })
   userSubcribe: Array<string>;

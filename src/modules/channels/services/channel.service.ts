@@ -17,13 +17,13 @@ export class ChannelService extends BaseService<ChannelDocument> {
   }
 
   private readonly defaultSelectFields: string =
-    '-posBadRequestExceptionts, -nftInfos';
+    '-posBadRequestExceptionts, -nftCollections';
 
   public findOneById = (channelId: string, selectFields?: string) =>
     this.channelModel
       .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields)
       .populate([
-        'nftInfos',
+        'nftCollections',
         { path: 'posts', populate: { path: 'tasks', model: 'Task' } },
         { path: 'posts', populate: { path: 'nftId' } },
       ])
