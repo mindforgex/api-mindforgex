@@ -151,27 +151,44 @@ export class ChannelService extends BaseService<ChannelDocument> {
       .lean();
   }
 
+  public async genTransaction(channelId: string, requestData: any, body: any) {
+    const userAddress = requestData.walletAddress;
+    const selectFields = "_id, donateReceiver";
+    const channel =  this.channelModel
+      .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields);
+    if (!channel) {
+      return '';
+    }
+    const receiverAddress = (await channel).donateReceiver;
+    const lamports = parseInt(process.env.LAMPORTS);
+
+    const publicKeySender = new PublicKey(userAddress);
+    const publicKeyReciever = new PublicKey(receiverAddress);
+    const amountLamports = body.amount * lamports; // 1 SOL = 1,000,000,000 lamports
+
+    const transaction = new Transaction().add(
+      SystemProgram.transfer({
+        fromPubkey: publicKeySender,
+        toPubkey: publicKeyReciever,
+        lamports: amountLamports,
+      })
+    );
+
+    return transaction;
+  }
+
   public async donateToChannel(channelId: string, requestData: any, body: any) {
     const selectFields = "_id, donateReceiver";
     const channel =  this.channelModel
-    .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields);
+      .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields);
 
-    const lamports = parseInt(process.env.LAMPORTS);
-    const senderAddress = body.sender;
+    if (!channel) {
+      return false;
+    }
+
+    const senderAddress = requestData.walletAddress;
     const receiverAddress = (await channel).donateReceiver;
     try {
-      const publicKeySender = new PublicKey(senderAddress);
-      const publicKeyReciever = new PublicKey(receiverAddress);
-      const amountLamports = body.amount * lamports; // 1 SOL = 1,000,000,000 lamports
-
-      const transaction = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: publicKeySender,
-          toPubkey: publicKeyReciever,
-          lamports: amountLamports,
-        })
-      );
-
       // store data donate
       const data = {
         'channelId': channelId,
@@ -182,13 +199,15 @@ export class ChannelService extends BaseService<ChannelDocument> {
       };
       const donateItem = await this.donateService.storeDonate(data);
 
-      return {
-        'transaction': transaction
-      };
+      await this.channelModel.updateOne(
+        { _id: channelId },
+        { $push: { donates: donateItem } }
+      );
+
+      return true;
     } catch (error) {
       console.error(error);
       throw new Error('Transfer failed');
     }
-    return true;
   }
 }

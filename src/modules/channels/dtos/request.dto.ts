@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsOptional } from 'class-validator';
+import { IsIn, IsOptional, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 import { PaginateDto } from 'src/common/classes';
 
@@ -10,4 +10,11 @@ export class GetListChannelDto extends PaginateDto {
   @IsOptional()
   @IsIn(Object.keys(SORT_CONDITION))
   sortCondition: string;
+}
+
+export class DonateChannelDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  amount: number
 }

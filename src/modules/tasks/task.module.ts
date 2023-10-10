@@ -27,6 +27,6 @@ import { Donate, DonateSchema } from '../donates/models/donate.model';
   ],
   controllers: [TaskController],
   providers: [TaskService, ChannelService, DonateService],
-  exports: [TaskService, ChannelService, DonateService],
+  exports: [TaskService, ChannelService],
 })
 export class TaskModule {}
