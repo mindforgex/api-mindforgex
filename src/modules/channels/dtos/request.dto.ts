@@ -12,9 +12,21 @@ export class GetListChannelDto extends PaginateDto {
   sortCondition: string;
 }
 
+export class GenTransactionDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  amount: number
+}
+
 export class DonateChannelDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsNumber()
   amount: number
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  tx: string
 }

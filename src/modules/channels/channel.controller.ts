@@ -14,7 +14,7 @@ import {
   ApiTags,
   ApiBadRequestResponse,
 } from '@nestjs/swagger';
-import { GetListChannelDto, DonateChannelDto } from './dtos/request.dto';
+import { GetListChannelDto, GenTransactionDto, DonateChannelDto } from './dtos/request.dto';
 import {
   GetListChannelResponseDto,
   ChannelDetaitResponseDto,
@@ -67,7 +67,7 @@ export class ChannelController {
   async genTransaction(
     @Param('id') channelId: string,
     @UserParams() requestData,
-    @Body() body: DonateChannelDto,
+    @Body() body: GenTransactionDto,
   ): Promise<any> {
     const result = await this.channelService.genTransaction(channelId, requestData, body);
 
@@ -83,10 +83,6 @@ export class ChannelController {
   ): Promise<any> {
     const result = await this.channelService.donateToChannel(channelId, requestData, body);
 
-    if (result) {
-      return { message: 'Donate To Channel Successfully' };
-    }
-
-    return { message: 'Donate To Channel Failed'};
+    return { message: 'Donate To Channel Successfully' };
   }
 }
