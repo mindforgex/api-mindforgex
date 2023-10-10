@@ -3,6 +3,7 @@ import { Document, Types } from 'mongoose';
 import { IChannel, Social, Country } from '../interfaces/channel.interface';
 import { Post } from '../../posts/models/post.model';
 import { NFTCollection } from 'src/modules/nfts/models/nft-collection.model';
+import { Donate } from '../../donates/models/donate.model';
 
 @Schema({ timestamps: true })
 export class Channel implements IChannel {
@@ -71,6 +72,9 @@ export class Channel implements IChannel {
 
   @Prop({ default: '' })
   donateReceiver: string;
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: Donate.name }] })
+  donates: Donate[];
 }
 
 export type ChannelDocument = Channel & Document;

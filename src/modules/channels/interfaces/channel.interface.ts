@@ -1,5 +1,6 @@
 import { Post } from 'src/modules/posts/models/post.model';
 import { NFTInfo } from 'src/modules/nfts/models/nft-info.model';
+import { Donate } from 'src/modules/donates/models/donate.model';
 
 export interface Social {
   url: string;
@@ -34,6 +35,7 @@ export interface IChannel {
   userSubcribe: Array<string>;
   aboutMe: string;
   donateReceiver: string;
+  donates?: Donate[];
   createdAt?: Date;
   updatedAt?: Date;
 }

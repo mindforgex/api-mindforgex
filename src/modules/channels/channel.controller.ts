@@ -14,7 +14,7 @@ import {
   ApiTags,
   ApiBadRequestResponse,
 } from '@nestjs/swagger';
-import { GetListChannelDto } from './dtos/request.dto';
+import { GetListChannelDto, DonateChannelDto } from './dtos/request.dto';
 import {
   GetListChannelResponseDto,
   ChannelDetaitResponseDto,
@@ -62,19 +62,31 @@ export class ChannelController {
     return { message: 'Subscribed successfully' };
   }
 
+  @Post(':id/gen_transaction')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async genTransaction(
+    @Param('id') channelId: string,
+    @UserParams() requestData,
+    @Body() body: DonateChannelDto,
+  ): Promise<any> {
+    const result = await this.channelService.genTransaction(channelId, requestData, body);
+
+    return { transaction: result };
+  }
+
   @Post(':id/donate')
-  // @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async donateToChannel(
     @Param('id') channelId: string,
     @UserParams() requestData,
-    @Body() body,
+    @Body() body: DonateChannelDto,
   ): Promise<any> {
-    // body = {
-    //   sender: '6hMrSrbGueb2F6mTVvuR4PhgG97Haq2VEbfsyrgACfFS',
-    //   amount: 0.002
-    // }
     const result = await this.channelService.donateToChannel(channelId, requestData, body);
 
-    return { message: 'Donate To Channel Successfully' };
+    if (result) {
+      return { message: 'Donate To Channel Successfully' };
+    }
+
+    return { message: 'Donate To Channel Failed'};
   }
 }
