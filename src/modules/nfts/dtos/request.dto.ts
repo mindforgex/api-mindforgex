@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsIn, IsOptional, IsString } from 'class-validator';
 
 import { PaginateDto } from 'src/common/classes';
 
@@ -36,14 +36,10 @@ export class RequestExchangeCollectionDto {
 export class ConfirmExchangeCollectionDto {
   @ApiProperty()
   @IsString()
-  readonly collectionId: string;
-
-  @ApiProperty()
-  @IsString()
   readonly channelId: string;
 
   @ApiProperty()
-  @IsString()
+  @IsArray()
   readonly txnSignature: string[];
 
   @ApiProperty()

@@ -15,8 +15,8 @@ export class RewardHistory implements IRewardHistory {
   @Prop({ required: true, type: Types.ObjectId, ref: 'Reward' })
   reward_id: IRewardHistory['reward_id'];
 
-  @Prop({ required: true, type: Types.ObjectId, ref: 'NFTCollection' })
-  nft_collection_id: IRewardHistory['nft_collection_id'];
+  @Prop({ required: true, type: String, ref: 'NFTCollection' })
+  nft_collection_address: IRewardHistory['nft_collection_address'];
 
   @Prop({ default: STATUS.PROCESSING, type: 'string' })
   status: IRewardHistory['status'];

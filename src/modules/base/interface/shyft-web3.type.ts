@@ -32,6 +32,7 @@ export interface IGetCollectionResponse {
 }
 
 export interface ICreateNFTCollectionForm extends JsonMetadata {
+  _id?: string;
   imageBuffer?: Buffer;
   payer?: string;
   externalUrl?: string;

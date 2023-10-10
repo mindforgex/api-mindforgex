@@ -1,0 +1,11 @@
+[
+  {
+    "_id":  "652416c6dcae6baf16d7d0a0",
+    "channel_id": "650c2cf2042aef782518e552",
+    "name": "Teddy",
+    "description": "Teddy is exchanged from collection Lisa Anniversary",
+    "image_uri": "https://images.unsplash.com/photo-1602734846297-9299fc2d4703?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGVkZHl8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+    "amount": 1,
+    "nft_collection_address": ""
+  }
+]

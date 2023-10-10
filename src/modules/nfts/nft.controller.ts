@@ -37,7 +37,6 @@ import { NFTCollectionService } from './services/nft-collection.service';
 import { MongoIdDto } from 'src/common/classes';
 import { JsonMetadata } from '../base/interface/wrapped-solana-connection.type';
 import { INFTCollection } from './interfaces/nft-info.interface';
-import { Types } from 'mongoose';
 import {
   ConfirmExchangeCollectionDto,
   RequestExchangeCollectionDto,
@@ -121,7 +120,7 @@ export class NftController {
     @UserParams() userParams: IUser,
   ): Promise<GetListCollectionResponseDto> {
     const channelCollectionData = await this.nftCollectionService.find({
-      channel_id: new Types.ObjectId(channelId),
+      channel_id: channelId,
     });
 
     for (const _collection of channelCollectionData) {

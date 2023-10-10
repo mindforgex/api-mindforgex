@@ -8,6 +8,7 @@ import { ShyftWeb3Service } from 'src/modules/base/services/shyft-web3.service';
 import { NFTReceive, NFTReceiveDocument } from '../models/nft-receive.model';
 import { WrapperConnection } from 'src/modules/base/services/wrapped-solana-connection.service';
 import { ReadApiAsset } from 'src/modules/base/interface/wrapped-solana-connection.type';
+import axios from 'axios';
 
 @Injectable()
 export class NFTReceiveService extends BaseService<NFTReceiveDocument> {
@@ -68,10 +69,18 @@ export class NFTReceiveService extends BaseService<NFTReceiveDocument> {
         ownerAddress: walletAddress,
       });
 
-      result = items.filter((_item) => _item.compression.compressed);
-      return result;
+      result = await Promise.all(
+        items
+          .filter((_item) => _item.compression.compressed)
+          .map(async (_item) => {
+            const { data } = await axios.get(_item.content.json_uri);
+            _item.content.metadata.attributes = data.attributes;
+            return _item;
+          }),
+      );
     } catch (error) {
       this.logger.error(__filename, error);
     }
+    return result;
   };
 }
