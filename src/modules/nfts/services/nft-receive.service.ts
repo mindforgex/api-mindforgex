@@ -71,7 +71,7 @@ export class NFTReceiveService extends BaseService<NFTReceiveDocument> {
 
       result = await Promise.all(
         items
-          .filter((_item) => _item.compression.compressed)
+          .filter((_item) => _item.compression.compressed && !_item.burnt)
           .map(async (_item) => {
             const { data } = await axios.get(_item.content.json_uri);
             _item.content.metadata.attributes = data.attributes;
