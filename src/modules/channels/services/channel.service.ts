@@ -7,7 +7,7 @@ import { SORT_CONDITION } from '../constants/channel.constant';
 import { BaseService } from 'src/modules/base/services/base.service';
 import { Channel, ChannelDocument } from '../models/channel.model';
 import { DonateService } from 'src/modules/donates/services/donate.service';
-import { Connection, Keypair, PublicKey, Transaction, TransactionInstruction, SystemProgram } from '@solana/web3.js';
+import { Connection, PublicKey, Transaction, TransactionResponse, SystemProgram } from '@solana/web3.js';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
@@ -166,6 +166,8 @@ export class ChannelService extends BaseService<ChannelDocument> {
     const publicKeyReciever = new PublicKey(receiverAddress);
     const amountLamports = body.amount * lamports; // 1 SOL = 1,000,000,000 lamports
 
+    const connection = new Connection(process.env.SONALA_NETWORk);
+    const latestBlockhash = await connection.getLatestBlockhash();
     const transaction = new Transaction().add(
       SystemProgram.transfer({
         fromPubkey: publicKeySender,
@@ -173,6 +175,9 @@ export class ChannelService extends BaseService<ChannelDocument> {
         lamports: amountLamports,
       })
     );
+
+    transaction.feePayer = publicKeySender;
+    transaction.recentBlockhash = latestBlockhash.blockhash;
 
     return transaction;
   }
@@ -183,11 +188,33 @@ export class ChannelService extends BaseService<ChannelDocument> {
       .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields);
 
     if (!channel) {
-      return false;
+      throw new Error('Channel not found');
     }
 
     const senderAddress = requestData.walletAddress;
     const receiverAddress = (await channel).donateReceiver;
+
+    const lamports = parseInt(process.env.LAMPORTS);
+    const connection = new Connection(process.env.SONALA_NETWORk);
+    const tx = body.tx;
+    const transactionInfo: TransactionResponse = await connection.getTransaction(tx);
+    if (!transactionInfo) {
+      throw new Error('Transaction not found');
+    }
+    const {meta: {postBalances, preBalances}, transaction: { message: {accountKeys} }} = transactionInfo;
+    const [, afterBalance] = postBalances;
+    const [, beforeBalace] = preBalances;
+    const [sender] = accountKeys;
+    const [, receiver] = accountKeys;
+
+    const isSuccess = (afterBalance - beforeBalace) / lamports === body.amount
+      && sender.toBase58()  == senderAddress.toBase58()
+      && receiver.toBase58() == new PublicKey(receiverAddress).toBase58();
+
+    if (!isSuccess) {
+      throw new Error('Decode failed transaction');
+    }
+
     try {
       // store data donate
       const data = {
@@ -206,7 +233,6 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
       return true;
     } catch (error) {
-      console.error(error);
       throw new Error('Transfer failed');
     }
   }
