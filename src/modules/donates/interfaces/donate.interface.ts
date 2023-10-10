@@ -8,6 +8,7 @@ export interface IDonate {
   channelWallet: string;
   amount: number;
   dateTimeDonate: Date;
+  transactionHash: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

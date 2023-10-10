@@ -7,7 +7,7 @@ import { SORT_CONDITION } from '../constants/channel.constant';
 import { BaseService } from 'src/modules/base/services/base.service';
 import { Channel, ChannelDocument } from '../models/channel.model';
 import { DonateService } from 'src/modules/donates/services/donate.service';
-import { Connection, PublicKey, Transaction, TransactionResponse, SystemProgram } from '@solana/web3.js';
+import { Connection, PublicKey, Transaction, TransactionResponse, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
@@ -160,11 +160,10 @@ export class ChannelService extends BaseService<ChannelDocument> {
       return '';
     }
     const receiverAddress = (await channel).donateReceiver;
-    const lamports = parseInt(process.env.LAMPORTS);
 
     const publicKeySender = new PublicKey(userAddress);
     const publicKeyReciever = new PublicKey(receiverAddress);
-    const amountLamports = body.amount * lamports; // 1 SOL = 1,000,000,000 lamports
+    const amountLamports = body.amount * LAMPORTS_PER_SOL; // 1 SOL = 1,000,000,000 lamports
 
     const connection = new Connection(process.env.SOLANA_NETWORK);
     const latestBlockhash = await connection.getLatestBlockhash();
@@ -194,7 +193,6 @@ export class ChannelService extends BaseService<ChannelDocument> {
     const senderAddress = requestData.walletAddress;
     const receiverAddress = (await channel).donateReceiver;
 
-    const lamports = parseInt(process.env.LAMPORTS);
     const connection = new Connection(process.env.SOLANA_NETWORK);
     const tx = body.tx;
     const transactionInfo: TransactionResponse = await connection.getTransaction(tx);
@@ -207,8 +205,8 @@ export class ChannelService extends BaseService<ChannelDocument> {
     const [sender] = accountKeys;
     const [, receiver] = accountKeys;
 
-    const isSuccess = (afterBalance - beforeBalace) / lamports === body.amount
-      && sender.toBase58()  == senderAddress.toBase58()
+    const isSuccess = (afterBalance - beforeBalace) / LAMPORTS_PER_SOL === body.amount
+      && sender.toBase58()  == new PublicKey(senderAddress).toBase58()
       && receiver.toBase58() == new PublicKey(receiverAddress).toBase58();
 
     if (!isSuccess) {
@@ -216,13 +214,18 @@ export class ChannelService extends BaseService<ChannelDocument> {
     }
 
     try {
+      const donate = this.donateService.findByTx(tx);
+      if (donate) {
+        throw new Error('Tx invalid');
+      }
       // store data donate
       const data = {
         'channelId': channelId,
         'userWallet': senderAddress,
         'channelWallet': receiverAddress,
         'amount':  body.amount,
-        'dateTimeDonate': new Date()
+        'transactionHash': tx,
+        'dateTimeDonate': new Date(),
       };
       const donateItem = await this.donateService.storeDonate(data);
 
