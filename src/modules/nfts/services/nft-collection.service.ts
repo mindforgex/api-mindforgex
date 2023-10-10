@@ -118,7 +118,9 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
 
       result = await Promise.all(
         items
-          .filter((_item) => _item.ownership.owner === walletAddress)
+          .filter(
+            (_item) => _item.ownership.owner === walletAddress && !_item.burnt,
+          )
           .map(async (_item) => {
             const { data } = await axios.get(_item.content.json_uri);
             _item.content.metadata.attributes = data.attributes;
