@@ -18,6 +18,9 @@ export class Donate implements IDonate {
 
   @Prop({ default: new Date() })
   dateTimeDonate: Date;
+
+  @Prop({ default: '' })
+  transactionHash: string;;
 }
 
 export type DonateDocument = Donate & Document;
