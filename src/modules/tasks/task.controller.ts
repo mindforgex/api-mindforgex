@@ -1,29 +1,25 @@
-import { Controller, Get, Post, Query, Res, UseGuards, Param, Body } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOkResponse,
-  ApiTags,
-  ApiBadRequestResponse,
-} from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { GetListTaskDto } from './dtos/request.dto';
-import {
-  GetListTaskResponseDto,
-  TaskDetailResponseDto,
-} from './dtos/response.dto';
+import { TaskDetailResponseDto } from './dtos/response.dto';
 
+import { PostService } from '../posts/services/post.service';
+import { TaskService } from './services/task.service';
+
+import { MongoIdDto } from 'src/common/classes';
+import { Role } from 'src/modules/users/constants/user.constant';
+
+import { UserParams } from 'src/decorators/user-params.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
-import { TaskService } from './services/task.service';
-import { MongoIdDto } from 'src/common/classes';
-
-import { Role } from 'src/modules/channels/constants/channel.constant';
-import { UserParams } from 'src/decorators/user-params.decorator';
 
 @ApiTags('tasks')
 @Controller('tasks')
 export class TaskController {
-  constructor(private readonly taskService: TaskService) {}
+  constructor(
+    private readonly taskService: TaskService,
+    private readonly postService: PostService,
+  ) {}
 
   @Get('/:id')
   @ApiOkResponse({ type: TaskDetailResponseDto })
@@ -37,10 +33,18 @@ export class TaskController {
   async verifyTask(
     @Param('id') taskId: string,
     @UserParams() requestData,
-    @Body() body,
+    @Body() body: any,
   ): Promise<any> {
-    const result = await this.taskService.verify(taskId, requestData, body);
+    const { taskType, taskInfo } = await this.taskService.findOneById(taskId);
 
-    return { message: 'Verify successfully' };
+    await this.taskService.verify(
+      taskId,
+      taskType,
+      taskInfo,
+      requestData,
+      body,
+    );
+
+    return { message: `Verify success` };
   }
 }

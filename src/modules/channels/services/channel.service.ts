@@ -7,7 +7,14 @@ import { SORT_CONDITION } from '../constants/channel.constant';
 import { BaseService } from 'src/modules/base/services/base.service';
 import { Channel, ChannelDocument } from '../models/channel.model';
 import { DonateService } from 'src/modules/donates/services/donate.service';
-import { Connection, PublicKey, Transaction, TransactionResponse, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
+import {
+  Connection,
+  PublicKey,
+  Transaction,
+  TransactionResponse,
+  SystemProgram,
+  LAMPORTS_PER_SOL,
+} from '@solana/web3.js';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
@@ -146,16 +153,18 @@ export class ChannelService extends BaseService<ChannelDocument> {
   }
 
   public async getChannelByUserSubscribe(channelId: string, userAddr: string) {
-    return await this.channelModel
+    return this.channelModel
       .findOne({ _id: channelId, userSubcribe: { $in: [userAddr] } })
       .lean();
   }
 
   public async genTransaction(channelId: string, requestData: any, body: any) {
     const userAddress = requestData.walletAddress;
-    const selectFields = "_id, donateReceiver";
-    const channel =  this.channelModel
-      .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields);
+    const selectFields = '_id, donateReceiver';
+    const channel = this.channelModel.findOne(
+      { _id: channelId },
+      selectFields ?? this.defaultSelectFields,
+    );
     if (!channel) {
       return '';
     }
@@ -172,7 +181,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
         fromPubkey: publicKeySender,
         toPubkey: publicKeyReciever,
         lamports: amountLamports,
-      })
+      }),
     );
 
     transaction.feePayer = publicKeySender;
@@ -182,9 +191,11 @@ export class ChannelService extends BaseService<ChannelDocument> {
   }
 
   public async donateToChannel(channelId: string, requestData: any, body: any) {
-    const selectFields = "_id, donateReceiver";
-    const channel =  this.channelModel
-      .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields);
+    const selectFields = '_id, donateReceiver';
+    const channel = this.channelModel.findOne(
+      { _id: channelId },
+      selectFields ?? this.defaultSelectFields,
+    );
 
     if (!channel) {
       throw new Error('Channel not found');
@@ -195,19 +206,26 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
     const connection = new Connection(process.env.SOLANA_NETWORK);
     const tx = body.tx;
-    const transactionInfo: TransactionResponse = await connection.getTransaction(tx);
+    const transactionInfo: TransactionResponse =
+      await connection.getTransaction(tx);
     if (!transactionInfo) {
       throw new Error('Transaction not found');
     }
-    const {meta: {postBalances, preBalances}, transaction: { message: {accountKeys} }} = transactionInfo;
+    const {
+      meta: { postBalances, preBalances },
+      transaction: {
+        message: { accountKeys },
+      },
+    } = transactionInfo;
     const [, afterBalance] = postBalances;
     const [, beforeBalace] = preBalances;
     const [sender] = accountKeys;
     const [, receiver] = accountKeys;
 
-    const isSuccess = (afterBalance - beforeBalace) / LAMPORTS_PER_SOL === body.amount
-      && sender.toBase58()  == new PublicKey(senderAddress).toBase58()
-      && receiver.toBase58() == new PublicKey(receiverAddress).toBase58();
+    const isSuccess =
+      (afterBalance - beforeBalace) / LAMPORTS_PER_SOL === body.amount &&
+      sender.toBase58() == new PublicKey(senderAddress).toBase58() &&
+      receiver.toBase58() == new PublicKey(receiverAddress).toBase58();
 
     if (!isSuccess) {
       throw new Error('Decode failed transaction');
@@ -220,18 +238,18 @@ export class ChannelService extends BaseService<ChannelDocument> {
       }
       // store data donate
       const data = {
-        'channelId': channelId,
-        'userWallet': senderAddress,
-        'channelWallet': receiverAddress,
-        'amount':  body.amount,
-        'transactionHash': tx,
-        'dateTimeDonate': new Date(),
+        channelId: channelId,
+        userWallet: senderAddress,
+        channelWallet: receiverAddress,
+        amount: body.amount,
+        transactionHash: tx,
+        dateTimeDonate: new Date(),
       };
       const donateItem = await this.donateService.storeDonate(data);
 
       await this.channelModel.updateOne(
         { _id: channelId },
-        { $push: { donates: donateItem } }
+        { $push: { donates: donateItem } },
       );
 
       return true;

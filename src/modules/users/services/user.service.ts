@@ -24,9 +24,12 @@ export class UserService extends BaseService<UserDocument> {
       .findOne({ _id: userId }, selectFields ?? this.defaultSelectFields)
       .lean();
 
-  public findOneByEmail = (email: string, selectFields?: string) =>
+  public findOneByWalletAddress = (
+    walletAddress: string,
+    selectFields?: string,
+  ) =>
     this.userModel
-      .findOne({ email }, selectFields ?? this.defaultSelectFields)
+      .findOne({ walletAddress }, selectFields ?? this.defaultSelectFields)
       .lean();
 
   async findByWalletAddressAndUpsert(

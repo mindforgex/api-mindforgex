@@ -27,6 +27,15 @@ export class User implements IUser {
 
   @Prop({ default: DEFAULT_USER_NONCE })
   nonce: number;
+
+  @Prop()
+  hasDiscord: boolean;
+
+  @Prop()
+  discordId: string;
+
+  @Prop()
+  discordUserName: string;
 }
 
 export type UserDocument = User & Document;
