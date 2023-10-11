@@ -55,8 +55,7 @@ export class TaskService extends BaseService<TaskDocument> {
     requestData: any,
     body: any,
   ): Promise<any> {
-    // const userVerify = requestData.walletAddress;
-    const userVerify = '4yRYALSV8CrvyZ746jKphNRYq6ywdQadKwGsHxGtebr1';
+    const userVerify = requestData.walletAddress;
     const channelId = body.channelId;
     const taskVerified = await this.taskModel.findOne({
       _id: taskId,
