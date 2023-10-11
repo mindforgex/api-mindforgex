@@ -9,7 +9,10 @@ type _id = string | Types.ObjectId;
 export interface INFTInfo extends JsonMetadata {
   _id?: _id;
   nft_collection_address?: string;
+
+  // extra field
   owned?: boolean; // extra field when user get collection item
+  mint?: string;
 }
 
 export interface INFTCollection {

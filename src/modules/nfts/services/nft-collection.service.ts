@@ -147,22 +147,39 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       }
 
       // filter index and optimize data
-      const itemIndexes = userNFTData.flatMap(
-        (_item) =>
-          Array.isArray(_item.content.metadata.attributes) &&
-          _item.content.metadata.attributes
-            .filter((_itemAttribute) => _itemAttribute.trait_type === 'index')
-            .map((_itemAttribute) => _itemAttribute.value),
-      );
+      const itemIndexes = userNFTData
+        .flatMap((_item) => {
+          const attributes = _item.content.metadata.attributes;
+          if (Array.isArray(attributes)) {
+            const indexAttribute = attributes.find(
+              (attr) => attr.trait_type === 'index',
+            );
+            if (indexAttribute) {
+              return {
+                mint: _item.id,
+                index: indexAttribute.value,
+              };
+            }
+          }
+          return null;
+        })
+        .filter(Boolean); // filter out null values
 
       // check owned
-      for (const _collectionItems of collectionData.nft_info) {
-        _collectionItems.owned = _collectionItems.attributes.some(
-          (_collectionAttribute) =>
-            _collectionAttribute.trait_type === 'index' &&
-            itemIndexes.includes(_collectionAttribute.value),
+      collectionData.nft_info.forEach((_collectionItems) => {
+        const indexAttribute = _collectionItems.attributes.find(
+          (attr) => attr.trait_type === 'index',
         );
-      }
+        if (indexAttribute) {
+          const ownedItem = itemIndexes.find(
+            (_item) => _item.index === indexAttribute.value,
+          );
+          if (ownedItem) {
+            _collectionItems.owned = true;
+            _collectionItems.mint = ownedItem.mint;
+          }
+        }
+      });
     } catch (error) {
       this.logger.error(__filename, error);
     }
