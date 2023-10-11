@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsOptional } from 'class-validator';
+import { IsIn, IsOptional, IsNotEmpty } from 'class-validator';
 
 import { PaginateDto } from 'src/common/classes';
 
@@ -10,4 +10,14 @@ export class GetListUserDto extends PaginateDto {
   @IsOptional()
   @IsIn(Object.keys(SORT_CONDITION))
   sortCondition: string;
+}
+
+export class ConnectDiscordDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  discordId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  discordUsername: string;
 }

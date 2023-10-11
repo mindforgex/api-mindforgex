@@ -35,7 +35,7 @@ export class User implements IUser {
   discordId: string;
 
   @Prop()
-  discordUserName: string;
+  discordUsername: string;
 }
 
 export type UserDocument = User & Document;

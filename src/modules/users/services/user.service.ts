@@ -90,4 +90,15 @@ export class UserService extends BaseService<UserDocument> {
   }
 
   public findAll = () => this.userModel.find().lean();
+
+  public updateDiscordInfo = async (
+    walletAddress: string,
+    discordId: string,
+    discordUsername: string,
+  ) => {
+    await this.userModel.updateOne(
+      { walletAddress },
+      { hasDiscord: true, discordId, discordUsername },
+    );
+  };
 }
