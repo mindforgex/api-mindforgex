@@ -2,6 +2,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { ITask } from '../interfaces/task.interface';
+import { TASK_TYPE } from '../constants/task.constant';
+
+import { TaskSnsDto } from '../dtos/request.dto';
 
 @Schema({ timestamps: true })
 export class Task implements ITask {
@@ -16,6 +19,12 @@ export class Task implements ITask {
 
   @Prop({ default: [] })
   userAddress: Array<string>;
+
+  @Prop({})
+  taskType: TASK_TYPE;
+
+  @Prop({})
+  taskInfo: TaskSnsDto;
 }
 
 export type TaskDocument = Task & Document;

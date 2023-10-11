@@ -4,13 +4,20 @@ import { Model, Types } from 'mongoose';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 import { ChannelService } from 'src/modules/channels/services/channel.service';
+import { DiscordService } from './discord.service';
+import { UserService } from 'src/modules/users/services/user.service';
+
 import { Task, TaskDocument } from '../models/task.model';
+
+import { TASK_TYPE } from '../constants/task.constant';
 @Injectable()
 export class TaskService extends BaseService<TaskDocument> {
   constructor(
     @InjectModel(Task.name)
     private readonly taskModel: Model<TaskDocument>,
     private readonly channelService: ChannelService,
+    private readonly userService: UserService,
+    private readonly discordService: DiscordService,
   ) {
     super(taskModel);
   }
@@ -41,19 +48,46 @@ export class TaskService extends BaseService<TaskDocument> {
       .findOne({ _id: taskId }, selectFields ?? this.defaultSelectFields)
       .lean();
 
-  async verify(taskId: string, requestData: any, body: any): Promise<any> {
-    const userVerify = requestData.walletAddress;
+  async verify(
+    taskId: string,
+    taskType: TASK_TYPE,
+    taskInfo: any,
+    requestData: any,
+    body: any,
+  ): Promise<any> {
+    // const userVerify = requestData.walletAddress;
+    const userVerify = '4yRYALSV8CrvyZ746jKphNRYq6ywdQadKwGsHxGtebr1';
     const channelId = body.channelId;
+    const taskVerified = await this.taskModel.findOne({
+      _id: taskId,
+      userAddress: { $in: [userVerify] },
+    });
+
+    if (taskVerified) throw new BadRequestException('already verified');
 
     try {
-      // check user subscribed.
-      const channel = await this.channelService.getChannelByUserSubscribe(
-        channelId,
-        userVerify,
-      );
+      if (taskType === TASK_TYPE.SUBSCRIBE_WEB3_CHANNEL) {
+        // check user subscribed.
+        const channel = await this.channelService.getChannelByUserSubscribe(
+          channelId,
+          userVerify,
+        );
 
-      if (!channel) {
-        throw new BadRequestException('not subscribed yet');
+        if (!channel) {
+          throw new BadRequestException('not subscribed yet');
+        }
+      } else if (taskType === TASK_TYPE.JOIN_DISCORD) {
+        const userInfo = await this.userService.findOneByWalletAddress(
+          userVerify,
+        );
+
+        const result = await this.discordService.verifyDiscordTask(
+          userInfo.discordId,
+          taskInfo.serverId,
+        );
+
+        if (!result)
+          throw new BadRequestException(`User is not in discord server`);
       }
 
       // check and insert user to user verify list.

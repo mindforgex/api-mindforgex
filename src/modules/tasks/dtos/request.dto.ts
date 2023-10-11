@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsOptional } from 'class-validator';
+import { IsIn, IsOptional, IsNotEmpty } from 'class-validator';
 
 import { PaginateDto } from 'src/common/classes';
 
@@ -10,4 +10,18 @@ export class GetListTaskDto extends PaginateDto {
   @IsOptional()
   @IsIn(Object.keys(SORT_CONDITION))
   sortCondition: string;
+}
+
+export class TaskSnsDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  title: string;
+
+  @ApiProperty()
+  @IsOptional()
+  link: string;
+
+  @ApiProperty()
+  @IsOptional()
+  serverId: string;
 }
