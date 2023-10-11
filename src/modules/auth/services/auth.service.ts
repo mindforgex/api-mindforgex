@@ -52,7 +52,14 @@ export class AuthService {
       },
     );
 
-    const { _id, nonce: nonceUpdated, role } = userUpdated;
+    const {
+      _id,
+      nonce: nonceUpdated,
+      role,
+      hasDiscord,
+      discordId,
+      discordUsername,
+    } = userUpdated;
     const jwtParams = {
       userId: _id,
       walletAddress,
@@ -62,7 +69,12 @@ export class AuthService {
 
     return {
       accessToken: this.generateJwtToken(jwtParams),
-      user: jwtParams,
+      user: {
+        ...jwtParams,
+        hasDiscord,
+        discordId,
+        discordUsername,
+      },
     };
   }
 
