@@ -232,8 +232,8 @@ export class ChannelService extends BaseService<ChannelDocument> {
     }
 
     try {
-      const donate = this.donateService.findByTx(tx);
-      if (donate) {
+      const donate = await this.donateService.findByTx(tx);
+      if (donate.length) {
         throw new Error('Tx invalid');
       }
       // store data donate
@@ -254,7 +254,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
       return true;
     } catch (error) {
-      throw new Error('Transfer failed');
+      throw new Error('Store Info Donate Fail');
     }
   }
 }
