@@ -9,6 +9,7 @@ import {
   RewardHistoryDocument,
 } from '../models/reward-history.model';
 import { IRewardHistory } from '../interfaces/reward.interface';
+import { STATUS } from '../constants/reward.constant';
 
 @Injectable()
 export class RewardHistoryService extends BaseService<RewardHistoryDocument> {
@@ -48,6 +49,7 @@ export class RewardHistoryService extends BaseService<RewardHistoryDocument> {
         {
           $match: {
             user_id: new Types.ObjectId(userId),
+            status: STATUS.COMPLETED,
           },
         },
         {

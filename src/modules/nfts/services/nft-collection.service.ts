@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 
@@ -227,6 +227,26 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       ])
       .exec() as unknown as Promise<INFTCollection[]>;
 
+  private _getNFTToBurn(array: ReadApiAsset[]) {
+    const result = array.reduce((acc: ReadApiAsset[], curr: ReadApiAsset) => {
+      const value = curr.content.metadata.attributes.find(
+        (attr) => attr.trait_type === 'index',
+      ).value;
+      if (
+        !acc.find(
+          (item) =>
+            item.content.metadata.attributes.find(
+              (attr) => attr.trait_type === 'index',
+            ).value === value,
+        )
+      ) {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+    return result;
+  }
+
   public requestExchangeCollection = async (
     payload: RequestExchangeCollectionDto,
     userParam: IUser,
@@ -249,13 +269,15 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       );
       this.checkOwnedByWalletAddress(collectionData, userNFTByCollection);
 
-      const isUserOwnedAllNFT = collectionData.nft_info.some(
-        (_item) => !_item.owned,
+      const isUserOwnedAllNFT = collectionData.nft_info.every(
+        (_item) => _item.owned,
       );
-      if (isUserOwnedAllNFT) {
-        this.logger.error("User hasn't owned all NFT");
-        return;
+
+      // pick 1 nft of each type
+      if (!isUserOwnedAllNFT) {
+        throw new InternalServerErrorException("User hasn't owned all NFT");
       }
+      const _needToBurnNFT = this._getNFTToBurn(userNFTByCollection);
 
       // insert reward_history with status "processing"
       const insertRewardHistoryResp =
@@ -270,7 +292,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         ]);
       // get burn many compressed nft transaction encoded from Shyft
       const encodedTransactions = await this.shyftWeb3Service.burnMany(
-        userNFTByCollection.map((_nft) => _nft.id),
+        _needToBurnNFT.map((_nft) => _nft.id),
         userParam.walletAddress,
       );
       // return
