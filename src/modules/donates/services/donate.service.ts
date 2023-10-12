@@ -85,6 +85,6 @@ export class DonateService extends BaseService<DonateDocument> {
   }
 
   public async findByTx(tx: string) {
-    return await this.donateModel.find({ transactionHash: tx }).lean();
+    return this.donateModel.findOne({ transactionHash: tx }).lean();
   }
 }
