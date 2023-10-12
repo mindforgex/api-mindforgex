@@ -29,15 +29,26 @@ export class ChannelService extends BaseService<ChannelDocument> {
   private readonly defaultSelectFields: string =
     '-posBadRequestExceptionts, -nftCollections';
 
-  public findOneById = (channelId: string, selectFields?: string) =>
-    this.channelModel
+  public async findOneById (channelId: string, selectFields?: string) {
+    const channelQuery = this.channelModel
       .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields)
       .populate([
         'nftCollections',
+        'donates',
         { path: 'posts', populate: { path: 'tasks', model: 'Task' } },
         { path: 'posts', populate: { path: 'nftId' } },
       ])
       .lean();
+    const channel = await channelQuery.exec();
+
+    const numberPosts = channel.posts.length ?? 0;
+    const numberSubscribers = channel.userSubcribe.length ?? 0;
+    const numberCollections = channel.nftCollections.length ?? 0;
+
+    return {
+      ...channel, numberPosts, numberSubscribers, numberCollections
+    }
+  }
 
   public async getListChannel(queryParams: any) {
     const conditions = { ...queryParams };
@@ -196,6 +207,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
       { _id: channelId },
       selectFields ?? this.defaultSelectFields,
     );
+    const amountDonate = (await channel).amountDonate;
 
     if (!channel) {
       throw new Error('Channel not found');
@@ -246,10 +258,16 @@ export class ChannelService extends BaseService<ChannelDocument> {
         dateTimeDonate: new Date(),
       };
       const donateItem = await this.donateService.storeDonate(data);
+      const newAmountDonate = amountDonate + body.amount;
 
       await this.channelModel.updateOne(
         { _id: channelId },
-        { $push: { donates: donateItem } },
+        { $push: { donates: donateItem} },
+      );
+
+      await this.channelModel.findByIdAndUpdate(
+        channelId,
+        { $set: { amountDonate: newAmountDonate } }
       );
 
       return true;
