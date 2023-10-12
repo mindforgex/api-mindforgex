@@ -29,7 +29,11 @@ export class NFTOrderService extends BaseService<OrderDocument> {
   }
 
   async listingOrder(params: any, user: IUser) {
-    const listingParams = { ...params, seller: user.walletAddress };
+    const listingParams = {
+      ...params,
+      seller: user.walletAddress,
+      infoId: new Types.ObjectId(params.infoId),
+    };
     try {
       return await this.orderModel.create([listingParams]);
     } catch (error) {
@@ -186,22 +190,22 @@ export class NFTOrderService extends BaseService<OrderDocument> {
     collections: INFTCollection[],
   ) {
     const _collectionToNFT = new Map<string, INFTInfo[]>();
-    const _unOwnedNftInfoId = [];
+    const _nftInfoId = [];
     collections.forEach((_collection) => {
       _collection.nft_info.forEach((_nft) => {
-        _unOwnedNftInfoId.push(_nft._id);
+        _nftInfoId.push(_nft._id);
       });
       _collectionToNFT.set(_collection.address, _collection.nft_info);
     });
 
     try {
-      if (_unOwnedNftInfoId.length === 0) {
+      if (_nftInfoId.length === 0) {
         return collections;
       }
       const nftOrderData = await this.orderModel.find({
         seller: walletAddress,
         infoId: {
-          $in: _unOwnedNftInfoId,
+          $in: _nftInfoId,
         },
       });
       if (nftOrderData.length === 0) return collections;
