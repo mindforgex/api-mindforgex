@@ -98,13 +98,12 @@ export class TaskService extends BaseService<TaskDocument> {
         { new: true },
       );
 
-      if (!updatedTask) {
-        throw new BadRequestException('verify fail');
-      }
+      if (!updatedTask) throw new BadRequestException('verify fail');
 
       return updatedTask;
     } catch (error) {
-      throw new Error(`Error adding user to verify list: ${error.message}`);
+      this.logger.error('verify', error);
+      throw error;
     }
   }
 }
