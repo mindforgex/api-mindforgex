@@ -29,7 +29,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
   private readonly defaultSelectFields: string =
     '-posBadRequestExceptionts, -nftCollections';
 
-  public async findOneById (channelId: string, selectFields?: string) {
+  public async findOneById(channelId: string, selectFields?: string) {
     const channelQuery = this.channelModel
       .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields)
       .populate([
@@ -41,13 +41,23 @@ export class ChannelService extends BaseService<ChannelDocument> {
       .lean();
     const channel = await channelQuery.exec();
 
-    const numberPosts = channel.posts.length ?? 0;
-    const numberSubscribers = channel.userSubcribe.length ?? 0;
-    const numberCollections = channel.nftCollections.length ?? 0;
+    const numberPosts =
+      typeof channel.posts !== 'undefined' ? channel.posts.length : 0;
+    const numberSubscribers =
+      typeof channel.userSubcribe !== 'undefined'
+        ? channel.userSubcribe.length
+        : 0;
+    const numberCollections =
+      typeof channel.nftCollections !== 'undefined'
+        ? channel.nftCollections.length
+        : 0;
 
     return {
-      ...channel, numberPosts, numberSubscribers, numberCollections
-    }
+      ...channel,
+      numberPosts,
+      numberSubscribers,
+      numberCollections,
+    };
   }
 
   public async getListChannel(queryParams: any) {
@@ -172,14 +182,14 @@ export class ChannelService extends BaseService<ChannelDocument> {
   public async genTransaction(channelId: string, requestData: any, body: any) {
     const userAddress = requestData.walletAddress;
     const selectFields = '_id, donateReceiver';
-    const channel = this.channelModel.findOne(
+    const channel = await this.channelModel.findOne(
       { _id: channelId },
       selectFields ?? this.defaultSelectFields,
     );
     if (!channel) {
       return '';
     }
-    const receiverAddress = (await channel).donateReceiver;
+    const receiverAddress = channel.donateReceiver;
 
     const publicKeySender = new PublicKey(userAddress);
     const publicKeyReciever = new PublicKey(receiverAddress);
@@ -203,18 +213,17 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
   public async donateToChannel(channelId: string, requestData: any, body: any) {
     const selectFields = '_id, donateReceiver';
-    const channel = this.channelModel.findOne(
+    const channel = await this.channelModel.findOne(
       { _id: channelId },
       selectFields ?? this.defaultSelectFields,
     );
-    const amountDonate = (await channel).amountDonate;
 
     if (!channel) {
       throw new Error('Channel not found');
     }
+    const { donateReceiver: receiverAddress } = channel;
 
     const senderAddress = requestData.walletAddress;
-    const receiverAddress = (await channel).donateReceiver;
 
     const connection = new Connection(process.env.SOLANA_NETWORK);
     const tx = body.tx;
@@ -230,12 +239,12 @@ export class ChannelService extends BaseService<ChannelDocument> {
       },
     } = transactionInfo;
     const [, afterBalance] = postBalances;
-    const [, beforeBalace] = preBalances;
+    const [, beforeBalance] = preBalances;
     const [sender] = accountKeys;
     const [, receiver] = accountKeys;
 
     const isSuccess =
-      (afterBalance - beforeBalace) / LAMPORTS_PER_SOL === body.amount &&
+      (afterBalance - beforeBalance) / LAMPORTS_PER_SOL === body.amount &&
       sender.toBase58() == new PublicKey(senderAddress).toBase58() &&
       receiver.toBase58() == new PublicKey(receiverAddress).toBase58();
 
@@ -245,7 +254,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
     try {
       const donate = await this.donateService.findByTx(tx);
-      if (donate.length) {
+      if (donate) {
         throw new Error('Tx invalid');
       }
       // store data donate
@@ -258,17 +267,15 @@ export class ChannelService extends BaseService<ChannelDocument> {
         dateTimeDonate: new Date(),
       };
       const donateItem = await this.donateService.storeDonate(data);
-      const newAmountDonate = amountDonate + body.amount;
 
       await this.channelModel.updateOne(
         { _id: channelId },
-        { $push: { donates: donateItem} },
+        { $push: { donates: donateItem } },
       );
 
-      await this.channelModel.findByIdAndUpdate(
-        channelId,
-        { $set: { amountDonate: newAmountDonate } }
-      );
+      await this.channelModel.findByIdAndUpdate(channelId, {
+        $inc: { amountDonate: body.amount },
+      });
 
       return true;
     } catch (error) {
