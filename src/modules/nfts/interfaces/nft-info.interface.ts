@@ -12,7 +12,8 @@ export interface INFTInfo extends JsonMetadata {
 
   // extra field
   owned?: boolean; // extra field when user get collection item
-  mint?: string;
+  order?: object | null;
+  amount?: number;
 }
 
 export interface INFTCollection {

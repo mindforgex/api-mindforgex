@@ -29,6 +29,10 @@ import {
   Donate,
   DonateSchema,
 } from '../donates/models/donate.model';
+import { NFTOrderService } from './services/nft-order.service';
+import { Order, OrderSchema } from './models/order.model';
+import { OrderHistory, OrderHistorySchema } from './models/orderHistory.model';
+import { OrderHistoryService } from './services/order-history.service';
 
 
 @Module({
@@ -62,6 +66,14 @@ import {
         name: Donate.name,
         schema: DonateSchema,
       },
+      {
+        name: Order.name,
+        schema: OrderSchema,
+      },
+      {
+        name: OrderHistory.name,
+        schema: OrderHistorySchema,
+      },
     ]),
   ],
   controllers: [NftController],
@@ -74,6 +86,8 @@ import {
     RewardHistoryService,
     RewardService,
     DonateService,
+    NFTOrderService,
+    OrderHistoryService
   ],
   exports: [NFTCollectionService, NFTInfoService, NFTReceiveService],
 })
