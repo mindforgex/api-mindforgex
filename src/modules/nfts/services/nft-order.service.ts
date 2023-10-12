@@ -247,7 +247,6 @@ export class NFTOrderService extends BaseService<OrderDocument> {
         for (const _nftInfo of _collection.nft_info) {
           const newNftInfo = nftsInfoMap.get(_nftInfo._id);
           if (newNftInfo) {
-            _nftInfo.owned = true;
             _nftInfo.order = newNftInfo.order;
             _nftInfo.amount = newNftInfo.amount + 1;
           }
