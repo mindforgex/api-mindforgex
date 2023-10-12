@@ -36,6 +36,7 @@ export interface IChannel {
   aboutMe: string;
   donateReceiver: string;
   donates?: Donate[];
+  amountDonate: number;
   createdAt?: Date;
   updatedAt?: Date;
 }

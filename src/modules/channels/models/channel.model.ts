@@ -75,6 +75,9 @@ export class Channel implements IChannel {
 
   @Prop({ type: [{ type: Types.ObjectId, ref: Donate.name }] })
   donates: Donate[];
+
+  @Prop({ default: 0 })
+  amountDonate: number;
 }
 
 export type ChannelDocument = Channel & Document;
