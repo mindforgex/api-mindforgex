@@ -204,6 +204,7 @@ export class NFTOrderService extends BaseService<OrderDocument> {
           $in: _unOwnedNftInfoId,
         },
       });
+      if (nftOrderData.length === 0) return collections;
 
       const nftOrderMap = new Map();
       nftOrderData.forEach((_nftOrder) => {
