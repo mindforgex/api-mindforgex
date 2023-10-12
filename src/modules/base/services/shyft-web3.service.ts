@@ -6,6 +6,7 @@ import {
 import {
   Connection,
   Keypair,
+  PublicKey,
   Transaction,
   clusterApiUrl,
 } from '@solana/web3.js';
@@ -243,5 +244,44 @@ export class ShyftWeb3Service {
     }
 
     throw new InternalServerErrorException('Failed to burn cNFT');
+  }
+
+  private async encodeTransactionTransfer(params: {
+    nft_address: string;
+    receiver: string;
+  }) {
+    const shyftParams = {
+      ...params,
+      receiver: new PublicKey(params.receiver),
+      sender: new PublicKey(this.creatorWalletAddress),
+      network: this.network,
+    };
+    try {
+      const {
+        data: {
+          result: { encoded_transaction },
+        },
+      } = await this.axiosInstance.post(
+        '/sol/v1/nft/compressed/transfer',
+        shyftParams,
+      );
+      return { encode: encoded_transaction };
+    } catch (err) {
+      throw new Error('Error encode transfer');
+    }
+  }
+
+  public async transferNftByShyft(params: {
+    nft_address: string;
+    receiver: string;
+  }) {
+    const { encode } = await this.encodeTransactionTransfer(params);
+    if (encode) {
+      const txnSignature = await this.signTransaction(
+        encode,
+        this.creatorPrivateKey,
+      );
+      return { tx: txnSignature };
+    }
   }
 }

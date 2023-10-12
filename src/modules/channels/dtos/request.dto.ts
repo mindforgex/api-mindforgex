@@ -12,6 +12,13 @@ export class GetListChannelDto extends PaginateDto {
   sortCondition: string;
 }
 
+export class GetListOrderDto extends PaginateDto {
+  @ApiProperty({ default: 'LATEST_UPDATE' })
+  @IsOptional()
+  @IsIn(Object.keys(SORT_CONDITION))
+  sortCondition: string;
+}
+
 export class GenTransactionDto {
   @ApiProperty()
   @IsNotEmpty()

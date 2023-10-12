@@ -6,6 +6,7 @@ import {
   UseGuards,
   UnauthorizedException,
   Body,
+  Query,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -31,6 +32,7 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { NFTInfoService } from './services/nft-info.service';
 import { NFTReceiveService } from './services/nft-receive.service';
 import { NFTCollectionService } from './services/nft-collection.service';
+import { NFTOrderService } from './services/nft-order.service';
 
 // import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 // import { RolesGuard } from 'src/guards/roles.guard';
@@ -41,6 +43,7 @@ import {
   ConfirmExchangeCollectionDto,
   RequestExchangeCollectionDto,
 } from './dtos/request.dto';
+import { GetListOrderDto } from '../channels/dtos/request.dto';
 
 @ApiTags('nfts')
 @Controller('nfts')
@@ -49,6 +52,7 @@ export class NftController {
     private readonly nftCollectionService: NFTCollectionService,
     private readonly nftInfoService: NFTInfoService,
     private readonly nftReceiveService: NFTReceiveService,
+    private readonly nftOrderService: NFTOrderService,
   ) {}
 
   @Get('metadata/:id')
@@ -104,6 +108,11 @@ export class NftController {
       );
     }
 
+    await this.nftOrderService.checkIsListing(
+      userParams.walletAddress,
+      collections as INFTCollection[],
+    );
+
     return {
       totalItems: collections.length,
       pageIndex: 1,
@@ -134,6 +143,11 @@ export class NftController {
         userNFTData,
       );
     }
+
+    await this.nftOrderService.checkIsListing(
+      userParams.walletAddress,
+      channelCollectionData,
+    );
 
     return {
       totalItems: channelCollectionData.length,
@@ -166,5 +180,41 @@ export class NftController {
     await this.nftCollectionService.userConfirmExchange(payload, userParams);
 
     return { message: 'Exchange collection to reward successful' };
+  }
+
+  @Post('listing-order')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async listingNFTOrder(
+    @Body() payload: any,
+    @UserParams() userParams: IUser,
+  ): Promise<any> {
+    await this.nftOrderService.listingOrder(payload, userParams);
+    return { message: 'Listing successfully' };
+  }
+
+  @Get('market-orders')
+  async marketOrder(@Query() query: GetListOrderDto): Promise<any> {
+    const result = await this.nftOrderService.getListOrder(query);
+    return { message: 'success', data: result };
+  }
+
+  @Post('market-buy-order')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async marketBuyOrder(
+    @Body() payload: any,
+    @UserParams() userParams: IUser,
+  ): Promise<any> {
+    const result = await this.nftOrderService.transferNft(payload, userParams);
+    return { message: 'success', data: result };
+  }
+
+  @Post('market-cancel-order')
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async marketCancelOrder(@Body() payload: any, @UserParams() userParams: IUser): Promise<any> {
+    const result = await this.nftOrderService.cannelListing(payload, userParams);
+    return { message: 'success', data: [] };
   }
 }

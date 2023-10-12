@@ -156,8 +156,8 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
             );
             if (indexAttribute) {
               return {
-                mint: _item.id,
                 index: indexAttribute.value,
+                mint: _item.id,
               };
             }
           }
@@ -171,12 +171,19 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
           (attr) => attr.trait_type === 'index',
         );
         if (indexAttribute) {
-          const ownedItem = itemIndexes.find(
+          const ownedItem = itemIndexes.filter(
             (_item) => _item.index === indexAttribute.value,
           );
-          if (ownedItem) {
+          if (ownedItem.length > 0) {
             _collectionItems.owned = true;
-            _collectionItems.mint = ownedItem.mint;
+            _collectionItems.amount = ownedItem.length;
+            _collectionItems.order = ownedItem.map((_item) => ({
+              order_id: null,
+              mint: _item.mint,
+            }));
+          } else {
+            _collectionItems.owned = false;
+            _collectionItems.amount = 0;
           }
         }
       });
