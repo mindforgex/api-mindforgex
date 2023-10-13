@@ -6,6 +6,7 @@ import { SORT_CONDITION } from '../constants/channel.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 import { Channel, ChannelDocument } from '../models/channel.model';
+import { NFTCollection, NFTCollectionDocument } from 'src/modules/nfts/models/nft-collection.model';
 import { DonateService } from 'src/modules/donates/services/donate.service';
 import {
   Connection,
@@ -22,6 +23,8 @@ export class ChannelService extends BaseService<ChannelDocument> {
     @InjectModel(Channel.name)
     private readonly channelModel: Model<ChannelDocument>,
     private readonly donateService: DonateService,
+    @InjectModel(NFTCollection.name)
+    private readonly nftCollectionModel: Model<NFTCollectionDocument>,
   ) {
     super(channelModel);
   }
@@ -47,10 +50,9 @@ export class ChannelService extends BaseService<ChannelDocument> {
       typeof channel.userSubcribe !== 'undefined'
         ? channel.userSubcribe.length
         : 0;
-    const numberCollections =
-      typeof channel.nftCollections !== 'undefined'
-        ? channel.nftCollections.length
-        : 0;
+
+    const nftCollections = await this.nftCollectionModel.find({channel_id: channelId});
+    const numberCollections = nftCollections.length;
 
     return {
       ...channel,

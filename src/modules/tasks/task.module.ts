@@ -15,6 +15,8 @@ import { Donate, DonateSchema } from '../donates/models/donate.model';
 import { Task, TaskSchema } from './models/task.model';
 import { Post, PostSchema } from '../posts/models/post.model';
 
+import { NFTCollection, NFTCollectionSchema } from 'src/modules/nfts/models/nft-collection.model';
+
 @Module({
   imports: [
     UserModule,
@@ -35,6 +37,10 @@ import { Post, PostSchema } from '../posts/models/post.model';
         name: Post.name,
         schema: PostSchema,
       },
+      {
+        name: NFTCollection.name,
+        schema: NFTCollectionSchema
+      }
     ]),
   ],
   controllers: [TaskController],

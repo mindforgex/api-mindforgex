@@ -5,6 +5,7 @@ import { ChannelService } from './services/channel.service';
 import { Channel, ChannelSchema } from './models/channel.model';
 import { DonateService } from '../donates/services/donate.service';
 import { Donate, DonateSchema } from '../donates/models/donate.model';
+import { NFTCollection, NFTCollectionSchema } from 'src/modules/nfts/models/nft-collection.model';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { Donate, DonateSchema } from '../donates/models/donate.model';
       {
         name: Donate.name,
         schema: DonateSchema,
+      },
+      {
+        name: NFTCollection.name,
+        schema: NFTCollectionSchema,
       },
     ]),
   ],
