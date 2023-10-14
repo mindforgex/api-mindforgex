@@ -66,6 +66,10 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
     }
   }
 
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   // mint and save metadata
   public async createMany(data: ICreateNFTCollectionForm[], channelId: string) {
     try {
@@ -76,6 +80,8 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
         // @ts-ignore
         _data.receiver = channelData.donateReceiver;
         const resp = await this.shyftWeb3Service.mintCollectionNFT(_data);
+        this.logger.log('sleep 2s');
+        await this.sleep(2000);
         const collectionData =
           await this.shyftWeb3Service.getCollectionByAddress(resp.address);
         _formatData.push({
@@ -83,8 +89,11 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
           address: collectionData.mint,
           owner_address: collectionData.owner,
           metadata_uri: collectionData.metadata_uri,
-          channel_id: channelId,
+          channel_id: new Types.ObjectId(channelId),
         });
+
+        this.logger.log('sleep 2s');
+        await this.sleep(2000);
       }
       return await this.nftCollectionModel.create(_formatData);
     } catch (error) {

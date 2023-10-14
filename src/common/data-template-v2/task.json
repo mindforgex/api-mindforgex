@@ -1,0 +1,22 @@
+[
+  {
+    "taskType": "SUBSCRIBE_WEB3_CHANNEL",
+    "name": "Subscribe Web3 Channel",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"
+  },
+  {
+    "name": "Join discord server",
+    "taskType": "JOIN_DISCORD",
+    "taskInfo": {
+      "title": "MindForgeX",
+      "link": "https://discord.gg/ZzUdMn6t",
+      "serverId": "1161246114511601674"
+    },
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"
+  },
+  {
+    "name": "Subscribe Youtube Channel",
+    "taskType": "SUBSCRIBE_WEB3_CHANNEL",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"
+  }
+]

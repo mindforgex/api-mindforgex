@@ -44,6 +44,7 @@ import {
   RequestExchangeCollectionDto,
 } from './dtos/request.dto';
 import { GetListOrderDto } from '../channels/dtos/request.dto';
+import { Types } from 'mongoose';
 
 @ApiTags('nfts')
 @Controller('nfts')
@@ -65,7 +66,7 @@ export class NftController {
   }
 
   @Get('users/:walletAddress')
-  @CacheTTL(1 * 60 * 1000) // 1 minute
+  @CacheTTL(0.1 * 60 * 1000) // 10 seconds
   @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async getNFTByUser(
     @Param('walletAddress') walletAddress: string,
@@ -122,14 +123,14 @@ export class NftController {
   }
 
   @Get('channel/:channelId')
-  @CacheTTL(1 * 60 * 1000) // 1 minute
+  @CacheTTL(0.1 * 60 * 1000) // 10 seconds
   @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async getChannelCollection(
     @Param('channelId') channelId: string,
     @UserParams() userParams: IUser,
   ): Promise<GetListCollectionResponseDto> {
     const channelCollectionData = await this.nftCollectionService.find({
-      channel_id: channelId,
+      channel_id: new Types.ObjectId(channelId),
     });
 
     for (const _collection of channelCollectionData) {

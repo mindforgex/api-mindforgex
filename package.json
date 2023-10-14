@@ -26,7 +26,8 @@
     "seed-channels": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/channels/seed.ts",
     "update-channels": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/channels/update.ts",
     "seed-nft": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/nft/seed.ts",
-    "mint-nft": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/nft/mintNftToCollection.ts"
+    "mint-nft": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/nft/mintNftToCollection.ts",
+    "update-task": "node -r tsconfig-paths/register -r ts-node/register src/command/databases/seeds/task/update.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.360.0",
