@@ -1,0 +1,249 @@
+[
+  {
+    "_id": "6528ed714049b912879aa970",
+    "name": "Sakura Tanaka",
+    "channelName": "SakuraGaming",
+    
+    "avatar": "https://drive.google.com/uc?export=view&id=1quRgqn_NmhBWerjLqa3o90FXxuaARfxg",
+    "description": "Sakura is a cheerful and energetic gamer known for her skill in various genres, from FPS to RPG. She's a university student with a passion for gaming since childhood.",
+    "socialLinks": [
+      {
+        "url": "",
+        "name": "youtube",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      }
+    ],
+    "country": {
+      "name": "Japan",
+      "icon": ""
+    },
+    "founded": "21 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Hypercasual, FPS",
+    "email": "info@relipasoft.com",
+    "sex": "Female",
+    "dateOfBirth": "May 6, 1990",
+    "twitterUrl": "",
+    "youtubeUrl": "",
+    "follower": 150000,
+    "followerYoutube": 678000,
+    "followerTwitter": 3000,
+    "donateReceiver": "G56y7EeQ1sW5hfNAgTjmhfJNisAXb9ixFEWKogDL4pZd",
+    "aboutMe": "<iframe width=\"875\" height=\"492\" src=\"https://www.youtube.com/embed/rywOYfGu4EA\" title=\"Proof of History Explainer\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+  },
+  {
+    "_id": "6528ee76d39f6cf7bff1deff",
+    "name": "Takeshi Yamamoto",
+    "channelName": "TakeshiTalks",
+    "avatar": "https://drive.google.com/uc?export=view&id=1H-ZKUR4Q0iLnbDVNlvEU9lOcQfI95yVh",
+    "description": "Takeshi is a tech enthusiast and software developer who enjoys discussing the latest trends in technology, programming, and gadgets. He has a laid-back personality and a keen sense of humor.",
+    "socialLinks": [
+      {
+        "url": "",
+        "name": "youtube",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      }
+    ],
+    "country": {
+      "name": "Japan",
+      "icon": ""
+    },
+    "founded": "25 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Review technology products, Life-Style, DIY, ...",
+    "email": "info@relipasoft.com",
+    "sex": "Male",
+    "dateOfBirth": "Jan 4, 1995",
+    "twitterUrl": "",
+    "youtubeUrl": "",
+    "follower": 1200000,
+    "followerYoutube": 678000,
+    "followerTwitter": 53400,
+    "donateReceiver": "G56y7EeQ1sW5hfNAgTjmhfJNisAXb9ixFEWKogDL4pZd",
+    "aboutMe": "<iframe width=\"875\" height=\"492\" src=\"https://www.youtube.com/embed/rywOYfGu4EA\" title=\"Proof of History Explainer\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+  },
+  {
+    "_id": "6528ee820b1818bbd00cfcc3",
+    "name": "Hikari Suzuki",
+    "channelName": "HikariArtistry",
+    "avatar": "https://drive.google.com/uc?export=view&id=1KZflhBCLji8oeGyqrbUVXJDqa7yKE_vN",
+    "description": "Hikari is a talented digital artist known for her stunning illustrations and character designs. She often livestreams her creative process and provides tutorials for aspiring artists.",
+    "socialLinks": [
+      {
+        "url": "",
+        "name": "youtube",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      }
+    ],
+    "country": {
+      "name": "Japan",
+      "icon": ""
+    },
+    "founded": "25 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Art and Creativity",
+    "email": "info@relipasoft.com",
+    "sex": "Female",
+    "dateOfBirth": "Sep 10, 1995",
+    "twitterUrl": "",
+    "youtubeUrl": "",
+    "follower": 1800000,
+    "followerYoutube": 6780500,
+    "followerTwitter": 34500,
+    "donateReceiver": "G56y7EeQ1sW5hfNAgTjmhfJNisAXb9ixFEWKogDL4pZd",
+    "aboutMe": "<iframe width=\"875\" height=\"492\" src=\"https://www.youtube.com/embed/rywOYfGu4EA\" title=\"Proof of History Explainer\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+  },
+  {
+    "_id": "6528f1e450d490744301e0f9",
+    "name": "Kenjiro Sato",
+    "channelName": "KenjiroSato",
+    "avatar": "https://drive.google.com/uc?export=view&id=14mythWX6NRcUb_qQDoFpP-6Z93FshLwQ",
+    "description": "Kenjiro is a game developer who streams his game development process, offers insights into the gaming industry, and occasionally plays and reviews indie games. His streams provide a unique behind-the-scenes look at game creation.",
+    "socialLinks": [
+      {
+        "url": "",
+        "name": "youtube",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      }
+    ],
+    "country": {
+      "name": "Japan",
+      "icon": ""
+    },
+    "founded": "02 Sep, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Stream horror game on PC, Battle Royale game and Nintendo game. In particular, Hikakin is good at playing Minecraft",
+    "email": "info@relipasoft.com",
+    "sex": "Male",
+    "dateOfBirth": "Sep 10, 1995",
+    "twitterUrl": "",
+    "youtubeUrl": "",
+    "follower": 90000,
+    "followerYoutube": 780500,
+    "followerTwitter": 9500,
+    "donateReceiver": "G56y7EeQ1sW5hfNAgTjmhfJNisAXb9ixFEWKogDL4pZd",
+    "aboutMe": "<iframe width=\"875\" height=\"492\" src=\"https://www.youtube.com/embed/rywOYfGu4EA\" title=\"Proof of History Explainer\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+  },
+  {
+    "_id": "6528f1f478db4316d8aae5bd",
+    "name": "Yuki Nakamura",
+    "channelName": "YukiSpeedRuns",
+    "avatar": "https://drive.google.com/uc?export=view&id=1_MyjCtT5Eb6w0S1tejHNa8rfeqsorvp0",
+    "description": "Yuki is a speedrunning expert known for completing games in record time. She shares tips and tricks for speedrunning, engages with her audience during live speedruns, and occasionally takes on challenges suggested by viewers.",
+    "socialLinks": [
+      {
+        "url": "",
+        "name": "youtube",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      }
+    ],
+    "country": {
+      "name": "Japan",
+      "icon": ""
+    },
+    "founded": "02 Oct, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Speedrunning",
+    "email": "info@relipasoft.com",
+    "sex": "Male",
+    "dateOfBirth": "Feb 12, 1994",
+    "twitterUrl": "",
+    "youtubeUrl": "",
+    "follower": 20000,
+    "followerYoutube": 5700,
+    "followerTwitter": 10500,
+    "donateReceiver": "G56y7EeQ1sW5hfNAgTjmhfJNisAXb9ixFEWKogDL4pZd",
+    "aboutMe": "<iframe width=\"875\" height=\"492\" src=\"https://www.youtube.com/embed/rywOYfGu4EA\" title=\"Proof of History Explainer\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+  },
+  {
+    "_id": "6528f1f9caedd03f6476bc4f",
+    "name": "Daichi Honda",
+    "channelName": "DaichiPlays",
+    "avatar": "https://drive.google.com/uc?export=view&id=1rNj0kqhw0_iAQruYG8VdJ4B3gKrIzj2J",
+    "description": "Daichi is a competitive esports player specializing in multiplayer online battle arena (MOBA) games. He provides insights into strategy, gameplay tips, and occasionally streams live tournaments.",
+    "socialLinks": [
+      {
+        "url": "",
+        "name": "youtube",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      },
+      {
+        "url": "",
+        "name": "twitter",
+        "icon": ""
+      }
+    ],
+    "country": {
+      "name": "Japan",
+      "icon": ""
+    },
+    "founded": "08 Jul, 2023",
+    "mainGame": "Overwatch",
+    "profestionalFeild": "Stream Hyper Casual Game, Mario Maker, Minecraft, ...",
+    "email": "info@relipasoft.com",
+    "sex": "Male",
+    "dateOfBirth": "Feb 24, 1997",
+    "twitterUrl": "",
+    "youtubeUrl": "",
+    "follower": 130000,
+    "followerYoutube": 2700,
+    "followerTwitter": 88500,
+    "donateReceiver": "G56y7EeQ1sW5hfNAgTjmhfJNisAXb9ixFEWKogDL4pZd",
+    "aboutMe": "<iframe width=\"875\" height=\"492\" src=\"https://www.youtube.com/embed/rywOYfGu4EA\" title=\"Proof of History Explainer\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>"
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "imageUri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSjzPJ39-DP1BCOkD4ihKLykWiEZu0TxoVaQ&usqp=CAU",
+    "externalUrl": "https://mindforgex.relipa.vn/channel/#",
+    "name": "Sakura Village",
+    "symbol": "LA",
+    "description": "Welcome to \"Sakura Village\", a limited edition NFT collection inspired by the gaming adventures of Sakura Tanaka, known for her mastery of the gaming world. Dive into the digital realm and own a piece of Sakura's virtual legacy with these exclusive NFTs.",
+    "attributes": [
+      {
+        "trait_type": "owner",
+        "value": "https://mindforgex.relipa.vn/channel/#"
+      },
+      {
+        "trait_type": "nft_in_collection",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "imageUri": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8JVwkhuRuHo_NXlc3qwWJ54L7-4uYcs6pQQ&usqp=CAU",
+    "externalUrl": "https://mindforgex.relipa.vn/channel/#",
+    "name": "Sakura's Hong Kong Chronicles",
+    "symbol": "LA",
+    "description": "Embark on a virtual journey through the bustling streets of Hong Kong with \"Sakura's Hong Kong Chronicles,\" an exclusive NFT collection inspired by Tanaka Sakura's gaming escapades in vibrant urban landscapes.",
+    "attributes": [
+      {
+        "trait_type": "owner",
+        "value": "https://mindforgex.relipa.vn/channel/#"
+      },
+      {
+        "trait_type": "nft_in_collection",
+        "value": 3
+      }
+    ]
+  }
+]

@@ -24,11 +24,9 @@ export class TaskService extends BaseService<TaskDocument> {
 
   private readonly defaultSelectFields: string = '';
 
-  public async createMultiTasks(channelId: string, dataArray: any[]) {
+  public async createMultiTasks(dataArray: any[]) {
     try {
-      const posts = await this.taskModel.create(
-        dataArray.map((data) => ({ ...data, channel: channelId })),
-      );
+      const posts = await this.taskModel.create(dataArray);
       return posts;
     } catch (error) {
       throw new Error(`Error creating posts: ${error.message}`);
@@ -41,6 +39,10 @@ export class TaskService extends BaseService<TaskDocument> {
 
   public async getTasksByPostId(postId: string) {
     return this.taskModel.find({ postId: new Types.ObjectId(postId) });
+  }
+
+  public async updateAll(query: any, update: any, option?: any) {
+    return this.taskModel.updateMany(query, update, option).lean();
   }
 
   public findOneById = (taskId: string, selectFields?: string) =>

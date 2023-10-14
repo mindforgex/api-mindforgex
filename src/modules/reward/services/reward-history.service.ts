@@ -60,14 +60,14 @@ export class RewardHistoryService extends BaseService<RewardHistoryDocument> {
             as: 'reward_data',
           },
         },
-        {
-          $lookup: {
-            from: 'nftcollections',
-            localField: 'nft_collection_address',
-            foreignField: 'address',
-            as: 'nft_collection_data',
-          },
-        },
+        // {
+        //   $lookup: {
+        //     from: 'nftcollections',
+        //     localField: 'nft_collection_address',
+        //     foreignField: 'address',
+        //     as: 'nft_collection_data',
+        //   },
+        // },
       ])
       .exec() as unknown as Promise<IRewardHistory[]>;
 }

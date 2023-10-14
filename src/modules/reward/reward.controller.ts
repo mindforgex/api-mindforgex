@@ -26,7 +26,7 @@ export class RewardController {
     private readonly rewardHistoryService: RewardHistoryService,
   ) {}
   @Get('history/users')
-  @CacheTTL(1 * 60 * 1000) // 1 minute
+  @CacheTTL(0.1 * 60 * 1000) // 10 sec
   @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async getNFTByUser(
     @UserParams() userParams: IUser,

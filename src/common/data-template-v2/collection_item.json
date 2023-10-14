@@ -1,0 +1,209 @@
+{
+  "0": [
+    {
+      "name": "Sakura Tanaka in village",
+      "image": "https://drive.google.com/uc?export=view&id=1E1ulk3M5UAYNum78s90_aNVK4HisTcgV",
+      "description": "Level 1 - NFT Collector: Collect 4 NFTs (Any Collection) to join a group chat with the streamer.\n Level 2 - Collection Explorer: Collect 1 NFT collection to join receive a concert ticket.\n Level 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol/join NFT airdrop event.",
+      "symbol": "STV",
+      "seller_fee_basis_points": 5,
+      "external_url": "https://mindforgex.relipa.vn/channel/#",
+      "attributes": [
+        {
+          "trait_type": "index",
+          "value": 1
+        }
+      ],
+      "properties": {
+        "creators": [
+          {
+            "address": "Ej3EiTpzhfiUVBXuwcUdBhGySXvge3Hbsa6LGQXQ36mE",
+            "verified": true,
+            "share": 100
+          }
+        ],
+        "files": [
+          {
+            "uri": "https://drive.google.com/uc?export=view&id=1E1ulk3M5UAYNum78s90_aNVK4HisTcgV",
+            "type": "image/png"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sakura Tanaka in waterfall",
+      "image": "https://drive.google.com/uc?export=view&id=1ldlVWQ1l8do21Au3W6AcGUNF6hSe0BNG",
+      "description": "Level 1 - NFT Collector: Collect 4 NFTs (Any Collection) to join a group chat with the streamer.\n Level 2 - Collection Explorer: Collect 1 NFT collection to join receive a concert ticket.\n Level 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol/join NFT airdrop event.",
+      "symbol": "STW",
+      "seller_fee_basis_points": 5,
+      "external_url": "https://mindforgex.relipa.vn/channel/#",
+      "attributes": [
+        {
+          "trait_type": "index",
+          "value": 2
+        }
+      ],
+      "properties": {
+        "creators": [
+          {
+            "address": "Ej3EiTpzhfiUVBXuwcUdBhGySXvge3Hbsa6LGQXQ36mE",
+            "verified": true,
+            "share": 100
+          }
+        ],
+        "files": [
+          {
+            "uri": "https://drive.google.com/uc?export=view&id=1ldlVWQ1l8do21Au3W6AcGUNF6hSe0BNG",
+            "type": "image/png"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sakura Tanaka camping",
+      "image": "https://drive.google.com/uc?export=view&id=1XKU1XvNa3t_FbsCcb5m_G-zGUJWeRrFe",
+      "description": "Level 1 - NFT Collector: Collect 4 NFTs (Any Collection) to join a group chat with the streamer.\n Level 2 - Collection Explorer: Collect 1 NFT collection to join receive a concert ticket.\n Level 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol/join NFT airdrop event.",
+      "symbol": "STC",
+      "seller_fee_basis_points": 5,
+      "external_url": "https://mindforgex.relipa.vn/channel/#",
+      "attributes": [
+        {
+          "trait_type": "index",
+          "value": 3
+        }
+      ],
+      "properties": {
+        "creators": [
+          {
+            "address": "Ej3EiTpzhfiUVBXuwcUdBhGySXvge3Hbsa6LGQXQ36mE",
+            "verified": true,
+            "share": 100
+          }
+        ],
+        "files": [
+          {
+            "uri": "https://drive.google.com/uc?export=view&id=1XKU1XvNa3t_FbsCcb5m_G-zGUJWeRrFe",
+            "type": "image/png"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sakura in River",
+      "image": "https://drive.google.com/uc?export=view&id=1AkRUzhWRE0q_09xx-FP6UtsemT4Yi1Wc",
+      "description": "Level 1 - NFT Collector: Collect 4 NFTs (Any Collection) to join a group chat with the streamer.\n Level 2 - Collection Explorer: Collect 1 NFT collection to join receive a concert ticket.\n Level 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol/join NFT airdrop event.",
+      "symbol": "SR",
+      "seller_fee_basis_points": 5,
+      "external_url": "https://mindforgex.relipa.vn/channel/#",
+      "attributes": [
+        {
+          "trait_type": "index",
+          "value": 4
+        }
+      ],
+      "properties": {
+        "creators": [
+          {
+            "address": "Ej3EiTpzhfiUVBXuwcUdBhGySXvge3Hbsa6LGQXQ36mE",
+            "verified": true,
+            "share": 100
+          }
+        ],
+        "files": [
+          {
+            "uri": "https://drive.google.com/uc?export=view&id=1AkRUzhWRE0q_09xx-FP6UtsemT4Yi1Wc",
+            "type": "image/png"
+          }
+        ]
+      }
+    }
+  ],
+  "1": [
+    {
+      "name": "Sakura in Hongkong",
+      "image": "https://drive.google.com/uc?export=view&id=16ec6uHzDDSUBfxm7r8pi_sWxwvrDQ2e7",
+      "description": "Level 1 - NFT Collector: Collect 4 NFTs (Any Collection) to join a group chat with the streamer.\n Level 2 - Collection Explorer: Collect 1 NFT collection to join receive a concert ticket.\n Level 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol/join NFT airdrop event.",
+      "symbol": "SH",
+      "seller_fee_basis_points": 5,
+      "external_url": "https://mindforgex.relipa.vn/channel/#",
+      "attributes": [
+        {
+          "trait_type": "index",
+          "value": 1
+        }
+      ],
+      "properties": {
+        "creators": [
+          {
+            "address": "Ej3EiTpzhfiUVBXuwcUdBhGySXvge3Hbsa6LGQXQ36mE",
+            "verified": true,
+            "share": 100
+          }
+        ],
+        "files": [
+          {
+            "uri": "https://drive.google.com/uc?export=view&id=16ec6uHzDDSUBfxm7r8pi_sWxwvrDQ2e7",
+            "type": "image/png"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sakura in Hongkong  2",
+      "image": "https://drive.google.com/uc?export=view&id=1luHrrubG_iNm49NwgIUmzZoA9LqhhGB8",
+      "description": "Level 1 - NFT Collector: Collect 4 NFTs (Any Collection) to join a group chat with the streamer.\n Level 2 - Collection Explorer: Collect 1 NFT collection to join receive a concert ticket.\n Level 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol/join NFT airdrop event.",
+      "symbol": "SH2",
+      "seller_fee_basis_points": 5,
+      "external_url": "https://mindforgex.relipa.vn/channel/#",
+      "attributes": [
+        {
+          "trait_type": "index",
+          "value": 2
+        }
+      ],
+      "properties": {
+        "creators": [
+          {
+            "address": "Ej3EiTpzhfiUVBXuwcUdBhGySXvge3Hbsa6LGQXQ36mE",
+            "verified": true,
+            "share": 100
+          }
+        ],
+        "files": [
+          {
+            "uri": "https://drive.google.com/uc?export=view&id=1luHrrubG_iNm49NwgIUmzZoA9LqhhGB8",
+            "type": "image/png"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sakura in Hongkong  3",
+      "image": "https://drive.google.com/uc?export=view&id=1B_o37TpyE0jtz1t8fEygEUdeAre_HE6d",
+      "description": "Level 1 - NFT Collector: Collect 4 NFTs (Any Collection) to join a group chat with the streamer.\n Level 2 - Collection Explorer: Collect 1 NFT collection to join receive a concert ticket.\n Level 3 - Super Collector: Collect NFTs from 5 different collections to have a chance to stream with the idol/join NFT airdrop event.",
+      "symbol": "SH3",
+      "seller_fee_basis_points": 5,
+      "external_url": "https://mindforgex.relipa.vn/channel/#",
+      "attributes": [
+        {
+          "trait_type": "index",
+          "value": 3
+        }
+      ],
+      "properties": {
+        "creators": [
+          {
+            "address": "Ej3EiTpzhfiUVBXuwcUdBhGySXvge3Hbsa6LGQXQ36mE",
+            "verified": true,
+            "share": 100
+          }
+        ],
+        "files": [
+          {
+            "uri": "https://drive.google.com/uc?export=view&id=1B_o37TpyE0jtz1t8fEygEUdeAre_HE6d",
+            "type": "image/png"
+          }
+        ]
+      }
+    }
+  ]
+}
