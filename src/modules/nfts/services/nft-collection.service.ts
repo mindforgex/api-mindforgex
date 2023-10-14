@@ -264,7 +264,7 @@ export class NFTCollectionService extends BaseService<NFTCollectionDocument> {
       let collectionData: INFTCollection | Array<INFTCollection>;
       collectionData = await this.find({
         _id: new Types.ObjectId(payload.collectionId),
-        channel_id: payload.channelId,
+        channel_id: new Types.ObjectId(payload.channelId),
       });
       if (collectionData.length === 0) {
         this.logger.error('No NFT collection found');
