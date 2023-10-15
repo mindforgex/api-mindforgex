@@ -3,7 +3,7 @@
 Clone the repository with the following command:
 
 ```bash
-git clone https://gitlab.relipa.vn/hackathon/api.git
+git clone https://github.com/mindforgex/api-mindforgex
 ```
 
 Run in terminal this command:
