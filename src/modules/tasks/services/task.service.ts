@@ -10,6 +10,7 @@ import { UserService } from 'src/modules/users/services/user.service';
 import { Task, TaskDocument } from '../models/task.model';
 
 import { TASK_TYPE } from '../constants/task.constant';
+import { TwitchService } from './twitch.service';
 @Injectable()
 export class TaskService extends BaseService<TaskDocument> {
   constructor(
@@ -18,6 +19,7 @@ export class TaskService extends BaseService<TaskDocument> {
     private readonly channelService: ChannelService,
     private readonly userService: UserService,
     private readonly discordService: DiscordService,
+    private readonly twitchService: TwitchService,
   ) {
     super(taskModel);
   }
@@ -67,28 +69,54 @@ export class TaskService extends BaseService<TaskDocument> {
     if (taskVerified) throw new BadRequestException('already verified');
 
     try {
-      if (taskType === TASK_TYPE.SUBSCRIBE_WEB3_CHANNEL) {
-        // check user subscribed.
-        const channel = await this.channelService.getChannelByUserSubscribe(
-          channelId,
-          userVerify,
-        );
+      switch (taskType) {
+        case TASK_TYPE.SUBSCRIBE_WEB3_CHANNEL: {
+          // check user subscribed.
+          const channel = await this.channelService.getChannelByUserSubscribe(
+            channelId,
+            userVerify,
+          );
 
-        if (!channel) {
-          throw new BadRequestException('not subscribed yet');
+          if (!channel) {
+            throw new BadRequestException('not subscribed yet');
+          }
+          break;
         }
-      } else if (taskType === TASK_TYPE.JOIN_DISCORD) {
-        const userInfo = await this.userService.findOneByWalletAddress(
-          userVerify,
-        );
+        case TASK_TYPE.JOIN_DISCORD: {
+          const userInfo = await this.userService.findOneByWalletAddress(
+            userVerify,
+          );
 
-        const result = await this.discordService.verifyDiscordTask(
-          userInfo.discordId,
-          taskInfo.serverId,
-        );
+          const result = await this.discordService.verifyDiscordTask(
+            userInfo.discordId,
+            taskInfo.serverId,
+          );
 
-        if (!result)
-          throw new BadRequestException(`User is not in discord server`);
+          if (!result)
+            throw new BadRequestException(`User is not in discord server`);
+          break;
+        }
+        case TASK_TYPE.SUBSCRIBE_TWITCH: {
+          const userTwitchProfile = await this.twitchService.getUser(
+            body.twitchAccessToken,
+            requestData.twitchId,
+          );
+          if (!userTwitchProfile)
+            throw new BadRequestException("Invalid 'twitchAccessToken'");
+
+          const result = await this.twitchService.verifyFollowChannel(
+            taskInfo.serverId, // twitch channel login, ex: 'abab'
+            requestData.twitchId, // twitch user id, ex: '123123'
+            body.twitchAccessToken,
+          );
+          if (!result)
+            throw new BadRequestException(
+              `User has not subscribed channel yet.`,
+            );
+          break;
+        }
+        default:
+          throw new BadRequestException('Invalid task');
       }
 
       // check and insert user to user verify list.

@@ -1,6 +1,7 @@
 export enum Role {
   admin = 'admin',
   commonUser = 'commonUser',
+  channelUser = 'channelUser',
 }
 
 export enum UserStatus {

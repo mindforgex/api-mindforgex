@@ -104,5 +104,16 @@ export class UserService extends BaseService<UserDocument> {
 
   public updateToken = async (walletAddress: string, registratorToken: string): Promise<void> => {
     await this.userModel.updateOne({ walletAddress }, { registratorToken });
+  }
+
+  updateTwitchInfo = async (
+    walletAddress: string,
+    twitchId: string,
+    twitchLogin: string,
+  ) => {
+    await this.userModel.updateOne(
+      { walletAddress },
+      { twitchId, twitchLogin },
+    );
   };
 }
