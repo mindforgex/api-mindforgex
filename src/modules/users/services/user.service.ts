@@ -7,6 +7,7 @@ import { SORT_CONDITION } from '../constants/user.constant';
 import { BaseService } from 'src/modules/base/services/base.service';
 
 import { User, UserDocument } from '../models/user.model';
+import { ConnectTwitchDto } from '../dtos/request.dto';
 
 @Injectable()
 export class UserService extends BaseService<UserDocument> {
@@ -106,14 +107,7 @@ export class UserService extends BaseService<UserDocument> {
     await this.userModel.updateOne({ walletAddress }, { registratorToken });
   }
 
-  updateTwitchInfo = async (
-    walletAddress: string,
-    twitchId: string,
-    twitchLogin: string,
-  ) => {
-    await this.userModel.updateOne(
-      { walletAddress },
-      { twitchId, twitchLogin },
-    );
+  updateTwitchInfo = async (walletAddress: string, data: ConnectTwitchDto) => {
+    await this.userModel.updateOne({ walletAddress }, data);
   };
 }

@@ -44,6 +44,9 @@ export class User implements IUser {
 
   @Prop()
   twitchLogin: string;
+
+  @Prop()
+  twitchAccessToken: string;
 }
 
 export type UserDocument = User & Document;

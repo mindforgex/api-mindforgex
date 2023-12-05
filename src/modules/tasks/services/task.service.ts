@@ -97,12 +97,14 @@ export class TaskService extends BaseService<TaskDocument> {
           break;
         }
         case TASK_TYPE.SUBSCRIBE_TWITCH: {
-          const userTwitchProfile = await this.twitchService.getUser(
-            body.twitchAccessToken,
-            requestData.twitchId,
-          );
-          if (!userTwitchProfile)
-            throw new BadRequestException("Invalid 'twitchAccessToken'");
+          if (
+            !requestData.twitchId ||
+            !requestData.twitchLogin ||
+            !requestData.twitchAccessToken
+          )
+            throw new BadRequestException(
+              'User has not connected to Twitch yet',
+            );
 
           const result = await this.twitchService.verifyFollowChannel(
             taskInfo.serverId, // twitch channel login, ex: 'abab'

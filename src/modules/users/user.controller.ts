@@ -74,11 +74,7 @@ export class UserController {
     @UserParams() userParams: IUser,
     @Body() body: ConnectTwitchDto,
   ): Promise<any> {
-    await this.userService.updateTwitchInfo(
-      userParams.walletAddress,
-      body.twitchId,
-      body.twitchLogin,
-    );
+    await this.userService.updateTwitchInfo(userParams.walletAddress, body);
     return { message: 'Success' };
   }
 }

@@ -30,4 +30,8 @@ export class ConnectTwitchDto {
   @ApiProperty()
   @IsNotEmpty()
   twitchLogin: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  twitchAccessToken: string;
 }
