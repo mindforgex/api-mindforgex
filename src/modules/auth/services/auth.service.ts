@@ -59,6 +59,7 @@ export class AuthService {
       hasDiscord,
       discordId,
       discordUsername,
+      registratorToken
     } = userUpdated;
     const jwtParams = {
       userId: _id,
@@ -74,6 +75,7 @@ export class AuthService {
         hasDiscord,
         discordId,
         discordUsername,
+        registratorToken
       },
     };
   }

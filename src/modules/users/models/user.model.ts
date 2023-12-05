@@ -36,6 +36,9 @@ export class User implements IUser {
 
   @Prop()
   discordUsername: string;
+
+  @Prop({ unique: true, default: '' })
+  registratorToken: string;
 }
 
 export type UserDocument = User & Document;
@@ -43,3 +46,4 @@ export type UserDocument = User & Document;
 export const UserSchema = SchemaFactory.createForClass(User);
 
 UserSchema.index({ updatedAt: -1 });
+

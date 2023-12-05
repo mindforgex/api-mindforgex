@@ -6,6 +6,7 @@ import {
   UseGuards,
   Post,
   Body,
+  Put,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
@@ -47,6 +48,17 @@ export class UserController {
       body.discordUsername,
     );
 
+    return { message: 'Success' };
+  }
+
+  @ApiBearerAuth('jwt')
+  @Put('registrator-token')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async updateToken(
+    @UserParams() userParams: IUser,
+    @Body() body: { registratorToken: string },
+  ): Promise<any> {
+    await this.userService.updateToken(userParams.walletAddress, body.registratorToken);
     return { message: 'Success' };
   }
 }

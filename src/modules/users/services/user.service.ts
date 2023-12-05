@@ -101,4 +101,8 @@ export class UserService extends BaseService<UserDocument> {
       { hasDiscord: true, discordId, discordUsername },
     );
   };
+
+  public updateToken = async (walletAddress: string, registratorToken: string): Promise<void> => {
+    await this.userModel.updateOne({ walletAddress }, { registratorToken });
+  };
 }

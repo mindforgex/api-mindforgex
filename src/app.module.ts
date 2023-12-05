@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -13,6 +13,7 @@ import { TaskModule } from 'src/modules/tasks/task.module';
 import { UserModule } from 'src/modules/users/user.module';
 import { RewardModule } from './modules/reward/reward.module';
 import { DonateModule } from 'src/modules/donates/donate.module';
+import { NotificationModule } from 'src/modules/notification/notification.module';
 import { AppController } from './app.controller';
 
 const modules = [
@@ -24,6 +25,7 @@ const modules = [
   TaskModule,
   RewardModule,
   DonateModule,
+  NotificationModule,
 ];
 
 @Module({
