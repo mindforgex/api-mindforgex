@@ -10,14 +10,19 @@ export class TwitchService {
   });
 
   getFollowedChannel = async (accessToken: string, userId: string) => {
-    const { data } = await this.axiosInstance.get('/channels/followed', {
-      params: {
-        user_id: userId,
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const { data } = await this.axiosInstance
+      .get('/channels/followed', {
+        params: {
+          user_id: userId,
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .catch((error) => {
+        console.log(error);
+        throw new Error(error);
+      });
     return data;
   };
 

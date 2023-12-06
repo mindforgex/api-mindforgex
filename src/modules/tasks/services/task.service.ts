@@ -109,7 +109,7 @@ export class TaskService extends BaseService<TaskDocument> {
           const result = await this.twitchService.verifyFollowChannel(
             taskInfo.serverId, // twitch channel login, ex: 'abab'
             requestData.twitchId, // twitch user id, ex: '123123'
-            body.twitchAccessToken,
+            requestData.twitchAccessToken,
           );
           if (!result)
             throw new BadRequestException(
