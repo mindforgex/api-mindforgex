@@ -8,6 +8,7 @@ import { ChannelService } from '../channels/services/channel.service';
 import { TaskService } from './services/task.service';
 import { DiscordService } from './services/discord.service';
 import { PostService } from '../posts/services/post.service';
+import { TwitchService } from './services/twitch.service';
 
 import { Channel, ChannelSchema } from '../channels/models/channel.model';
 import { DonateService } from '../donates/services/donate.service';
@@ -15,7 +16,10 @@ import { Donate, DonateSchema } from '../donates/models/donate.model';
 import { Task, TaskSchema } from './models/task.model';
 import { Post, PostSchema } from '../posts/models/post.model';
 
-import { NFTCollection, NFTCollectionSchema } from 'src/modules/nfts/models/nft-collection.model';
+import {
+  NFTCollection,
+  NFTCollectionSchema,
+} from 'src/modules/nfts/models/nft-collection.model';
 
 @Module({
   imports: [
@@ -39,8 +43,8 @@ import { NFTCollection, NFTCollectionSchema } from 'src/modules/nfts/models/nft-
       },
       {
         name: NFTCollection.name,
-        schema: NFTCollectionSchema
-      }
+        schema: NFTCollectionSchema,
+      },
     ]),
   ],
   controllers: [TaskController],
@@ -50,6 +54,7 @@ import { NFTCollection, NFTCollectionSchema } from 'src/modules/nfts/models/nft-
     DonateService,
     DiscordService,
     PostService,
+    TwitchService,
   ],
   exports: [TaskService, ChannelService],
 })

@@ -21,3 +21,17 @@ export class ConnectDiscordDto {
   @IsNotEmpty()
   discordUsername: string;
 }
+
+export class ConnectTwitchDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  twitchId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  twitchLogin: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  twitchAccessToken: string;
+}
