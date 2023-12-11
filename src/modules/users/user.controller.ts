@@ -6,6 +6,9 @@ import {
   Post,
   Body,
   Put,
+  HttpCode,
+  HttpStatus,
+  Param,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
@@ -24,6 +27,7 @@ import { IUser } from 'src/modules/users/interfaces/user.interface';
 import { UserParams } from 'src/decorators/user-params.decorator';
 
 import { UserService } from './services/user.service';
+import { User } from './models/user.model';
 
 import axios from 'axios';
 
@@ -63,7 +67,10 @@ export class UserController {
     @UserParams() userParams: IUser,
     @Body() body: { registratorToken: string },
   ): Promise<any> {
-    await this.userService.updateToken(userParams.walletAddress, body.registratorToken);
+    await this.userService.updateToken(
+      userParams.walletAddress,
+      body.registratorToken,
+    );
     return { message: 'Success' };
   }
 
@@ -76,5 +83,26 @@ export class UserController {
   ): Promise<any> {
     await this.userService.updateTwitchInfo(userParams.walletAddress, body);
     return { message: 'Success' };
+  }
+  
+  @Get('/me')
+  @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth('jwt')
+  @ApiOkResponse({ type: User })
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async getMe(@UserParams() userParams: IUser): Promise<User> {
+    return await this.userService.findOneById(userParams._id);
+  }
+
+  @Get('/:id/status')
+  @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: User })
+  async getEmployeesWithScheduleAndOfficeToday(
+    @Param('id') walletAddress: string,
+  ): Promise<User> {
+    return await this.userService.findOneByWalletAddress(
+      walletAddress,
+      'status',
+    );
   }
 }

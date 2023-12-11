@@ -50,6 +50,23 @@ export class UserService extends BaseService<UserDocument> {
     return userUpdated;
   }
 
+  
+  async findByIdAndUpdate(
+    userId: string,
+    update: any,
+    session?: ClientSession,
+  ) {
+    const userUpdate = await this.userModel
+      .findOneAndUpdate({ _id: userId }, update, {
+        new: true,
+        fields: this.defaultSelectFields,
+        session,
+      })
+      .lean();
+
+    return userUpdate;
+  }
+
   private makeFilterCondition = ({ network = null, role = null }) => ({
     ...(network && { network }),
     ...(role && { role }),

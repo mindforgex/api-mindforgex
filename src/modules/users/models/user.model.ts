@@ -5,6 +5,7 @@ import {
   DEFAULT_USER_NONCE,
   Role,
   UserStatus,
+  UserType,
 } from '../constants/user.constant';
 import { IUser } from '../interfaces/user.interface';
 
@@ -19,8 +20,14 @@ export class User implements IUser {
   @Prop()
   avatarUrl: string;
 
-  @Prop({ default: UserStatus.active })
+  @Prop({ default: UserStatus.inactive })
   status: UserStatus;
+
+  @Prop()
+  userType: UserType;
+
+  @Prop()
+  email: string;
 
   @Prop({ default: new Date() })
   lastConnectedTime: Date;
