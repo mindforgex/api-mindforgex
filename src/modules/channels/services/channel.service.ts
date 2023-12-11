@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -6,7 +6,10 @@ import { SORT_CONDITION } from '../constants/channel.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 import { Channel, ChannelDocument } from '../models/channel.model';
-import { NFTCollection, NFTCollectionDocument } from 'src/modules/nfts/models/nft-collection.model';
+import {
+  NFTCollection,
+  NFTCollectionDocument,
+} from 'src/modules/nfts/models/nft-collection.model';
 import { DonateService } from 'src/modules/donates/services/donate.service';
 import {
   Connection,
@@ -16,12 +19,22 @@ import {
   SystemProgram,
   LAMPORTS_PER_SOL,
 } from '@solana/web3.js';
+import { CreateChannelDto } from '../dtos/request.dto';
+import { Social } from '../interfaces/channel.interface';
+import { UserService } from 'src/modules/users/services/user.service';
+import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
+import {
+  UserStatus,
+  UserType,
+} from 'src/modules/users/constants/user.constant';
+import { ChannelExitsException } from 'src/exceptions/channel-exits.exception';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
   constructor(
     @InjectModel(Channel.name)
     private readonly channelModel: Model<ChannelDocument>,
+    private readonly userService: UserService,
     private readonly donateService: DonateService,
     @InjectModel(NFTCollection.name)
     private readonly nftCollectionModel: Model<NFTCollectionDocument>,
@@ -51,7 +64,9 @@ export class ChannelService extends BaseService<ChannelDocument> {
         ? channel.userSubcribe.length
         : 0;
 
-    const nftCollections = await this.nftCollectionModel.find({channel_id: channelId});
+    const nftCollections = await this.nftCollectionModel.find({
+      channel_id: channelId,
+    });
     const numberCollections = nftCollections.length;
 
     return {
@@ -283,5 +298,39 @@ export class ChannelService extends BaseService<ChannelDocument> {
     } catch (error) {
       throw new Error('Store Info Donate Fail');
     }
+  }
+
+  async createChannel(
+    dataChannel: CreateChannelDto,
+    user: any,
+  ): Promise<Channel> {
+    const { youtube, discord, x, userType, email, ...data } = dataChannel;
+    const { _id: userId } = user;
+
+    const updateUser = await this.userService.findByIdAndUpdate(userId, {
+      status: UserStatus.active,
+      userType,
+      email,
+    });
+
+    if (!updateUser) throw new UserNotFoundException();
+
+    if (userType === UserType.user) return;
+
+    const channelExits = await this.channelModel.findOne({ userId }).lean();
+    if (channelExits) throw new ChannelExitsException();
+
+    const socialLinks: Social[] = [];
+    youtube && socialLinks.push({ url: youtube, name: 'youtube', icon: '' });
+    discord && socialLinks.push({ url: discord, name: 'discord', icon: '' });
+    x && socialLinks.push({ url: x, name: 'x', icon: '' });
+
+    const channel = await this.channelModel.create({
+      ...data,
+      socialLinks,
+      userId,
+    });
+
+    return channel.save();
   }
 }

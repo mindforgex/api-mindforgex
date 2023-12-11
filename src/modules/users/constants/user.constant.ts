@@ -6,7 +6,13 @@ export enum Role {
 
 export enum UserStatus {
   active = 'active',
+  inactive = 'inactive',
   blocked = 'blocked',
+}
+
+export enum UserType {
+  koc = '1',
+  user = '2',
 }
 
 export enum PasswordResetStatus {

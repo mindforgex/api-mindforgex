@@ -1,6 +1,8 @@
 import { Post } from 'src/modules/posts/models/post.model';
 import { NFTInfo } from 'src/modules/nfts/models/nft-info.model';
 import { Donate } from 'src/modules/donates/models/donate.model';
+import { Types } from 'mongoose';
+import { IUser } from 'src/modules/users/interfaces/user.interface';
 
 export interface Social {
   url: string;
@@ -13,6 +15,7 @@ export interface Country {
 }
 export interface IChannel {
   _id?: string;
+  userId?: Types.ObjectId | IUser;
   name?: string;
   channelName?: string;
   avatarUrl: string;
@@ -25,8 +28,8 @@ export interface IChannel {
   email: string;
   sex: string;
   dateOfBirth: string;
-  twitterUrl: string;
-  youtubeUrl: string;
+  // twitterUrl: string;
+  // youtubeUrl: string;
   follower: number;
   followerYoutube: number;
   followerTwitter: number;

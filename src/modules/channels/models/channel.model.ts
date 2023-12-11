@@ -7,7 +7,10 @@ import { Donate } from '../../donates/models/donate.model';
 
 @Schema({ timestamps: true })
 export class Channel implements IChannel {
+  @Prop({ required: true, types: Types.ObjectId, ref: 'User' })
+  userId?: Types.ObjectId;
   @Prop({ default: '' })
+
   name?: string;
 
   @Prop({ default: '' })
@@ -43,11 +46,11 @@ export class Channel implements IChannel {
   @Prop({ default: '' })
   dateOfBirth: string;
 
-  @Prop({ default: '' })
-  twitterUrl: string;
+  // @Prop({ default: '' })
+  // twitterUrl: string;
 
-  @Prop({ default: '' })
-  youtubeUrl: string;
+  // @Prop({ default: '' })
+  // youtubeUrl: string;
 
   @Prop({ default: '' })
   follower: number;

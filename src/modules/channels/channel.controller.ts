@@ -7,6 +7,8 @@ import {
   UseGuards,
   Param,
   Body,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -14,7 +16,12 @@ import {
   ApiTags,
   ApiBadRequestResponse,
 } from '@nestjs/swagger';
-import { GetListChannelDto, GenTransactionDto, DonateChannelDto } from './dtos/request.dto';
+import {
+  GetListChannelDto,
+  GenTransactionDto,
+  DonateChannelDto,
+  CreateChannelDto,
+} from './dtos/request.dto';
 import {
   GetListChannelResponseDto,
   ChannelDetaitResponseDto,
@@ -25,6 +32,8 @@ import { ChannelService } from './services/channel.service';
 import { MongoIdDto } from 'src/common/classes';
 import { Role } from 'src/modules/channels/constants/channel.constant';
 import { UserParams } from 'src/decorators/user-params.decorator';
+import { SuccessResponseDto } from 'src/common/dto/success.response.dto';
+import { IUser } from '../users/interfaces/user.interface';
 
 @ApiTags('channels')
 @Controller('channels')
@@ -51,6 +60,18 @@ export class ChannelController {
     return await this.channelService.findOneById(channelId);
   }
 
+  @Post('/')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async createChannel(
+    @Body() channel: CreateChannelDto,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const createChannel = await this.channelService.createChannel(channel, userParams);
+    return new SuccessResponseDto(createChannel);
+  }
+
   @Post(':id/subscribe')
   @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async subscribeChannel(
@@ -69,7 +90,11 @@ export class ChannelController {
     @UserParams() requestData,
     @Body() body: GenTransactionDto,
   ): Promise<any> {
-    const result = await this.channelService.genTransaction(channelId, requestData, body);
+    const result = await this.channelService.genTransaction(
+      channelId,
+      requestData,
+      body,
+    );
 
     return { transaction: result };
   }
@@ -81,7 +106,11 @@ export class ChannelController {
     @UserParams() requestData,
     @Body() body: DonateChannelDto,
   ): Promise<any> {
-    const result = await this.channelService.donateToChannel(channelId, requestData, body);
+    const result = await this.channelService.donateToChannel(
+      channelId,
+      requestData,
+      body,
+    );
 
     return { message: 'Donate To Channel Successfully' };
   }
