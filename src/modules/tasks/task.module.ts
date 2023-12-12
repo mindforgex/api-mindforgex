@@ -20,6 +20,7 @@ import {
   NFTCollection,
   NFTCollectionSchema,
 } from 'src/modules/nfts/models/nft-collection.model';
+import { VerifyYoutubeInfo, VerifyYoutubeInfoSchema } from './models/verify-youtube-info';
 
 @Module({
   imports: [
@@ -45,6 +46,10 @@ import {
         name: NFTCollection.name,
         schema: NFTCollectionSchema,
       },
+      {
+        name: VerifyYoutubeInfo.name,
+        schema: VerifyYoutubeInfoSchema,
+      }
     ]),
   ],
   controllers: [TaskController],

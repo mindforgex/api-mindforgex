@@ -1,16 +1,16 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-
 import { BaseService } from 'src/modules/base/services/base.service';
 import { ChannelService } from 'src/modules/channels/services/channel.service';
 import { DiscordService } from './discord.service';
 import { UserService } from 'src/modules/users/services/user.service';
-
 import { Task, TaskDocument } from '../models/task.model';
-
 import { TASK_TYPE } from '../constants/task.constant';
 import { TwitchService } from './twitch.service';
+import { VerifyYoutubeInfo, VerifyYoutubeInfoDocument } from '../models/verify-youtube-info';
+import axios from 'axios';
+
 @Injectable()
 export class TaskService extends BaseService<TaskDocument> {
   constructor(
@@ -20,6 +20,8 @@ export class TaskService extends BaseService<TaskDocument> {
     private readonly userService: UserService,
     private readonly discordService: DiscordService,
     private readonly twitchService: TwitchService,
+    @InjectModel(VerifyYoutubeInfo.name)
+    private readonly verifyYoutubeInfoModel: Model<VerifyYoutubeInfo>
   ) {
     super(taskModel);
   }
@@ -137,5 +139,65 @@ export class TaskService extends BaseService<TaskDocument> {
       this.logger.error('verify', error);
       throw error;
     }
+  }
+
+  public async storeUserInfoSubscribe(requestData: any, tokens: any) {
+    const userInfo = await this.getUserInfo(tokens.access_token);
+    const walletAddr = requestData.walletAddress;
+
+    const info = await this.verifyYoutubeInfoModel.find({
+      email: userInfo.email,
+      walletAddr: walletAddr
+    }).lean();
+
+
+    try {
+      if (info) { // update
+        await this.verifyYoutubeInfoModel.findOneAndUpdate(
+          { _id: info[0]._id },
+          {
+            tokens: tokens
+          },
+          { new: true },
+        );
+      } else { // create
+        const data = {
+          'sub': userInfo.sub ?? '',
+          'userName': userInfo.name ?? '',
+          'email': userInfo.email ?? '',
+          'emailVerified': userInfo.email_verified ?? false,
+          'locale': userInfo.locale ?? '',
+          'picture': userInfo.picture ?? '',
+          'tokens': tokens,
+          'walletAddr': walletAddr
+        };
+        await this.verifyYoutubeInfoModel.create(data);
+      }
+
+    } catch (error) {
+      throw new Error(`Error store google authenticate info: ${error.message}`);
+    }
+  }
+
+  async getUserInfo(accessToken: string) {
+    try {
+      const response = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      const userInfo = response.data;
+      return userInfo;
+    } catch (error) {
+      console.error('Error during fetching user info:', error);
+      throw error;
+    }
+  }
+
+  public async getVerifyYoutubeInfoByUser(requestData: any) {
+    const walletAddr = requestData.walletAddress;
+
+    return this.verifyYoutubeInfoModel.findOne({ walletAddr: walletAddr }).lean();
   }
 }

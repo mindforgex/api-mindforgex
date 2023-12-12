@@ -44,7 +44,7 @@ import {
       return result;
     }
 
-    @Get('/list_donate_by_channeel/:channelId')
+    @Get('/list_donate_by_channel/:channelId')
     @ApiBearerAuth('jwt')
     @ApiOkResponse({ type: GetListDonateResponseDto })
     // @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
