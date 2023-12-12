@@ -9,6 +9,7 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -21,6 +22,8 @@ import {
   GenTransactionDto,
   DonateChannelDto,
   CreateChannelDto,
+  UpdateChannelDto,
+  UpdateAboutMeChannelDto,
 } from './dtos/request.dto';
 import {
   GetListChannelResponseDto,
@@ -68,8 +71,45 @@ export class ChannelController {
     @Body() channel: CreateChannelDto,
     @UserParams() userParams: IUser,
   ): Promise<SuccessResponseDto> {
-    const createChannel = await this.channelService.createChannel(channel, userParams);
+    const createChannel = await this.channelService.createChannel(
+      channel,
+      userParams,
+    );
     return new SuccessResponseDto(createChannel);
+  }
+
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async updateChannel(
+    @Param('id') channelId: string,
+    @Body() channel: UpdateChannelDto,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const isUpdated = await this.channelService.updateChannel(
+      channel,
+      channelId,
+      userParams,
+    );
+    return new SuccessResponseDto(isUpdated);
+  }
+
+  @Put(':id/about_me')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async updateAboutMe(
+    @Param('id') channelId: string,
+    @Body() data: UpdateAboutMeChannelDto,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const isUpdated = await this.channelService.updateAboutMe(
+      data,
+      channelId,
+      userParams,
+    );
+    return new SuccessResponseDto(isUpdated);
   }
 
   @Post(':id/subscribe')

@@ -19,7 +19,11 @@ import {
   SystemProgram,
   LAMPORTS_PER_SOL,
 } from '@solana/web3.js';
-import { CreateChannelDto } from '../dtos/request.dto';
+import {
+  CreateChannelDto,
+  UpdateAboutMeChannelDto,
+  UpdateChannelDto,
+} from '../dtos/request.dto';
 import { Social } from '../interfaces/channel.interface';
 import { UserService } from 'src/modules/users/services/user.service';
 import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
@@ -28,6 +32,8 @@ import {
   UserType,
 } from 'src/modules/users/constants/user.constant';
 import { ChannelExitsException } from 'src/exceptions/channel-exits.exception';
+import { IUser } from 'src/modules/users/interfaces/user.interface';
+import { ChannelNotFoundException } from 'src/exceptions/channel-not-found.exception';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
@@ -71,6 +77,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
     return {
       ...channel,
+      nftCollections,
       numberPosts,
       numberSubscribers,
       numberCollections,
@@ -104,6 +111,38 @@ export class ChannelService extends BaseService<ChannelDocument> {
     // sort['_id'] = -1;
 
     return sort;
+  };
+
+  private fomartSocialLinks = ({
+    discord = '',
+    youtube = '',
+    x = '',
+    followerYoutube = 0,
+    followerTwitter = 0,
+  }): Social[] => {
+    const socialLinks: Social[] = [];
+    youtube &&
+      socialLinks.push({
+        url: youtube,
+        name: 'youtube',
+        icon: '',
+        totalFollower: followerYoutube,
+      });
+    discord &&
+      socialLinks.push({
+        url: discord,
+        name: 'discord',
+        icon: '',
+        totalFollower: 0,
+      });
+    x &&
+      socialLinks.push({
+        url: x,
+        name: 'x',
+        icon: '',
+        totalFollower: followerTwitter,
+      });
+    return socialLinks;
   };
 
   async getAllWithPagination(queryParams: any, querySelect?: string) {
@@ -302,7 +341,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
   async createChannel(
     dataChannel: CreateChannelDto,
-    user: any,
+    user: IUser,
   ): Promise<Channel> {
     const { youtube, discord, x, userType, email, ...data } = dataChannel;
     const { _id: userId } = user;
@@ -320,10 +359,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
     const channelExits = await this.channelModel.findOne({ userId }).lean();
     if (channelExits) throw new ChannelExitsException();
 
-    const socialLinks: Social[] = [];
-    youtube && socialLinks.push({ url: youtube, name: 'youtube', icon: '' });
-    discord && socialLinks.push({ url: discord, name: 'discord', icon: '' });
-    x && socialLinks.push({ url: x, name: 'x', icon: '' });
+    const socialLinks = this.fomartSocialLinks({ youtube, discord, x });
 
     const channel = await this.channelModel.create({
       ...data,
@@ -332,5 +368,64 @@ export class ChannelService extends BaseService<ChannelDocument> {
     });
 
     return channel.save();
+  }
+
+  async updateChannel(
+    dataChannel: UpdateChannelDto,
+    idChannel: string,
+    user: IUser,
+  ): Promise<Channel> {
+    const dataUser = await this.userService.findOneById(user._id);
+    if (!dataUser) throw new UserNotFoundException();
+    const {
+      discord,
+      youtube,
+      x,
+      followerYoutube,
+      followerTwitter,
+      country,
+      ...data
+    } = dataChannel;
+
+    const socialLinks = this.fomartSocialLinks({
+      youtube,
+      discord,
+      x,
+      followerYoutube,
+      followerTwitter,
+    });
+
+    const channelUpdate = await this.channelModel
+      .findOneAndUpdate(
+        { _id: idChannel, userId: user._id },
+        { ...data, socialLinks, country: { icon: '', name: country } },
+        {
+          new: true,
+          fields: this.defaultSelectFields,
+        },
+      )
+      .lean();
+    return channelUpdate;
+  }
+
+  async updateAboutMe(
+    data: UpdateAboutMeChannelDto,
+    idChannel: string,
+    user: IUser,
+  ): Promise<Channel> {
+    const dataUser = await this.userService.findOneById(user._id);
+    if (!dataUser) throw new UserNotFoundException();
+    const { aboutMe } = data;
+    const aboutMeUpdate = await this.channelModel
+      .findOneAndUpdate(
+        { _id: idChannel, userId: user._id },
+        { aboutMe },
+        {
+          new: true,
+          fields: this.defaultSelectFields,
+        },
+      )
+      .lean();
+    return aboutMeUpdate;
   }
 }

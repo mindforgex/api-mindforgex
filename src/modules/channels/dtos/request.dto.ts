@@ -8,6 +8,7 @@ import {
   Matches,
   MaxLength,
   Min,
+  IsDateString,
 } from 'class-validator';
 
 import { PaginateDto } from 'src/common/classes';
@@ -15,6 +16,7 @@ import { PaginateDto } from 'src/common/classes';
 import { SORT_CONDITION } from '../constants/channel.constant';
 import { REGEX_VALIDATOR } from 'src/common/constants';
 import { UserType } from 'src/modules/users/constants/user.constant';
+import { Sex } from '../interfaces/channel.interface';
 
 export class GetListChannelDto extends PaginateDto {
   @ApiProperty({ default: 'LATEST_UPDATE' })
@@ -71,7 +73,7 @@ export class CreateChannelDto {
   @IsOptional()
   @IsString()
   @MaxLength(255)
-  nickName: string;
+  channelName: string;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -81,9 +83,9 @@ export class CreateChannelDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsNumber()
-  @Min(18)
-  age: number;
+  @IsDateString()
+  // @Min(18)
+  dateOfBirth: Date;
 
   @ApiPropertyOptional()
   @IsOptional()
@@ -105,4 +107,112 @@ export class CreateChannelDto {
   @Matches(REGEX_VALIDATOR.URL)
   @MaxLength(255)
   x: string;
+}
+
+export class UpdateChannelDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Matches(REGEX_VALIDATOR.EMAIL)
+  @MaxLength(100)
+  email: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  name: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  channelName: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(1000)
+  description: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  country: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  founded: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  mainGame: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  profestionalFeild: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  sex: Sex;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsDateString()
+  // @Min(18)
+  dateOfBirth: Date;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(1000)
+  aboutMe: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Matches(REGEX_VALIDATOR.URL)
+  @MaxLength(255)
+  discord: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Matches(REGEX_VALIDATOR.URL)
+  @MaxLength(255)
+  youtube: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsNumber()
+  followerYoutube: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Matches(REGEX_VALIDATOR.URL)
+  @MaxLength(255)
+  x: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsNumber()
+  followerTwitter: number;
+}
+
+export class UpdateAboutMeChannelDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(1000)
+  aboutMe: string;
 }

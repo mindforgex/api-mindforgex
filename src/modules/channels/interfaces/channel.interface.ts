@@ -8,10 +8,16 @@ export interface Social {
   url: string;
   name: string;
   icon: string;
+  totalFollower: number;
 }
 export interface Country {
   name: string;
   icon: string;
+}
+export enum Sex {
+  male = 'male',
+  female = 'female',
+  other = 'other',
 }
 export interface IChannel {
   _id?: string;
@@ -26,7 +32,7 @@ export interface IChannel {
   mainGame: string;
   profestionalFeild: string;
   email: string;
-  sex: string;
+  sex: Sex;
   dateOfBirth: string;
   // twitterUrl: string;
   // youtubeUrl: string;
