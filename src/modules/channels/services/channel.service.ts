@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 import { SORT_CONDITION } from '../constants/channel.constant';
 
@@ -65,12 +65,13 @@ export class ChannelService extends BaseService<ChannelDocument> {
         : 0;
 
     const nftCollections = await this.nftCollectionModel.find({
-      channel_id: channelId,
+      channel_id: new Types.ObjectId(channelId),
     });
     const numberCollections = nftCollections.length;
 
     return {
       ...channel,
+      nftCollections,
       numberPosts,
       numberSubscribers,
       numberCollections,
