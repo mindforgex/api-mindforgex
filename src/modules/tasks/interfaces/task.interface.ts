@@ -9,4 +9,5 @@ export interface ITask {
   userAddress: Array<string>;
   createdAt?: Date;
   updatedAt?: Date;
+  status?: string;
 }

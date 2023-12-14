@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { FilterQuery, Model, QueryOptions, Types, UpdateQuery } from 'mongoose';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 import { ChannelService } from 'src/modules/channels/services/channel.service';
@@ -138,4 +138,34 @@ export class TaskService extends BaseService<TaskDocument> {
       throw error;
     }
   }
+
+  public updateManyTask = async (
+    filter?: FilterQuery<TaskDocument>,
+    update?: UpdateQuery<TaskDocument>,
+    // option?: QueryOptions<TaskDocument>,
+  ) => {
+    const result = await this.taskModel.updateMany(
+      { postId: new Types.ObjectId('657acde47d51303e3eac7f9b') },
+      {
+        status: {
+          $cond: {
+            if: {
+              $gte: [
+                '$taskType',
+                [
+                  'SUBSCRIBE_WEB3_CHANNEL',
+                  'JOIN_DISCORD',
+                  'SUBSCRIBE_TWITCH',
+                  'SUBSCRIBE_YOUTUBE',
+                ],
+              ],
+            },
+            then: 'a',
+            else: 'b',
+          },
+        },
+      },
+    );
+    return result;
+  };
 }

@@ -1,9 +1,13 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -14,7 +18,11 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { GetListPostDto } from './dtos/request.dto';
+import {
+  CreatePostDto,
+  GetListPostDto,
+  UpdatePostDto,
+} from './dtos/request.dto';
 import {
   GetListPostResponseDto,
   PostDetailResponseDto,
@@ -31,6 +39,7 @@ import { RolesGuard } from 'src/guards/roles.guard';
 import { TaskService } from 'src/modules/tasks/services/task.service';
 import { ShyftWeb3Service } from '../base/services/shyft-web3.service';
 import { PostService } from './services/post.service';
+import { SuccessResponseDto } from 'src/common/dto/success.response.dto';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -55,6 +64,35 @@ export class PostController {
   @ApiBadRequestResponse({ description: 'Post not found' })
   async getPostById(@Param() params: MongoIdDto): Promise<any> {
     return this.postService.findOneById(params.id);
+  }
+
+  @Post('')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async createPost(
+    @Body() dataPost: CreatePostDto,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const created = await this.postService.createPost(dataPost, userParams);
+    return new SuccessResponseDto(created);
+  }
+
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async updatePost(
+    @Param('id') postId: string,
+    @Body() post: UpdatePostDto,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const isUpdated = await this.postService.updatePost(
+      post,
+      postId,
+      userParams,
+    );
+    return new SuccessResponseDto(isUpdated);
   }
 
   @Post(':id/nft/claim')
