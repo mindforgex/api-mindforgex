@@ -6,12 +6,25 @@ import { BaseService } from 'src/modules/base/services/base.service';
 
 import { NFTInfo } from 'src/modules/nfts/models/nft-info.model';
 import { Post, PostDocument } from '../models/post.model';
+import { CreatePostDto } from '../dtos/request.dto';
+import { IUser } from 'src/modules/users/interfaces/user.interface';
+import { UserService } from 'src/modules/users/services/user.service';
+import { UserNotFoundException } from 'src/exceptions/user-not-found.exception';
+import { UserStatus } from 'src/modules/users/constants/user.constant';
+import { ChannelService } from 'src/modules/channels/services/channel.service';
+import { ChannelNotFoundException } from 'src/exceptions/channel-not-found.exception';
+import { TaskService } from 'src/modules/tasks/services/task.service';
+import { LIST_TASK_OPTIONS } from 'src/common/constants';
+import { TaskStatus } from 'src/modules/tasks/constants/task.constant';
 
 @Injectable()
 export class PostService extends BaseService<PostDocument> {
   constructor(
     @InjectModel(Post.name)
     private readonly postModel: Model<PostDocument>,
+    private readonly userService: UserService,
+    private readonly channelService: ChannelService,
+    private readonly taskService: TaskService,
   ) {
     super(postModel);
   }
@@ -79,5 +92,94 @@ export class PostService extends BaseService<PostDocument> {
     );
 
     return post;
+  }
+
+  async createPost(dataPost: CreatePostDto, user: IUser) {
+    const { _id: userId } = user;
+    const { channelId, title, content, tasks, file } = dataPost;
+    console.log('tasks', tasks);
+
+    // EXPLAIN: Check user existence and activity status
+    const userExits = await this.userService.findOneByCondition({
+      _id: userId,
+      status: UserStatus.active,
+    });
+    if (!userExits) throw new UserNotFoundException();
+
+    // EXPLAIN: Check if the channel exists and if the post is owned by the user
+    const channelExits = await this.channelService.findOneByCondition({
+      _id: channelId,
+      userId: userId,
+    });
+    if (!channelExits) throw new ChannelNotFoundException();
+
+    // EXPLAIN: Create post
+    const post = await this.postModel.create({
+      title,
+      content,
+      channelId: new Types.ObjectId(channelId),
+      //TODO: The meaning and logic of creating nftId is unclear
+      nftId: new Types.ObjectId('65292c6f68895e7bc014aab5'),
+    });
+
+    // console.log('postpost', post);
+
+    const formatTasks = LIST_TASK_OPTIONS.map((task) => ({
+      postId: post._id,
+      taskType: task.taskType,
+      name: task.name,
+      description: task.description,
+      // @ts-ignore
+      status: tasks.includes(task.taskType)
+        ? TaskStatus.active
+        : TaskStatus.inactive,
+      taskInfo: {
+        title: '16',
+        link: '16',
+        serverId: '16',
+      },
+    }));
+    const createdTasks = await this.taskService.createMultiTasks(formatTasks);
+    post.tasks = createdTasks;
+    const updatePost = await post.save();
+    channelExits.posts = [...channelExits.posts, post.id];
+    const updateChannel = await channelExits.save();
+    return updatePost;
+  }
+
+  async updatePost(dataPost: CreatePostDto, postId: string, user: IUser) {
+    const { _id: userId } = user;
+    const { channelId, title, content, tasks, file } = dataPost;
+
+    // EXPLAIN: Check user existence and activity status
+    const userExits = await this.userService.findOneByCondition({
+      _id: userId,
+      status: UserStatus.active,
+    });
+    if (!userExits) throw new UserNotFoundException();
+
+    // EXPLAIN: Check if the channel exists and if the post is owned by the user
+    const channelExits = await this.channelService.findOneByCondition({
+      _id: channelId,
+      userId: userId,
+    });
+    if (!channelExits) throw new ChannelNotFoundException();
+
+    // EXPLAIN: Update post
+    const updatePost = await this.postModel.findOneAndUpdate(
+      { _id: postId, channelId },
+      {
+        title,
+        content,
+        channelId: new Types.ObjectId(channelId),
+        //TODO: The meaning and logic of creating nftId is unclear
+        nftId: new Types.ObjectId('65292c6f68895e7bc014aab5'),
+      },
+    );
+
+    const formatOptionTasks = LIST_TASK_OPTIONS.map((i) => i.taskType);
+    console.log('formatOptionTasks', formatOptionTasks);
+    const updateManyTask = await this.taskService.updateManyTask();
+    return { updatePost, updateManyTask };
   }
 }

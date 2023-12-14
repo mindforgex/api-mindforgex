@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model, ProjectionType } from 'mongoose';
 
 import { SORT_CONDITION } from '../constants/channel.constant';
 
@@ -83,6 +83,14 @@ export class ChannelService extends BaseService<ChannelDocument> {
       numberCollections,
     };
   }
+
+  public findOneByCondition = (
+    filter: FilterQuery<ChannelDocument>,
+    projection?: ProjectionType<ChannelDocument>,
+  ) =>
+    this.channelModel
+      .findOne(filter, projection ?? this.defaultSelectFields)
+      // .lean();
 
   public async getListChannel(queryParams: any) {
     const conditions = { ...queryParams };
