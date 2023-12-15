@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -93,6 +94,18 @@ export class PostController {
       userParams,
     );
     return new SuccessResponseDto(isUpdated);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async deletePost(
+    @Param('id') postId: string,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const isDelete = await this.postService.deletePost(postId, userParams);
+    return new SuccessResponseDto(isDelete);
   }
 
   @Post(':id/nft/claim')

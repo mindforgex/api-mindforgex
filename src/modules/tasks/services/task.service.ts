@@ -142,30 +142,17 @@ export class TaskService extends BaseService<TaskDocument> {
   public updateManyTask = async (
     filter?: FilterQuery<TaskDocument>,
     update?: UpdateQuery<TaskDocument>,
-    // option?: QueryOptions<TaskDocument>,
+    option?: QueryOptions<TaskDocument>,
   ) => {
-    const result = await this.taskModel.updateMany(
-      { postId: new Types.ObjectId('657acde47d51303e3eac7f9b') },
-      {
-        status: {
-          $cond: {
-            if: {
-              $gte: [
-                '$taskType',
-                [
-                  'SUBSCRIBE_WEB3_CHANNEL',
-                  'JOIN_DISCORD',
-                  'SUBSCRIBE_TWITCH',
-                  'SUBSCRIBE_YOUTUBE',
-                ],
-              ],
-            },
-            then: 'a',
-            else: 'b',
-          },
-        },
-      },
-    );
+    const result = await this.taskModel.updateMany(filter, update, option);
+    return result;
+  };
+
+  public deleteManyTask = async (
+    filter?: FilterQuery<TaskDocument>,
+    option?: QueryOptions<TaskDocument>,
+  ) => {
+    const result = await this.taskModel.deleteMany(filter, option);
     return result;
   };
 }

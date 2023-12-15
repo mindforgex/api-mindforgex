@@ -16,6 +16,7 @@ import { ChannelNotFoundException } from 'src/exceptions/channel-not-found.excep
 import { TaskService } from 'src/modules/tasks/services/task.service';
 import { LIST_TASK_OPTIONS } from 'src/common/constants';
 import { TaskStatus } from 'src/modules/tasks/constants/task.constant';
+import { PostNotFoundException } from 'src/exceptions/post-not-found.exception';
 
 @Injectable()
 export class PostService extends BaseService<PostDocument> {
@@ -94,10 +95,9 @@ export class PostService extends BaseService<PostDocument> {
     return post;
   }
 
-  async createPost(dataPost: CreatePostDto, user: IUser) {
+  async createPost(dataPost: CreatePostDto, user: IUser): Promise<Post> {
     const { _id: userId } = user;
     const { channelId, title, content, tasks, file } = dataPost;
-    console.log('tasks', tasks);
 
     // EXPLAIN: Check user existence and activity status
     const userExits = await this.userService.findOneByCondition({
@@ -122,8 +122,6 @@ export class PostService extends BaseService<PostDocument> {
       nftId: new Types.ObjectId('65292c6f68895e7bc014aab5'),
     });
 
-    // console.log('postpost', post);
-
     const formatTasks = LIST_TASK_OPTIONS.map((task) => ({
       postId: post._id,
       taskType: task.taskType,
@@ -133,21 +131,26 @@ export class PostService extends BaseService<PostDocument> {
       status: tasks.includes(task.taskType)
         ? TaskStatus.active
         : TaskStatus.inactive,
+      //TODO: The meaning and logic of creating taskInfo is unclear
       taskInfo: {
-        title: '16',
-        link: '16',
-        serverId: '16',
+        title: '',
+        link: '',
+        serverId: '',
       },
     }));
     const createdTasks = await this.taskService.createMultiTasks(formatTasks);
     post.tasks = createdTasks;
     const updatePost = await post.save();
     channelExits.posts = [...channelExits.posts, post.id];
-    const updateChannel = await channelExits.save();
+    await channelExits.save();
     return updatePost;
   }
 
-  async updatePost(dataPost: CreatePostDto, postId: string, user: IUser) {
+  async updatePost(
+    dataPost: CreatePostDto,
+    postId: string,
+    user: IUser,
+  ): Promise<Post> {
     const { _id: userId } = user;
     const { channelId, title, content, tasks, file } = dataPost;
 
@@ -171,15 +174,50 @@ export class PostService extends BaseService<PostDocument> {
       {
         title,
         content,
-        channelId: new Types.ObjectId(channelId),
-        //TODO: The meaning and logic of creating nftId is unclear
-        nftId: new Types.ObjectId('65292c6f68895e7bc014aab5'),
       },
     );
 
+    // EXPLAIN: Update task
     const formatOptionTasks = LIST_TASK_OPTIONS.map((i) => i.taskType);
-    console.log('formatOptionTasks', formatOptionTasks);
-    const updateManyTask = await this.taskService.updateManyTask();
-    return { updatePost, updateManyTask };
+    await this.taskService.updateManyTask(
+      { postId },
+      {
+        $set: {
+          status: {
+            // $cond: {
+            //   if: { $in: ['$taskType', formatOptionTasks] },
+            //   then: 'a',
+            //   else: 'b',
+            // },
+            $cond: [
+              { $in: ['$taskType', formatOptionTasks] },
+              TaskStatus.active,
+              TaskStatus.inactive,
+            ],
+          },
+        },
+      },
+    );
+    return updatePost;
+  }
+
+  async deletePost(postId: string, user: IUser) {
+    const { _id: userId } = user;
+
+    // EXPLAIN: Check post existence
+    const postExits = await this.findOneById(postId);
+    if (!postExits) throw new PostNotFoundException();
+
+    // EXPLAIN: Check if the channel exists and if the post is owned by the user
+    const channelExits = await this.channelService.findOneByCondition({
+      _id: postExits.channelId,
+      userId: userId,
+    });
+    if (!channelExits) throw new ChannelNotFoundException();
+
+    // Delete the post and the tasks belonging to the post
+    const deletePost = await this.postModel.deleteOne({ _id: postId });
+    await this.taskService.deleteManyTask({ postId });
+    return deletePost;
   }
 }
