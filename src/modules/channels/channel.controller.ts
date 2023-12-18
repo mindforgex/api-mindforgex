@@ -78,9 +78,9 @@ export class ChannelController {
     @Param('id') channelId: string,
     @UserParams() requestData,
   ): Promise<any> {
-    const result = await this.channelService.subscribe(channelId, requestData);
+    const result = await this.channelService.subscribeOrUnSubscribe(channelId, requestData);
 
-    return { message: 'Subscribed successfully' };
+    return { message: result.message };
   }
 
   @Post(':id/gen_transaction')

@@ -165,11 +165,30 @@ export class ChannelService extends BaseService<ChannelDocument> {
     }
   }
 
-  async subscribe(channelId: string, requestData: any): Promise<any> {
+  async subscribeOrUnSubscribe(channelId: string, requestData: any): Promise<any> {
     const userAddress = requestData.walletAddress;
+    const channelInfo = await this.channelModel.findOne({ _id: channelId });
+
+    if (!channelInfo) {
+      throw new BadRequestException('Cannot find channel');
+    }
 
     try {
-      const updatedChannel = await this.channelModel.findOneAndUpdate(
+      if (channelInfo.userSubcribe.includes(userAddress)) {
+        // unsubscribe
+        await this.channelModel.findOneAndUpdate(
+          { _id: channelId },
+          {
+            $inc: { follower: -1 },
+            $pull: { userSubcribe: userAddress },
+          },
+          { new: true },
+        );
+
+        return {message: "UnSubscribed successfully"};
+      }
+      // subscribe
+      await this.channelModel.findOneAndUpdate(
         { _id: channelId, userSubcribe: { $nin: [userAddress] } },
         {
           $inc: { follower: 1 },
@@ -178,14 +197,10 @@ export class ChannelService extends BaseService<ChannelDocument> {
         { new: true },
       );
 
-      if (!updatedChannel) {
-        throw new BadRequestException('already subscribed');
-      }
-
-      return updatedChannel;
+      return {message: "Subscribed successfully"};
     } catch (error) {
       throw new Error(
-        `Error adding user to subscription list: ${error.message}`,
+        `Subscribed or UnSubscribed error: ${error.message}`,
       );
     }
   }
