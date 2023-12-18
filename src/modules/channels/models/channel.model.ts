@@ -4,6 +4,7 @@ import { IChannel, Social, Country, Sex } from '../interfaces/channel.interface'
 import { Post } from '../../posts/models/post.model';
 import { NFTCollection } from 'src/modules/nfts/models/nft-collection.model';
 import { Donate } from '../../donates/models/donate.model';
+import { Schedule } from 'src/modules/schedule/models/schedule.model';
 
 @Schema({ timestamps: true })
 export class Channel implements IChannel {
@@ -81,6 +82,9 @@ export class Channel implements IChannel {
 
   @Prop({ default: 0 })
   amountDonate: number;
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: Schedule.name }] })
+  schedules: Schedule[];
 }
 
 export type ChannelDocument = Channel & Document;

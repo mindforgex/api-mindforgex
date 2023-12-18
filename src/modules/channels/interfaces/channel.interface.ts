@@ -3,6 +3,7 @@ import { NFTInfo } from 'src/modules/nfts/models/nft-info.model';
 import { Donate } from 'src/modules/donates/models/donate.model';
 import { Types } from 'mongoose';
 import { IUser } from 'src/modules/users/interfaces/user.interface';
+import { Schedule } from 'src/modules/schedule/models/schedule.model';
 
 export interface Social {
   url: string;
@@ -48,4 +49,5 @@ export interface IChannel {
   amountDonate: number;
   createdAt?: Date;
   updatedAt?: Date;
+  schedules?: Schedule[];
 }
