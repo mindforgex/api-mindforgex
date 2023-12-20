@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { ClientSession, Model } from 'mongoose';
+import { ClientSession, FilterQuery, Model, ProjectionType } from 'mongoose';
 
 import { SORT_CONDITION } from '../constants/user.constant';
 
@@ -23,6 +23,14 @@ export class UserService extends BaseService<UserDocument> {
   public findOneById = (userId: string, selectFields?: string) =>
     this.userModel
       .findOne({ _id: userId }, selectFields ?? this.defaultSelectFields)
+      .lean();
+
+  public findOneByCondition = (
+    condition: FilterQuery<UserDocument>,
+    projection?: ProjectionType<UserDocument>,
+  ) =>
+    this.userModel
+      .findOne(condition, projection ?? this.defaultSelectFields)
       .lean();
 
   public findOneByWalletAddress = (
@@ -50,7 +58,6 @@ export class UserService extends BaseService<UserDocument> {
     return userUpdated;
   }
 
-  
   async findByIdAndUpdate(
     userId: string,
     update: any,

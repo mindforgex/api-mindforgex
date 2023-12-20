@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { TASK_TYPE } from 'src/modules/tasks/constants/task.constant';
 dotenv.config();
 
 const { NODE_ENV } = process.env;
@@ -26,3 +27,30 @@ export const NETWORK_CHAIN_ID = {
   // ETH = NODE_ENV === 'production' ? 1 : 5, // 5: Goerli
   [NETWORK.POLYGON]: NODE_ENV === 'production' ? 137 : 80001,
 };
+
+// export const LIST_TASK_OPTIONS = [
+//   {
+//     taskType: TASK_TYPE.SUBSCRIBE_WEB3_CHANNEL,
+//     name: 'Subscribe Web3 Channel',
+//     description:
+//       "Subscribe Web3 Channel - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+//   },
+//   {
+//     taskType: TASK_TYPE.JOIN_DISCORD,
+//     name: 'Join discord server',
+//     description:
+//       "Join discord server - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+//   },
+//   {
+//     taskType: TASK_TYPE.SUBSCRIBE_TWITCH,
+//     name: 'Subscribe Twitter Channel',
+//     description:
+//       "Subscribe Twitter Channel - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+//   },
+//   {
+//     taskType: TASK_TYPE.SUBSCRIBE_YOUTUBE,
+//     name: 'Subscribe Youtube Channel',
+//     description:
+//       "Subscribe Youtube Channel - Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+//   },
+// ];
