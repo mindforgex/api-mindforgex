@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { IChannel, Social, Country } from '../interfaces/channel.interface';
+import { IChannel, Social, Country, Sex } from '../interfaces/channel.interface';
 import { Post } from '../../posts/models/post.model';
 import { NFTCollection } from 'src/modules/nfts/models/nft-collection.model';
 import { Donate } from '../../donates/models/donate.model';
@@ -40,8 +40,8 @@ export class Channel implements IChannel {
   @Prop({ default: '' })
   email: string;
 
-  @Prop({ default: '' })
-  sex: string;
+  @Prop({ default: Sex.female })
+  sex: Sex;
 
   @Prop({ default: '' })
   dateOfBirth: string;
