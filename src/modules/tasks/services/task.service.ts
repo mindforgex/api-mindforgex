@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { FilterQuery, Model, QueryOptions, Types, UpdateQuery } from 'mongoose';
 import { BaseService } from 'src/modules/base/services/base.service';
 import { ChannelService } from 'src/modules/channels/services/channel.service';
 import { DiscordService } from './discord.service';
@@ -200,4 +200,21 @@ export class TaskService extends BaseService<TaskDocument> {
 
     return this.verifyYoutubeInfoModel.findOne({ walletAddr: walletAddr }).lean();
   }
+  
+  public updateManyTask = async (
+    filter?: FilterQuery<TaskDocument>,
+    update?: UpdateQuery<TaskDocument>,
+    option?: QueryOptions<TaskDocument>,
+  ) => {
+    const result = await this.taskModel.updateMany(filter, update, option);
+    return result;
+  };
+
+  public deleteManyTask = async (
+    filter?: FilterQuery<TaskDocument>,
+    option?: QueryOptions<TaskDocument>,
+  ) => {
+    const result = await this.taskModel.deleteMany(filter, option);
+    return result;
+  };
 }

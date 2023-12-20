@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model, ProjectionType, Types } from 'mongoose';
 
 import { SORT_CONDITION } from '../constants/channel.constant';
 
@@ -34,6 +34,9 @@ import {
 import { ChannelExitsException } from 'src/exceptions/channel-exits.exception';
 import { IUser } from 'src/modules/users/interfaces/user.interface';
 import { ChannelNotFoundException } from 'src/exceptions/channel-not-found.exception';
+import { Donate } from 'src/modules/donates/models/donate.model';
+import { Post } from 'src/modules/posts/models/post.model';
+import { Task } from 'src/modules/tasks/models/task.model';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
@@ -55,10 +58,24 @@ export class ChannelService extends BaseService<ChannelDocument> {
     const channelQuery = this.channelModel
       .findOne({ _id: channelId }, selectFields ?? this.defaultSelectFields)
       .populate([
-        'nftCollections',
-        'donates',
-        { path: 'posts', populate: { path: 'tasks', model: 'Task' } },
-        { path: 'posts', populate: { path: 'nftId' } },
+        {
+          path: 'posts',
+          model: Post.name,
+          populate: { path: 'tasks', model: Task.name },
+        },
+        {
+          path: 'posts',
+          model: Post.name,
+          populate: { path: 'nftId' },
+        },
+        {
+          path: 'nftCollections',
+          model: NFTCollection.name,
+        },
+        {
+          path: 'donates',
+          model: Donate.name,
+        },
       ])
       .lean();
     const channel = await channelQuery.exec();
@@ -71,18 +88,24 @@ export class ChannelService extends BaseService<ChannelDocument> {
         : 0;
 
     const nftCollections = await this.nftCollectionModel.find({
-      channel_id: channelId,
+      channel_id: new Types.ObjectId(channelId),
     });
     const numberCollections = nftCollections.length;
 
     return {
       ...channel,
-      nftCollections,
       numberPosts,
       numberSubscribers,
       numberCollections,
     };
   }
+
+  public findOneByCondition = (
+    filter: FilterQuery<ChannelDocument>,
+    projection?: ProjectionType<ChannelDocument>,
+  ) =>
+    this.channelModel.findOne(filter, projection ?? this.defaultSelectFields);
+  // .lean();
 
   public async getListChannel(queryParams: any) {
     const conditions = { ...queryParams };

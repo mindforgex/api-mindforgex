@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
 import { ITask } from '../interfaces/task.interface';
-import { TASK_TYPE } from '../constants/task.constant';
+import { TASK_TYPE, TaskStatus } from '../constants/task.constant';
 
 import { TaskSnsDto } from '../dtos/request.dto';
 
@@ -25,6 +25,9 @@ export class Task implements ITask {
 
   @Prop({})
   taskInfo: TaskSnsDto;
+
+  @Prop({ default: TaskStatus.inactive })
+  status?: string;
 }
 
 export type TaskDocument = Task & Document;

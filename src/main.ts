@@ -11,11 +11,13 @@ import { swaggerConfig } from 'src/config/swagger';
 import { MongoExceptionFilter } from 'src/filters/mongo-exception.filter';
 
 import { AppModule } from './app.module';
+import { join } from 'path';
 
 async function bootstrap() {
   const logger = new Logger('main.bootstrap');
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.useStaticAssets(join(__dirname, '../uploads'));
   app.getHttpAdapter().getInstance().disable('x-powered-by');
   const options =
     process.env.NODE_ENV === 'development'
