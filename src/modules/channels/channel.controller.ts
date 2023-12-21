@@ -10,6 +10,8 @@ import {
   HttpCode,
   HttpStatus,
   Put,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -37,6 +39,9 @@ import { Role } from 'src/modules/channels/constants/channel.constant';
 import { UserParams } from 'src/decorators/user-params.decorator';
 import { SuccessResponseDto } from 'src/common/dto/success.response.dto';
 import { IUser } from '../users/interfaces/user.interface';
+import { FileValidation } from 'src/helper/FileValidation';
+import { FileRequiredException } from 'src/exceptions/file-required.exception';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('channels')
 @Controller('channels')
@@ -67,10 +72,14 @@ export class ChannelController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: SuccessResponseDto })
+  @UseInterceptors(FileInterceptor('file'))
   async createChannel(
     @Body() channel: CreateChannelDto,
     @UserParams() userParams: IUser,
+    @UploadedFile(FileValidation.validateFileOptions({}))
+    file?: Express.Multer.File,
   ): Promise<SuccessResponseDto> {
+    channel.file = file;
     const createChannel = await this.channelService.createChannel(
       channel,
       userParams,
@@ -118,7 +127,10 @@ export class ChannelController {
     @Param('id') channelId: string,
     @UserParams() requestData,
   ): Promise<any> {
-    const result = await this.channelService.subscribeOrUnSubscribe(channelId, requestData);
+    const result = await this.channelService.subscribeOrUnSubscribe(
+      channelId,
+      requestData,
+    );
 
     return { message: result.message };
   }

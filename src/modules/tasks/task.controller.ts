@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards, Query, HttpCode, HttpStatus, Put } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { TaskDetailResponseDto } from './dtos/response.dto';
@@ -13,6 +13,9 @@ import { UserParams } from 'src/decorators/user-params.decorator';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { google } from 'googleapis';
+import { SuccessResponseDto } from 'src/common/dto/success.response.dto';
+import { IUser } from '../users/interfaces/user.interface';
+import { CreateTaskDto, UpdateTaskDto } from './dtos/request.dto';
 
 const scopes: any = [
   'profile',
@@ -133,5 +136,34 @@ export class TaskController {
     );
 
     return { message: `Verify success` };
+  }
+
+  @Post('')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async createTask(
+    @Body() dataTask: CreateTaskDto,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const created = await this.taskService.createTask(dataTask, userParams);
+    return new SuccessResponseDto(created);
+  }
+
+  @Put(':id')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async updateTask(
+    @Param('id') taskId: string,
+    @Body() task: UpdateTaskDto,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const isUpdated = await this.taskService.updateTask(
+      task,
+      taskId,
+      userParams,
+    );
+    return new SuccessResponseDto(isUpdated);
   }
 }

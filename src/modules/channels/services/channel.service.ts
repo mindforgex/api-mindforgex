@@ -37,6 +37,8 @@ import { ChannelNotFoundException } from 'src/exceptions/channel-not-found.excep
 import { Donate } from 'src/modules/donates/models/donate.model';
 import { Post } from 'src/modules/posts/models/post.model';
 import { Task } from 'src/modules/tasks/models/task.model';
+import { FileValidation } from 'src/helper/FileValidation';
+import { FileRequiredException } from 'src/exceptions/file-required.exception';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
@@ -227,7 +229,10 @@ export class ChannelService extends BaseService<ChannelDocument> {
     }
   }
 
-  async subscribeOrUnSubscribe(channelId: string, requestData: any): Promise<any> {
+  async subscribeOrUnSubscribe(
+    channelId: string,
+    requestData: any,
+  ): Promise<any> {
     const userAddress = requestData.walletAddress;
     const channelInfo = await this.channelModel.findOne({ _id: channelId });
 
@@ -247,7 +252,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
           { new: true },
         );
 
-        return {message: "UnSubscribed successfully"};
+        return { message: 'UnSubscribed successfully' };
       }
       // subscribe
       await this.channelModel.findOneAndUpdate(
@@ -259,11 +264,9 @@ export class ChannelService extends BaseService<ChannelDocument> {
         { new: true },
       );
 
-      return {message: "Subscribed successfully"};
+      return { message: 'Subscribed successfully' };
     } catch (error) {
-      throw new Error(
-        `Subscribed or UnSubscribed error: ${error.message}`,
-      );
+      throw new Error(`Subscribed or UnSubscribed error: ${error.message}`);
     }
   }
 
@@ -381,8 +384,10 @@ export class ChannelService extends BaseService<ChannelDocument> {
     dataChannel: CreateChannelDto,
     user: IUser,
   ): Promise<Channel> {
-    const { youtube, discord, x, userType, email, ...data } = dataChannel;
+    const { youtube, discord, x, userType, email, file, ...data } = dataChannel;
     const { _id: userId } = user;
+
+    if (userType === UserType.koc && !file) throw new FileRequiredException();
 
     const updateUser = await this.userService.findByIdAndUpdate(userId, {
       status: UserStatus.active,
@@ -399,10 +404,13 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
     const socialLinks = this.fomartSocialLinks({ youtube, discord, x });
 
+    const avatarUrl = FileValidation.saveFile(file);
+
     const channel = await this.channelModel.create({
       ...data,
       socialLinks,
       userId,
+      avatarUrl,
     });
 
     return channel.save();

@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsNotEmpty } from 'class-validator';
+import { IsIn, IsOptional, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 import { PaginateDto } from 'src/common/classes';
 
-import { SORT_CONDITION } from '../constants/task.constant';
+import { SORT_CONDITION, TASK_TYPE } from '../constants/task.constant';
 
 export class GetListTaskDto extends PaginateDto {
   @ApiProperty({ default: 'LATEST_UPDATE' })
@@ -25,3 +25,93 @@ export class TaskSnsDto {
   @IsOptional()
   serverId: string;
 }
+
+export class CreateTaskDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  postId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  name: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  description: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  title: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  link: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  serverId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  taskType: TASK_TYPE;
+}
+
+export class UpdateTaskDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  postId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  name: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  description: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  title: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  link: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  serverId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(255)
+  taskType: TASK_TYPE;
+}
+
+

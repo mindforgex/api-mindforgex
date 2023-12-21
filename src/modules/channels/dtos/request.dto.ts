@@ -53,7 +53,7 @@ export class DonateChannelDto {
 
 export class CreateChannelDto {
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   userType: UserType;
 
   @ApiPropertyOptional()
@@ -107,6 +107,10 @@ export class CreateChannelDto {
   @Matches(REGEX_VALIDATOR.URL)
   @MaxLength(255)
   x: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  file: Express.Multer.File;
 }
 
 export class UpdateChannelDto {

@@ -23,6 +23,7 @@ import { PageDto } from 'src/common/dto/page.dto';
 import { join } from 'path';
 import { writeFileSync } from 'fs';
 import * as moment from 'moment';
+import { FileValidation } from 'src/helper/FileValidation';
 
 @Injectable()
 export class ScheduleService extends BaseService<ScheduleDocument> {
@@ -127,12 +128,13 @@ export class ScheduleService extends BaseService<ScheduleDocument> {
     // writeFileSync(filePath, file.buffer);
 
     // EXPLAIN: Create schedule
+    const cover = FileValidation.saveFile(file);
     const schedule = await this.scheduleModel.create({
       channelId: new Types.ObjectId(channelId),
       title,
       description,
       date,
-      cover: '',
+      cover,
     });
 
     return schedule;
@@ -161,18 +163,14 @@ export class ScheduleService extends BaseService<ScheduleDocument> {
     });
     if (!channelExits) throw new ChannelNotFoundException();
 
-    //TODO: Handling and saving files in the cloud or server
-    const cover = '';
-
     // EXPLAIN: Update schedule
-    console.log('dataSchedule', dataSchedule);
     const updateSchedule = await this.scheduleModel.findOneAndUpdate(
       { _id: scheduleId, channelId: new Types.ObjectId(channelId) },
       {
         title,
         description,
         date,
-        cover,
+        ...(file && { cover: FileValidation.saveFile(file) }),
       },
     );
     return updateSchedule;
