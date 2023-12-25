@@ -37,6 +37,7 @@ import { GetListScheduleResponseDto } from './dtos/response.dto';
 import { PageDto } from 'src/common/dto/page.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CustomError } from 'src/exceptions/custom-error.exception';
+import { FileValidation } from 'src/helper/FileValidation';
 
 @ApiTags('schedules')
 @Controller('schedules')
@@ -67,23 +68,9 @@ export class ScheduleController {
   async createSchedule(
     @Body() dataSchedule: CreateScheduleDto,
     @UserParams() userParams: IUser,
-    @UploadedFile(
-      new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: /(jpg|jpeg|png|gif)$/,
-        })
-        .addMaxSizeValidator({
-          maxSize: 5 * 1024 * 1024,
-        })
-        .build({
-          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-        }),
-    )
-    file: Express.Multer.File,
+    @UploadedFile(FileValidation.validateFileOptions({ fileIsRequired: true }))
+    file?: Express.Multer.File,
   ): Promise<SuccessResponseDto> {
-    if (!file) {
-      throw new CustomError('File is required');
-    }
     dataSchedule.file = file;
     const created = await this.scheduleService.createSchedule(
       dataSchedule,
@@ -96,11 +83,15 @@ export class ScheduleController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: SuccessResponseDto })
+  @UseInterceptors(FileInterceptor('file'))
   async updateSchedule(
     @Param('id') scheduleId: string,
     @Body() schedule: UpdateScheduleDto,
     @UserParams() userParams: IUser,
+    @UploadedFile(FileValidation.validateFileOptions({}))
+    file?: Express.Multer.File,
   ): Promise<SuccessResponseDto> {
+    schedule.file = file;
     const isUpdated = await this.scheduleService.updateSchedule(
       schedule,
       scheduleId,

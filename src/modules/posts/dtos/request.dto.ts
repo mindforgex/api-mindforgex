@@ -45,9 +45,7 @@ export class CreatePostDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsString()
-  @MaxLength(10000)
-  file: string;
+  file: Express.Multer.File;
 }
 
 export class UpdatePostDto {
@@ -76,7 +74,5 @@ export class UpdatePostDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsString()
-  @MaxLength(10000)
-  file: string;
+  file: Express.Multer.File;
 }

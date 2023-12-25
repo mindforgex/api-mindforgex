@@ -10,7 +10,9 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -42,6 +44,8 @@ import { ShyftWeb3Service } from '../base/services/shyft-web3.service';
 import { PostService } from './services/post.service';
 import { SuccessResponseDto } from 'src/common/dto/success.response.dto';
 import { PageDto } from 'src/common/dto/page.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { FileValidation } from 'src/helper/FileValidation';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -63,9 +67,7 @@ export class PostController {
 
   @Get('')
   @ApiOkResponse({ type: GetListPostResponseDto })
-  async getListPost(
-    @Query() query: GetListPostDto,
-  ): Promise<PageDto<any>> {
+  async getListPost(@Query() query: GetListPostDto): Promise<PageDto<any>> {
     const result = await this.postService.getListPost(query);
     return result;
   }
@@ -81,10 +83,14 @@ export class PostController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: SuccessResponseDto })
+  @UseInterceptors(FileInterceptor('file'))
   async createPost(
     @Body() dataPost: CreatePostDto,
     @UserParams() userParams: IUser,
+    @UploadedFile(FileValidation.validateFileOptions({ fileIsRequired: true }))
+    file?: Express.Multer.File,
   ): Promise<SuccessResponseDto> {
+    dataPost.file = file;
     const created = await this.postService.createPost(dataPost, userParams);
     return new SuccessResponseDto(created);
   }
@@ -93,11 +99,15 @@ export class PostController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
   @ApiOkResponse({ type: SuccessResponseDto })
+  @UseInterceptors(FileInterceptor('file'))
   async updatePost(
     @Param('id') postId: string,
     @Body() post: UpdatePostDto,
     @UserParams() userParams: IUser,
+    @UploadedFile(FileValidation.validateFileOptions({}))
+    file?: Express.Multer.File,
   ): Promise<SuccessResponseDto> {
+    post.file = file;
     const isUpdated = await this.postService.updatePost(
       post,
       postId,

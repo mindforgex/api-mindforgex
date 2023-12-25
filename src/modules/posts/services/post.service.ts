@@ -20,6 +20,7 @@ import { PageMetaDto } from 'src/common/dto/page-meta.dto';
 import { PageDto } from 'src/common/dto/page.dto';
 import { SORT_CONDITION } from '../constants/post.constant';
 import { Task } from 'src/modules/tasks/models/task.model';
+import { FileValidation } from 'src/helper/FileValidation';
 
 @Injectable()
 export class PostService extends BaseService<PostDocument> {
@@ -129,6 +130,13 @@ export class PostService extends BaseService<PostDocument> {
   public findOneById = (postId: string, selectFields?: string) =>
     this.postModel
       .findOne({ _id: postId }, selectFields ?? this.defaultSelectFields)
+      .populate([
+        {
+          path: 'tasks',
+          model: Task.name,
+        },
+        { path: 'nftId' },
+      ])
       .lean();
 
   public async getPostById(postId: string) {
@@ -168,33 +176,15 @@ export class PostService extends BaseService<PostDocument> {
     if (!channelExits) throw new ChannelNotFoundException();
 
     // EXPLAIN: Create post
+    const image = FileValidation.saveFile(file);
     const post = await this.postModel.create({
       title,
       content,
       channelId: new Types.ObjectId(channelId),
+      images: [image],
       //TODO: The meaning and logic of creating nftId is unclear
       nftId: new Types.ObjectId('65292c6f68895e7bc014aab5'),
     });
-
-    // const formatTasks = LIST_TASK_OPTIONS.map((task) => ({
-    //   postId: post._id,
-    //   taskType: task.taskType,
-    //   name: task.name,
-    //   description: task.description,
-    //   // @ts-ignore
-    //   status: tasks.includes(task.taskType)
-    //     ? TaskStatus.active
-    //     : TaskStatus.inactive,
-    //   //TODO: The meaning and logic of creating taskInfo is unclear
-    //   taskInfo: {
-    //     title: '',
-    //     link: '',
-    //     serverId: '',
-    //   },
-    // }));
-    // const createdTasks = await this.taskService.createMultiTasks(formatTasks);
-    // post.tasks = createdTasks;
-    // const updatePost = await post.save();
     channelExits.posts = [...channelExits.posts, post.id];
     await channelExits.save();
     return post;
@@ -228,25 +218,9 @@ export class PostService extends BaseService<PostDocument> {
       {
         title,
         content,
+        ...(file && { images: [FileValidation.saveFile(file)] }),
       },
     );
-
-    // EXPLAIN: Update task
-    // const formatOptionTasks = LIST_TASK_OPTIONS.map((i) => i.taskType);
-    // await this.taskService.updateManyTask(
-    //   { postId },
-    //   {
-    //     $set: {
-    //       status: {
-    //         $cond: [
-    //           { $in: ['$taskType', formatOptionTasks] },
-    //           TaskStatus.active,
-    //           TaskStatus.inactive,
-    //         ],
-    //       },
-    //     },
-    //   },
-    // );
     return updatePost;
   }
 
@@ -268,5 +242,18 @@ export class PostService extends BaseService<PostDocument> {
     const deletePost = await this.postModel.deleteOne({ _id: postId });
     await this.taskService.deleteManyTask({ postId });
     return deletePost;
+  }
+
+  async updateTaskInPost(
+    postId: string,
+    taskId: string,
+    type: 'push' | 'pull',
+  ): Promise<Post> {
+    const updatePost = await this.postModel.findByIdAndUpdate(
+      postId,
+      { $pull: { tasks: taskId } },
+      { new: true },
+    );
+    return updatePost;
   }
 }

@@ -8,8 +8,15 @@ import { UserService } from 'src/modules/users/services/user.service';
 import { Task, TaskDocument } from '../models/task.model';
 import { TASK_TYPE } from '../constants/task.constant';
 import { TwitchService } from './twitch.service';
-import { VerifyYoutubeInfo, VerifyYoutubeInfoDocument } from '../models/verify-youtube-info';
+import {
+  VerifyYoutubeInfo,
+  VerifyYoutubeInfoDocument,
+} from '../models/verify-youtube-info';
 import axios from 'axios';
+import { CreateTaskDto, UpdateTaskDto } from '../dtos/request.dto';
+import { IUser } from 'src/modules/users/interfaces/user.interface';
+import { PostService } from 'src/modules/posts/services/post.service';
+import { Post } from 'src/modules/posts/models/post.model';
 
 @Injectable()
 export class TaskService extends BaseService<TaskDocument> {
@@ -21,7 +28,9 @@ export class TaskService extends BaseService<TaskDocument> {
     private readonly discordService: DiscordService,
     private readonly twitchService: TwitchService,
     @InjectModel(VerifyYoutubeInfo.name)
-    private readonly verifyYoutubeInfoModel: Model<VerifyYoutubeInfo>
+    private readonly verifyYoutubeInfoModel: Model<VerifyYoutubeInfo>,
+    @InjectModel(Post.name)
+    private readonly postModel: Model<Post>,
   ) {
     super(taskModel);
   }
@@ -145,35 +154,37 @@ export class TaskService extends BaseService<TaskDocument> {
     const userInfo = await this.getUserInfo(tokens.access_token);
     const walletAddr = requestData.walletAddress;
 
-    const info = await this.verifyYoutubeInfoModel.find({
-      email: userInfo.email,
-      walletAddr: walletAddr
-    }).lean();
-
+    const info = await this.verifyYoutubeInfoModel
+      .find({
+        email: userInfo.email,
+        walletAddr: walletAddr,
+      })
+      .lean();
 
     try {
-      if (info) { // update
+      if (info) {
+        // update
         await this.verifyYoutubeInfoModel.findOneAndUpdate(
           { _id: info[0]._id },
           {
-            tokens: tokens
+            tokens: tokens,
           },
           { new: true },
         );
-      } else { // create
+      } else {
+        // create
         const data = {
-          'sub': userInfo.sub ?? '',
-          'userName': userInfo.name ?? '',
-          'email': userInfo.email ?? '',
-          'emailVerified': userInfo.email_verified ?? false,
-          'locale': userInfo.locale ?? '',
-          'picture': userInfo.picture ?? '',
-          'tokens': tokens,
-          'walletAddr': walletAddr
+          sub: userInfo.sub ?? '',
+          userName: userInfo.name ?? '',
+          email: userInfo.email ?? '',
+          emailVerified: userInfo.email_verified ?? false,
+          locale: userInfo.locale ?? '',
+          picture: userInfo.picture ?? '',
+          tokens: tokens,
+          walletAddr: walletAddr,
         };
         await this.verifyYoutubeInfoModel.create(data);
       }
-
     } catch (error) {
       throw new Error(`Error store google authenticate info: ${error.message}`);
     }
@@ -181,11 +192,14 @@ export class TaskService extends BaseService<TaskDocument> {
 
   async getUserInfo(accessToken: string) {
     try {
-      const response = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const response = await axios.get(
+        'https://www.googleapis.com/oauth2/v3/userinfo',
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      });
+      );
 
       const userInfo = response.data;
       return userInfo;
@@ -198,9 +212,11 @@ export class TaskService extends BaseService<TaskDocument> {
   public async getVerifyYoutubeInfoByUser(requestData: any) {
     const walletAddr = requestData.walletAddress;
 
-    return this.verifyYoutubeInfoModel.findOne({ walletAddr: walletAddr }).lean();
+    return this.verifyYoutubeInfoModel
+      .findOne({ walletAddr: walletAddr })
+      .lean();
   }
-  
+
   public updateManyTask = async (
     filter?: FilterQuery<TaskDocument>,
     update?: UpdateQuery<TaskDocument>,
@@ -217,4 +233,59 @@ export class TaskService extends BaseService<TaskDocument> {
     const result = await this.taskModel.deleteMany(filter, option);
     return result;
   };
+
+  async createTask(dataTask: CreateTaskDto, user: IUser): Promise<Task> {
+    //TODO: Verify permission
+    const { _id: userId } = user;
+    const { postId, name, title, description, link, serverId } = dataTask;
+
+    // EXPLAIN: Create task
+    const task = await this.taskModel.create({
+      postId: new Types.ObjectId(postId),
+      name,
+      description,
+      taskInfo: {
+        title,
+        link,
+        serverId,
+      },
+    });
+
+    // EXPLAIN: Add the taskId to the post's tasks field
+    await this.postModel.findByIdAndUpdate(postId, {
+      $push: { tasks: task._id },
+    });
+
+    return task;
+  }
+
+  async updateTask(
+    dataChannel: UpdateTaskDto,
+    taskId: string,
+    user: IUser,
+  ): Promise<Task> {
+    const { postId, name, title, description, link, serverId } = dataChannel;
+    //TODO: Verify permission
+
+    const updateTask = await this.taskModel
+      .findOneAndUpdate(
+        { _id: taskId, postId: new Types.ObjectId(postId) },
+        {
+          name,
+          description,
+          taskInfo: {
+            title,
+            link,
+            serverId,
+          },
+        },
+        {
+          new: true,
+        },
+      )
+      .lean();
+    return updateTask;
+  }
+
+  async deleteTask(taskId: string, user: IUser) {}
 }
