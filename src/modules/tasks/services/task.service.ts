@@ -17,6 +17,9 @@ import { CreateTaskDto, UpdateTaskDto } from '../dtos/request.dto';
 import { IUser } from 'src/modules/users/interfaces/user.interface';
 import { PostService } from 'src/modules/posts/services/post.service';
 import { Post } from 'src/modules/posts/models/post.model';
+import { PostNotFoundException } from 'src/exceptions/post-not-found.exception';
+import { ChannelNotFoundException } from 'src/exceptions/channel-not-found.exception';
+import { TaskNotFoundException } from 'src/exceptions/task-not-found.exception';
 
 @Injectable()
 export class TaskService extends BaseService<TaskDocument> {
@@ -217,6 +220,21 @@ export class TaskService extends BaseService<TaskDocument> {
       .lean();
   }
 
+  async validatePermission(
+    postId: string | Types.ObjectId,
+    user: IUser,
+  ): Promise<void> {
+    const { _id: userId } = user;
+    const postExits = await this.postModel.findById(postId);
+    if (!postExits) throw new PostNotFoundException();
+    // EXPLAIN: Check if the channel exists and if the post is owned by the user
+    const channelExits = await this.channelService.findOneByCondition({
+      _id: postExits.channelId,
+      userId: userId,
+    });
+    if (!channelExits) throw new ChannelNotFoundException();
+  }
+
   public updateManyTask = async (
     filter?: FilterQuery<TaskDocument>,
     update?: UpdateQuery<TaskDocument>,
@@ -235,15 +253,18 @@ export class TaskService extends BaseService<TaskDocument> {
   };
 
   async createTask(dataTask: CreateTaskDto, user: IUser): Promise<Task> {
-    //TODO: Verify permission
-    const { _id: userId } = user;
-    const { postId, name, title, description, link, serverId } = dataTask;
+    const { postId, name, title, description, link, serverId, taskType } =
+      dataTask;
+
+    //EXPLAIN: Verify permission
+    await this.validatePermission(postId, user);
 
     // EXPLAIN: Create task
     const task = await this.taskModel.create({
       postId: new Types.ObjectId(postId),
       name,
       description,
+      taskType,
       taskInfo: {
         title,
         link,
@@ -264,8 +285,14 @@ export class TaskService extends BaseService<TaskDocument> {
     taskId: string,
     user: IUser,
   ): Promise<Task> {
-    const { postId, name, title, description, link, serverId } = dataChannel;
-    //TODO: Verify permission
+    const { postId, name, title, description, link, serverId, taskType } =
+      dataChannel;
+
+    const taskExits = await this.taskModel.findById(taskId);
+    if (!taskExits) throw new TaskNotFoundException();
+
+    //EXPLAIN: Verify permission
+    await this.validatePermission(taskExits.postId, user);
 
     const updateTask = await this.taskModel
       .findOneAndUpdate(
@@ -273,6 +300,7 @@ export class TaskService extends BaseService<TaskDocument> {
         {
           name,
           description,
+          taskType,
           taskInfo: {
             title,
             link,
@@ -287,5 +315,20 @@ export class TaskService extends BaseService<TaskDocument> {
     return updateTask;
   }
 
-  async deleteTask(taskId: string, user: IUser) {}
+  async deleteTask(taskId: string, user: IUser) {
+    const taskExits = await this.taskModel.findById(taskId);
+    if (!taskExits) throw new TaskNotFoundException();
+
+    //EXPLAIN: Verify permission
+    await this.validatePermission(taskExits.postId, user);
+
+    const deleteTask = await this.taskModel.findOneAndDelete({ _id: taskId });
+
+    // EXPLAIN: Delete the taskId to the post's tasks field
+    //@ts-ignore
+    await this.postModel.findByIdAndUpdate(deleteTask.postId, {
+      //@ts-ignore
+      $pull: { tasks: deleteTask._id },
+    });
+  }
 }

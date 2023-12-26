@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards, Query, HttpCode, HttpStatus, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards, Query, HttpCode, HttpStatus, Put, Delete } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { TaskDetailResponseDto } from './dtos/response.dto';
@@ -165,5 +165,17 @@ export class TaskController {
       userParams,
     );
     return new SuccessResponseDto(isUpdated);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async deletePost(
+    @Param('id') postId: string,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const isDelete = await this.taskService.deleteTask(postId, userParams);
+    return new SuccessResponseDto(isDelete);
   }
 }

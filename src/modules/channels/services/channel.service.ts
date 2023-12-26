@@ -408,6 +408,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
     const channel = await this.channelModel.create({
       ...data,
+      email,
       socialLinks,
       userId,
       avatarUrl,
@@ -421,8 +422,14 @@ export class ChannelService extends BaseService<ChannelDocument> {
     idChannel: string,
     user: IUser,
   ): Promise<Channel> {
-    const dataUser = await this.userService.findOneById(user._id);
-    if (!dataUser) throw new UserNotFoundException();
+    // EXPLAIN: Check user existence and activity status
+    const { _id: userId } = user;
+    const userExits = await this.userService.findOneByCondition({
+      _id: userId,
+      status: UserStatus.active,
+    });
+    if (!userExits) throw new UserNotFoundException();
+
     const {
       discord,
       youtube,
@@ -459,8 +466,14 @@ export class ChannelService extends BaseService<ChannelDocument> {
     idChannel: string,
     user: IUser,
   ): Promise<Channel> {
-    const dataUser = await this.userService.findOneById(user._id);
-    if (!dataUser) throw new UserNotFoundException();
+    // EXPLAIN: Check user existence and activity status
+    const { _id: userId } = user;
+    const userExits = await this.userService.findOneByCondition({
+      _id: userId,
+      status: UserStatus.active,
+    });
+    if (!userExits) throw new UserNotFoundException();
+    
     const { aboutMe } = data;
     const aboutMeUpdate = await this.channelModel
       .findOneAndUpdate(
