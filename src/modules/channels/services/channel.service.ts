@@ -408,6 +408,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
 
     const channel = await this.channelModel.create({
       ...data,
+      email,
       socialLinks,
       userId,
       avatarUrl,

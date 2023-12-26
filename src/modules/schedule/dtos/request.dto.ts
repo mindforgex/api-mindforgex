@@ -11,7 +11,7 @@ import { PaginateDto } from 'src/common/classes';
 import { SORT_CONDITION } from '../constants/schedule.constant';
 
 export class GetListScheduleDto extends PaginateDto {
-  @ApiProperty({ default: SORT_CONDITION.LATEST_UPDATE })
+  @ApiProperty({ default: { date: -1 } })
   @IsOptional()
   @IsIn(Object.keys(SORT_CONDITION))
   sortCondition: string;
