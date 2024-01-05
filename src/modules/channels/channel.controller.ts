@@ -42,6 +42,7 @@ import { IUser } from '../users/interfaces/user.interface';
 import { FileValidation } from 'src/helper/FileValidation';
 import { FileRequiredException } from 'src/exceptions/file-required.exception';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { PageDto } from 'src/common/dto/page.dto';
 
 @ApiTags('channels')
 @Controller('channels')
@@ -52,7 +53,7 @@ export class ChannelController {
   @ApiBearerAuth('jwt')
   @ApiOkResponse({ type: GetListChannelResponseDto })
   // @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
-  async getListChannel(@Query() query: GetListChannelDto): Promise<any> {
+  async getListChannel(@Query() query: GetListChannelDto): Promise<PageDto<any>> {
     const result = await this.channelService.getListChannel(query);
 
     return result;

@@ -256,4 +256,32 @@ export class PostService extends BaseService<PostDocument> {
     );
     return updatePost;
   }
+
+  async react(postId: string, user: IUser): Promise<any> {
+    // EXPLAIN: Check post existence
+    const postExits = await this.findOneById(postId);
+    if (!postExits) throw new PostNotFoundException();
+    const { walletAddress } = user;
+
+    if (postExits?.userAddressReact?.includes(walletAddress)) {
+      const react = await this.postModel.findOneAndUpdate(
+        { _id: postId },
+        {
+          $inc: { amountReact: -1 },
+          $pull: { userAddressReact: walletAddress },
+        },
+        { new: true },
+      );
+      return react;
+    }
+    const react = await this.postModel.findOneAndUpdate(
+      { _id: postId, userAddressReact: { $nin: [walletAddress] } },
+      {
+        $inc: { amountReact: 1 },
+        $push: { userAddressReact: walletAddress },
+      },
+      { new: true },
+    );
+    return react;
+  }
 }

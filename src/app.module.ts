@@ -16,6 +16,7 @@ import { DonateModule } from 'src/modules/donates/donate.module';
 import { NotificationModule } from 'src/modules/notification/notification.module';
 import { ScheduleModule } from './modules/schedule/schedule.module';
 import { AppController } from './app.controller';
+import { CommentModule } from './modules/comment/comment.module';
 
 const modules = [
   AuthModule,
@@ -27,7 +28,8 @@ const modules = [
   RewardModule,
   DonateModule,
   NotificationModule,
-  ScheduleModule
+  ScheduleModule,
+  CommentModule
 ];
 
 @Module({

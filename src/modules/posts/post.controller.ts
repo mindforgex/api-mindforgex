@@ -116,6 +116,21 @@ export class PostController {
     return new SuccessResponseDto(isUpdated);
   }
 
+  @Post(':id/react')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({ type: SuccessResponseDto })
+  async react(
+    @Param('id') postId: string,
+    @UserParams() userParams: IUser,
+  ): Promise<SuccessResponseDto> {
+    const react = await this.postService.react(
+      postId,
+      userParams,
+    );
+    return new SuccessResponseDto(react);
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)
