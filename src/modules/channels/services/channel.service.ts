@@ -21,6 +21,7 @@ import {
 } from '@solana/web3.js';
 import {
   CreateChannelDto,
+  GetListChannelDto,
   UpdateAboutMeChannelDto,
   UpdateChannelDto,
 } from '../dtos/request.dto';
@@ -39,6 +40,9 @@ import { Post } from 'src/modules/posts/models/post.model';
 import { Task } from 'src/modules/tasks/models/task.model';
 import { FileValidation } from 'src/helper/FileValidation';
 import { FileRequiredException } from 'src/exceptions/file-required.exception';
+import { GetListChannelResponseDto } from '../dtos/response.dto';
+import { PageDto } from 'src/common/dto/page.dto';
+import { PageMetaDto } from 'src/common/dto/page-meta.dto';
 
 @Injectable()
 export class ChannelService extends BaseService<ChannelDocument> {
@@ -109,26 +113,42 @@ export class ChannelService extends BaseService<ChannelDocument> {
     this.channelModel.findOne(filter, projection ?? this.defaultSelectFields);
   // .lean();
 
-  public async getListChannel(queryParams: any) {
+  public async getListChannel(queryParams: GetListChannelDto): Promise<PageDto<any>> {
     const conditions = { ...queryParams };
 
-    const [{ pageIndex, pageSize, items }, totalItems] = await Promise.all([
+    const [{  pageSize, items }, totalItems] = await Promise.all([
       this.getAllWithPagination(conditions),
       this.countItems(conditions),
     ]);
 
-    return {
-      totalItems,
-      pageIndex,
-      pageSize,
-      items,
-    };
+    const pageMeta = new PageMetaDto({ options: queryParams, totalItems });
+    return new PageDto(items, pageMeta);
   }
 
-  private makeFilterCondition = ({ network = null, role = null }) => ({
-    ...(network && { network }),
-    ...(role && { role }),
-  });
+  private makeFilterCondition = (queryParams: GetListChannelDto) => {
+    const { textSearch } = queryParams;
+    const fieldsSearchText = [
+      'name',
+      'channelName',
+      'description',
+      'country',
+      'founded',
+      'mainGame',
+      'profestionalFeild',
+      'aboutMe',
+      'email',
+    ];
+    // EXPLAIN: Search with the condition containing the textSearch
+    // EXPLAIN: Case-insensitive search
+    const filterQuerySearchText = fieldsSearchText.map((field) => ({
+      [field]: { $regex: textSearch, $options: 'i' },
+    }));
+    return {
+      ...(textSearch && {
+        $or: filterQuerySearchText,
+      }),
+    };
+  };
 
   private makeSortCondition = (queryParams: any) => {
     const sort =
@@ -189,7 +209,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
     return { pageIndex, pageSize, items: collections };
   }
 
-  public async countItems(queryParams: any) {
+  public async countItems(queryParams: GetListChannelDto) {
     const totalItems = await this.channelModel.countDocuments(
       this.makeFilterCondition(queryParams),
     );
@@ -473,7 +493,7 @@ export class ChannelService extends BaseService<ChannelDocument> {
       status: UserStatus.active,
     });
     if (!userExits) throw new UserNotFoundException();
-    
+
     const { aboutMe } = data;
     const aboutMeUpdate = await this.channelModel
       .findOneAndUpdate(

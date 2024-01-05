@@ -33,6 +33,18 @@ export class Post implements IPost {
 
   @Prop({ default: [] })
   userAddress: Array<string>;
+
+  @Prop({ default: 0 })
+  amountReact: number;
+
+  @Prop({ default: 0 })
+  amountComment: number;
+
+  @Prop({ default: 0 })
+  amountShare: number;
+
+  @Prop({ default: [] })
+  userAddressReact: Array<string>;
 }
 
 export type PostDocument = Post & Document;

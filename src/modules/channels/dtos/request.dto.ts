@@ -19,10 +19,16 @@ import { UserType } from 'src/modules/users/constants/user.constant';
 import { Sex } from '../interfaces/channel.interface';
 
 export class GetListChannelDto extends PaginateDto {
-  @ApiProperty({ default: 'LATEST_UPDATE' })
+  @ApiProperty({ default: SORT_CONDITION.LATEST_UPDATE })
   @IsOptional()
   @IsIn(Object.keys(SORT_CONDITION))
   sortCondition: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  textSearch: string;
 }
 
 export class GetListOrderDto extends PaginateDto {
