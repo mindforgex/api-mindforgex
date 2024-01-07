@@ -56,7 +56,7 @@ export class AuthService {
       _id,
       nonce: nonceUpdated,
       role,
-      hasDiscord,
+      // hasDiscord,
       discordId,
       discordUsername,
       registratorToken,
@@ -76,7 +76,7 @@ export class AuthService {
       accessToken: this.generateJwtToken(jwtParams),
       user: {
         ...jwtParams,
-        hasDiscord,
+        // hasDiscord,
         discordId,
         discordUsername,
         registratorToken,
