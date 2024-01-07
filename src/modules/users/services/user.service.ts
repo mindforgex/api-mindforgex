@@ -1,13 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ClientSession, FilterQuery, Model, ProjectionType } from 'mongoose';
 
-import { SORT_CONDITION } from '../constants/user.constant';
+import { SNS_TYPE, SORT_CONDITION } from '../constants/user.constant';
 
 import { BaseService } from 'src/modules/base/services/base.service';
 
 import { User, UserDocument } from '../models/user.model';
 import { ConnectTwitchDto } from '../dtos/request.dto';
+import { IUser } from '../interfaces/user.interface';
 
 @Injectable()
 export class UserService extends BaseService<UserDocument> {
@@ -123,15 +124,53 @@ export class UserService extends BaseService<UserDocument> {
   ) => {
     await this.userModel.updateOne(
       { walletAddress },
-      { hasDiscord: true, discordId, discordUsername },
+      {
+        // hasDiscord: true,
+        discordId,
+        discordUsername,
+      },
     );
   };
 
-  public updateToken = async (walletAddress: string, registratorToken: string): Promise<void> => {
+  public updateToken = async (
+    walletAddress: string,
+    registratorToken: string,
+  ): Promise<void> => {
     await this.userModel.updateOne({ walletAddress }, { registratorToken });
-  }
+  };
 
   updateTwitchInfo = async (walletAddress: string, data: ConnectTwitchDto) => {
     await this.userModel.updateOne({ walletAddress }, data);
+  };
+
+  disconnectSns = async (
+    user: IUser,
+    sns: (typeof SNS_TYPE)[keyof typeof SNS_TYPE],
+  ): Promise<IUser> => {
+    const keys = Object.keys(user)
+      /**
+       * @dev filter field includes sns name
+       * ex:
+       *  - input: 'discord'
+       *  - output: ['discord_foo', 'discord_bar']
+       */
+      .filter((_key) => _key.toLowerCase().includes(sns.toLowerCase()));
+    /**
+     * @dev mapping keys to object with empty value
+     * ex:
+     *  input: ['discord_foo', 'discord_bar']
+     *  output: {discord_foo: '', discord_bar: ''}
+     */
+    const updateData = keys.reduce((obj, key) => ({ ...obj, [key]: '' }), {});
+    const res = await this.userModel.updateOne(
+      {
+        _id: user._id,
+      },
+      updateData,
+    );
+    if (res.modifiedCount === 0) {
+      throw new InternalServerErrorException(res);
+    }
+    return this.userModel.findById(user._id);
   };
 }

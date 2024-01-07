@@ -16,6 +16,7 @@ import {
   GetListUserDto,
   ConnectDiscordDto,
   ConnectTwitchDto,
+  DisconnectSnsDto,
 } from './dtos/request.dto';
 import { GetListUserResponseDto } from './dtos/response.dto';
 
@@ -61,6 +62,16 @@ export class UserController {
   }
 
   @ApiBearerAuth('jwt')
+  @Post('sns/disconnect')
+  @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
+  async disconnectSns(
+    @UserParams() userParams: IUser,
+    @Body() body: DisconnectSnsDto,
+  ): Promise<IUser> {
+    return this.userService.disconnectSns(userParams, body.sns);
+  }
+
+  @ApiBearerAuth('jwt')
   @Put('registrator-token')
   @UseGuards(JwtAuthGuard, RolesGuard(Role.commonUser))
   async updateToken(
@@ -84,7 +95,7 @@ export class UserController {
     await this.userService.updateTwitchInfo(userParams.walletAddress, body);
     return { message: 'Success' };
   }
-  
+
   @Get('/me')
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth('jwt')

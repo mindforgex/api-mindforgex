@@ -3,7 +3,7 @@ import { IsIn, IsOptional, IsNotEmpty } from 'class-validator';
 
 import { PaginateDto } from 'src/common/classes';
 
-import { SORT_CONDITION } from '../constants/user.constant';
+import { SNS_TYPE, SORT_CONDITION } from '../constants/user.constant';
 
 export class GetListUserDto extends PaginateDto {
   @ApiProperty({ default: SORT_CONDITION.LATEST_UPDATE })
@@ -34,4 +34,11 @@ export class ConnectTwitchDto {
   @ApiProperty()
   @IsNotEmpty()
   twitchAccessToken: string;
+}
+
+export class DisconnectSnsDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsIn(Object.values(SNS_TYPE))
+  sns: string;
 }
